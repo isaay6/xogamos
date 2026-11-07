@@ -1,0 +1,1 @@
+ALTER TABLE "bookings" ALTER COLUMN "access_code" SET DATA TYPE varchar(6);

@@ -1,0 +1,46 @@
+/* SPDX-License-Identifier: EUPL-1.2 */
+/* Tokens del lenguaje visual (spec §3 y §4). El color del concello se aplica como --concello. */
+:root {
+	--txt: #17202a;
+	--gris: #6e7172;
+	--ceo: #eef2f1;
+	--pista: #f2762e;
+	--auga: #1aa6c8;
+	--herba: #2e9e4f;
+	--granito: #9aa1a0;
+	--parquet: #e3b26a;
+	--foco: #ffd84d;
+	--perigo: #c2372a;
+	--concello: var(--txt);
+
+	/* Derivados */
+	--branco: #fff;
+	--liña: #dfe3e2;
+	--apagado: #b9bfbe;
+	--texto-suave: #4a5157;
+	--fonte: 'Gabarito', system-ui, sans-serif;
+	--radio: 12px;
+	--toque: 44px;
+}
+
+html[data-texto='grande'] { font-size: 112.5%; }
+html[data-texto='moi-grande'] { font-size: 125%; }
+html[data-contraste='alto'] {
+	--txt: #000;
+	--gris: #202020;
+	--ceo: #fff;
+	--pista: #9d2600;
+	--auga: #005a70;
+	--herba: #075c22;
+	--granito: #3d4444;
+	--parquet: #704600;
+	--foco: #ffdf00;
+	--perigo: #8a0000;
+	--liña: #333;
+	--texto-suave: #202020;
+}
+html[data-movemento='reducido'] *, html[data-movemento='reducido'] *::before, html[data-movemento='reducido'] *::after {
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	scroll-behavior: auto !important;
+}

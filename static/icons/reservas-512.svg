@@ -1,0 +1,7 @@
+<!-- SPDX-License-Identifier: EUPL-1.2 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Reservas deportivas">
+  <rect width="512" height="512" rx="102" fill="#17202a"/>
+  <rect x="77" y="120" width="358" height="272" rx="32" fill="none" stroke="#eef2f1" stroke-width="22"/>
+  <path d="M256 120v272M77 256h358M168 120c48 48 48 224 0 272M344 120c-48 48-48 224 0 272" fill="none" stroke="#1aa6c8" stroke-width="19"/>
+  <circle cx="256" cy="256" r="35" fill="#f2762e"/>
+</svg>
