@@ -11,6 +11,15 @@ Pila: SvelteKit + TypeScript. Requírese Node 22 (`.nvmrc`).
 Para instalar a plataforma nun servidor municipal con Docker, consulte a guía de
 [instalación](docs/instalacion.md).
 
+## Documentación
+
+- [Instalación](docs/instalacion.md): Docker, copias e proxy HTTPS.
+- [Guía de uso](docs/guia-de-uso.md): unha páxina por papel.
+- [Arquitectura e decisións](docs/arquitectura.md).
+- [Interoperabilidade](docs/interoperabilidade.md): Cl@ve e Chave365, API OpenAPI e formatos.
+- [Accesibilidade](docs/accesibilidade.md): auditoría WCAG 2.1 AA, matriz e declaración.
+- [Protección de datos](docs/rgpd.md): rexistro de tratamentos, conservación e dereitos.
+
 ## Scripts
 
 - `npm run dev`: servidor de desenvolvemento.
