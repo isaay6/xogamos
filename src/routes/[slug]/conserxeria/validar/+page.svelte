@@ -23,12 +23,12 @@
 	);
 	const chegadaError = $derived(form && 'chegadaError' in form ? form.chegadaError : null);
 	const attended = $derived(form && 'attended' in form ? form.attended : false);
-	const pass = $derived(form && 'pass' in form ? form.pass : (lookup as any)?.pass ?? (data as any).pass ?? null);
+	const pass = $derived(
+		form && 'pass' in form ? form.pass : ((lookup as any)?.pass ?? (data as any).pass ?? null)
+	);
 
 	// Lo enviado tal cual (PIN o token QR): la tarjeta lo reenvía para repetir la búsqueda.
-	const raw = $derived(
-		form && 'codigo' in form ? String(form.codigo) : (lookup?.codigo ?? '')
-	);
+	const raw = $derived(form && 'codigo' in form ? String(form.codigo) : (lookup?.codigo ?? ''));
 	// Una URL o un token QR no caben en las casillas: solo se devuelven los PIN (el campo queda
 	// vacío para el siguiente escaneo).
 	const isLink = (v: string) => /[/.]/.test(v);
@@ -57,7 +57,9 @@
 </script>
 
 <svelte:head>
-	<title>{t(locale, 'cons.val.titulo')}</title>
+	<title
+		>{t(locale, 'cons.val.titulo')}{data.municipality ? ` · ${data.municipality.name}` : ''}</title
+	>
 </svelte:head>
 
 <header class="mh">
@@ -144,7 +146,12 @@
 			</form>
 		{/if}
 		{#if pass}
-			<div class="card ok"><p class="v">{t(locale, 'cons.val.abono')}</p><b>{pass.name}</b><span class="k">{t(locale, 'cons.val.abono_liña', { nome: pass.displayName, ata: pass.endsOn })}</span></div>
+			<div class="card ok">
+				<p class="v">{t(locale, 'cons.val.abono')}</p>
+				<b>{pass.name}</b><span class="k"
+					>{t(locale, 'cons.val.abono_liña', { nome: pass.displayName, ata: pass.endsOn })}</span
+				>
+			</div>
 		{/if}
 	</div>
 </div>

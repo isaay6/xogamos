@@ -7,12 +7,11 @@
 	let { data, form }: PageProps = $props();
 	const search = $derived(form && 'search' in form ? form.search : null);
 	const confirm = $derived(form && 'confirm' in form ? form.confirm : null);
-	const provider = (value: string) =>
-		t(data.locale, `dep.admins.provedor.${value}` as MessageKey);
+	const provider = (value: string) => t(data.locale, `dep.admins.provedor.${value}` as MessageKey);
 </script>
 
 <svelte:head>
-	<title>{t(data.locale, 'dep.admins.titulo')}</title>
+	<title>{t(data.locale, 'dep.admins.titulo')} · Deputación</title>
 </svelte:head>
 
 <h1 data-tour="dep-admins">{t(data.locale, 'dep.admins.titulo')}</h1>
@@ -96,7 +95,10 @@
 		<ul>
 			{#each search?.candidates ?? [] as candidate (candidate.userId)}
 				<li>
-					<span>{candidate.displayName} <small>{candidate.email ?? provider(candidate.provider)}</small></span>
+					<span
+						>{candidate.displayName}
+						<small>{candidate.email ?? provider(candidate.provider)}</small></span
+					>
 					<form method="POST" action="?/preparar">
 						<input type="hidden" name="municipalityId" value={search?.municipalityId} />
 						<input type="hidden" name="userId" value={candidate.userId} />
@@ -144,7 +146,8 @@
 							<form method="POST" action="?/prepararQuitar">
 								<input type="hidden" name="municipalityId" value={municipality.id} />
 								<input type="hidden" name="roleId" value={admin.roleId} />
-								<Button type="submit" variant="perigo">{t(data.locale, 'dep.admins.quitar')}</Button>
+								<Button type="submit" variant="perigo">{t(data.locale, 'dep.admins.quitar')}</Button
+								>
 							</form>
 						</li>
 					{/each}

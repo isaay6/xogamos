@@ -255,7 +255,7 @@
 
 	.non_fuches {
 		background: #f9dedb;
-		color: var(--perigo);
+		color: var(--txt);
 	}
 
 	.cancelada {

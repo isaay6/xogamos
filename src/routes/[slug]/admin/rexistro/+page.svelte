@@ -3,13 +3,32 @@
 	import { t } from '#lib/i18n/index.js';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
-	const kinds = ['facility_saved', 'hours_saved', 'closure_created', 'holiday_saved', 'rules_saved', 'staff_added', 'notice_saved', 'season_saved', 'pass_sold', 'booking_cancelled', 'request_decided'];
+	const kinds = [
+		'facility_saved',
+		'hours_saved',
+		'closure_created',
+		'holiday_saved',
+		'rules_saved',
+		'staff_added',
+		'notice_saved',
+		'season_saved',
+		'pass_sold',
+		'booking_cancelled',
+		'request_decided'
+	];
 	const sentence = (entry: PageData['entries'][number]) =>
-		t(data.locale, `adm.rexistro.${entry.kind}` as never, { persoa: entry.actorName, ...entry.params });
+		t(data.locale, `adm.rexistro.${entry.kind}` as never, {
+			persoa: entry.actorName,
+			...entry.params
+		});
 </script>
 
 <svelte:head>
-	<title>{t(data.locale, 'adm.rexistro.titulo')}</title>
+	<title
+		>{t(data.locale, 'adm.rexistro.titulo')}{data.municipality
+			? ` · ${data.municipality.name}`
+			: ''}</title
+	>
 </svelte:head>
 
 <section data-tour="rexistro">
@@ -40,7 +59,9 @@
 		<ul>
 			{#each data.entries as entry (entry.id)}
 				<li>
-					<time datetime={entry.createdAt.toISOString()}>{entry.createdAt.toLocaleString(data.locale)}</time>
+					<time datetime={entry.createdAt.toISOString()}
+						>{entry.createdAt.toLocaleString(data.locale)}</time
+					>
 					<span>{sentence(entry)}</span>
 				</li>
 			{/each}

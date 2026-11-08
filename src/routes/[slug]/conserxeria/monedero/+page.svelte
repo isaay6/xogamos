@@ -6,6 +6,14 @@
 	let { data, form }: PageProps = $props();
 	const locale = $derived(data.locale);
 </script>
+
+<svelte:head>
+	<title
+		>{t(locale, 'adm.monedero.titulo')}{data.municipality
+			? ` · ${data.municipality.name}`
+			: ''}</title
+	>
+</svelte:head>
 <h1>{t(locale, 'adm.monedero.titulo')}</h1>
 <form method="POST" action="?/emitir">
 	<label>
@@ -24,4 +32,29 @@
 		<code>{form.issued.code}</code>
 	</div>
 {/if}
-<style>form, label { display: grid; gap: 8px; max-width: 260px; } select, button { min-height: var(--toque); font: inherit; } .card { display: grid; gap: 8px; max-width: 320px; margin-top: 16px; padding: 18px; border: 3px dashed var(--txt); border-radius: var(--radio); } code { font-size: 24px; }</style>
+
+<style>
+	form,
+	label {
+		display: grid;
+		gap: 8px;
+		max-width: 260px;
+	}
+	select,
+	button {
+		min-height: var(--toque);
+		font: inherit;
+	}
+	.card {
+		display: grid;
+		gap: 8px;
+		max-width: 320px;
+		margin-top: 16px;
+		padding: 18px;
+		border: 3px dashed var(--txt);
+		border-radius: var(--radio);
+	}
+	code {
+		font-size: 24px;
+	}
+</style>

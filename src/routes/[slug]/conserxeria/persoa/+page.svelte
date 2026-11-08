@@ -21,7 +21,8 @@
 	const locale = $derived(data.locale);
 	const base = $derived(`/${data.municipality.slug}/conserxeria`);
 	type Row = (typeof data.upcoming)[number];
-	const when = (b: Row) => `${dayLabel(locale, b.startsAt.toISOString())} · ${formatTime(b.startsAt)}`;
+	const when = (b: Row) =>
+		`${dayLabel(locale, b.startsAt.toISOString())} · ${formatTime(b.startsAt)}`;
 	const place = (b: Row) =>
 		facilityLabel(locale, b.facilityName, b.unitIndex, nounFor('unit', b.mascot));
 	// As accións levan a persoa na query, como a URL da ficha.
@@ -39,7 +40,9 @@
 </script>
 
 <svelte:head>
-	<title>{t(locale, 'cons.per.titulo')}</title>
+	<title
+		>{t(locale, 'cons.per.titulo')}{data.municipality ? ` · ${data.municipality.name}` : ''}</title
+	>
 </svelte:head>
 
 <header class="mh">
@@ -86,8 +89,16 @@
 				<p class="okmsg" role="status">{t(locale, `cons.per.feito.${done}` as MessageKey)}</p>
 				{#if form && 'soldPass' in form && form.soldPass}
 					<section class="credencial">
-						<Fob code={form.soldPass.pin} color="#1AA6C8" size="xl" {locale} qr={form.soldPass.qr} />
-						<Button type="button" onclick={() => window.print()}>{t(locale, 'cons.per.imprimir')}</Button>
+						<Fob
+							code={form.soldPass.pin}
+							color="#1AA6C8"
+							size="xl"
+							{locale}
+							qr={form.soldPass.qr}
+						/>
+						<Button type="button" onclick={() => window.print()}
+							>{t(locale, 'cons.per.imprimir')}</Button
+						>
 					</section>
 				{/if}
 			{:else if failed && !confirming}
@@ -157,7 +168,9 @@
 								{/each}
 							</select>
 						</label>
-						{#if selectedPassType?.closedToday}<p class="err">{t(locale, 'cons.per.abono_pechado')}</p>{/if}
+						{#if selectedPassType?.closedToday}<p class="err">
+								{t(locale, 'cons.per.abono_pechado')}
+							</p>{/if}
 						<label>
 							{t(locale, 'cons.per.inicio_abono')}
 							<input name="startsOn" type="date" min={data.today} value={data.today} required />
@@ -170,7 +183,13 @@
 				{#if data.passes.length > 0}
 					<ul class="lista">
 						{#each data.passes as pass (pass.id)}
-							<li><span><b>{pass.name}</b> · {t(locale, 'cons.per.valido_abono', { ata: longDate(locale, pass.endsOn) })}</span><span class="k">{t(locale, 'cons.per.pin')} {formatCode(pass.pin)}</span></li>
+							<li>
+								<span
+									><b>{pass.name}</b> · {t(locale, 'cons.per.valido_abono', {
+										ata: longDate(locale, pass.endsOn)
+									})}</span
+								><span class="k">{t(locale, 'cons.per.pin')} {formatCode(pass.pin)}</span>
+							</li>
 						{/each}
 					</ul>
 				{/if}
@@ -185,10 +204,18 @@
 						<li>
 							<span>
 								<b>{place(b)}</b> · {when(b)} · {formatEuros(b.priceCents, locale)}
-								<span class="k"> · {t(locale, 'cons.panel.codigo')} {formatCode(b.accessCode)}</span>
+								<span class="k">
+									· {t(locale, 'cons.panel.codigo')} {formatCode(b.accessCode)}</span
+								>
 							</span>
 							{#if confirming === b.id}
-								<form use:enhance method="POST" action={action('cancelar')} class="seguro" role="alert">
+								<form
+									use:enhance
+									method="POST"
+									action={action('cancelar')}
+									class="seguro"
+									role="alert"
+								>
 									<b>{t(locale, 'cons.panel.seguro')}</b>
 									{#if failed === 'VALIDATION_FAILED'}
 										<p class="err">{t(locale, 'cons.err.VALIDATION_FAILED')}</p>
@@ -200,7 +227,9 @@
 										<textarea name="motivo" required maxlength="200" rows="2"></textarea>
 									</label>
 									<div class="acts">
-										<Button type="submit" variant="perigo">{t(locale, 'cons.panel.cancelar')}</Button>
+										<Button type="submit" variant="perigo"
+											>{t(locale, 'cons.panel.cancelar')}</Button
+										>
 										<Button variant="out" href={`?persoa=${p.profileId}`}
 											>{t(locale, 'cons.panel.non')}</Button
 										>

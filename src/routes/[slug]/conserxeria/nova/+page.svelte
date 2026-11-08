@@ -54,7 +54,9 @@
 </script>
 
 <svelte:head>
-	<title>{t(locale, 'cons.nova.titulo')}</title>
+	<title
+		>{t(locale, 'cons.nova.titulo')}{data.municipality ? ` · ${data.municipality.name}` : ''}</title
+	>
 </svelte:head>
 
 <header class="mh">
@@ -80,7 +82,10 @@
 					<div>
 						<b>{data.person.displayName}</b>
 						<p class="k">
-							{t(locale, data.person.isResident ? 'cons.panel.empadroada' : 'cons.panel.nonempadroada')}
+							{t(
+								locale,
+								data.person.isResident ? 'cons.panel.empadroada' : 'cons.panel.nonempadroada'
+							)}
 							{#if data.person.socialTariff}
 								· {t(locale, `cons.tarifa.${data.person.socialTariff}` as MessageKey)}{/if}
 							{#if data.person.phone}
@@ -209,7 +214,14 @@
 					{#if data.sport?.bookingMode === 'capacity'}
 						<label class="prazas">
 							<span class="k">{t(locale, 'cons.nova.prazas', { n: maxSeats })}</span>
-							<input name="seats" type="number" min="1" max={maxSeats} value="1" inputmode="numeric" />
+							<input
+								name="seats"
+								type="number"
+								min="1"
+								max={maxSeats}
+								value="1"
+								inputmode="numeric"
+							/>
 						</label>
 					{/if}
 					<fieldset class="canle">
@@ -253,8 +265,7 @@
 					<a
 						href={sportHref(s.typeId)}
 						aria-current={data.sport?.typeId === s.typeId ? 'true' : undefined}
-						class:on={data.sport?.typeId === s.typeId}
-						>{locale === 'es' ? s.nameEs : s.nameGl}</a
+						class:on={data.sport?.typeId === s.typeId}>{locale === 'es' ? s.nameEs : s.nameGl}</a
 					>
 				{/each}
 			</nav>
@@ -270,7 +281,12 @@
 				</form>
 				{#if data.options.length === 0}
 					<p class="k">
-						{t(locale, data.time || data.sport.bookingMode === 'day' ? 'cons.nova.sen' : 'cons.nova.escolleHora')}
+						{t(
+							locale,
+							data.time || data.sport.bookingMode === 'day'
+								? 'cons.nova.sen'
+								: 'cons.nova.escolleHora'
+						)}
 					</p>
 				{/if}
 			{:else}

@@ -37,14 +37,14 @@
 
 | Dato | Prazo |
 |---|---|
-| Sesións | Caducan soas (30 días sen uso). |
+| Sesións | Caducan aos 30 días sen uso e bórranse cada día (automático). |
 | Reservas e asistencia | 2 anos desde a data da reserva, para estatísticas e reclamacións. Despois, só cifras anónimas. |
 | Movementos do monedeiro | O prazo que marque a normativa económica municipal (normalmente 4 anos). |
 | Rexistro de actividade do persoal | 2 anos. |
-| Correos enviados (cola de saída) | 30 días. |
+| Correos enviados (cola de saída) | 30 días (automático). |
 | Perfil sen actividade | Avísase aos 3 anos sen reservas e bórrase aos 3 meses do aviso se a persoa non responde. |
 
-> **Pendente técnico:** o borrado automático por prazos e o borrado da conta a petición aínda non están programados. Mentres tanto, o concello atende as peticións de supresión pola vía ordinaria (sede electrónica ou rexistro). Está na folla de ruta do piloto.
+> **Xa automático:** cada día bórranse as sesións caducadas, os correos enviados ou fallidos con máis de 30 días e os avisos lidos con máis dun ano (`src/lib/server/jobs/retention.ts`). **Pendente:** a anonimización de reservas antigas e o borrado da conta a petición. Mentres tanto, o concello atende as peticións de supresión pola vía ordinaria (sede electrónica ou rexistro). Está na folla de ruta do piloto.
 
 ## 4. Dereitos das persoas
 

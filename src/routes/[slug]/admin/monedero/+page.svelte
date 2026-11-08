@@ -7,6 +7,14 @@
 	let { data, form }: PageProps = $props();
 	const locale = $derived(data.locale);
 </script>
+
+<svelte:head>
+	<title
+		>{t(locale, 'adm.monedero.titulo')}{data.municipality
+			? ` · ${data.municipality.name}`
+			: ''}</title
+	>
+</svelte:head>
 <h1>{t(locale, 'adm.monedero.titulo')}</h1>
 <section>
 	<h2>{t(locale, 'adm.monedero.emitir')}</h2>
@@ -27,7 +35,9 @@
 			<code>{form.issued.code}</code>
 			<Qr value={`wallet:${form.issued.code}`} label={form.issued.code} />
 			<small>{t(locale, 'adm.monedero.simulacion_qr')}</small>
-			<button type="button" onclick={() => window.print()}>{t(locale, 'adm.abonos.imprimir')}</button>
+			<button type="button" onclick={() => window.print()}
+				>{t(locale, 'adm.abonos.imprimir')}</button
+			>
 		</div>
 	{/if}
 </section>
@@ -42,10 +52,33 @@
 		{/each}
 	</ul>
 </section>
+
 <style>
-	section { margin: 24px 0; }
-	form, label { display: grid; gap: 8px; max-width: 260px; }
-	select, button { min-height: var(--toque); font: inherit; }
-	.card { display: grid; gap: 8px; max-width: 320px; margin-top: 16px; padding: 18px; border: 3px dashed var(--txt); border-radius: var(--radio); }
-	code { font-size: 24px; letter-spacing: .08em; }
+	section {
+		margin: 24px 0;
+	}
+	form,
+	label {
+		display: grid;
+		gap: 8px;
+		max-width: 260px;
+	}
+	select,
+	button {
+		min-height: var(--toque);
+		font: inherit;
+	}
+	.card {
+		display: grid;
+		gap: 8px;
+		max-width: 320px;
+		margin-top: 16px;
+		padding: 18px;
+		border: 3px dashed var(--txt);
+		border-radius: var(--radio);
+	}
+	code {
+		font-size: 24px;
+		letter-spacing: 0.08em;
+	}
 </style>

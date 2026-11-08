@@ -48,19 +48,7 @@
 	<section>
 		<h2>{t(locale, 'adm.informe.cifras')}</h2>
 		<div class="figures">
-			{#each [
-				[number(data.report.figures.bookings), t(locale, 'adm.informe.reservas')],
-				[number(data.report.figures.people), t(locale, 'adm.informe.persoas')],
-				[`${pct(data.report.figures.occupancy)} %`, t(locale, 'adm.informe.ocupacion')],
-				[number(data.report.figures.noShows), t(locale, 'adm.informe.ausencias')],
-				[number(data.report.figures.cancellations), t(locale, 'adm.informe.cancelacions')],
-				[
-					`${number(data.report.figures.residents)} / ${number(data.report.figures.nonResidents)}`,
-					`${t(locale, 'adm.informe.residentes')} / ${t(locale, 'adm.informe.non_residentes')}`
-				],
-				[number(data.report.figures.passes), t(locale, 'adm.informe.abonos')],
-				[number(data.report.figures.socialTariffBookings), t(locale, 'adm.informe.tarifa_social')]
-			] as figure (figure[1])}
+			{#each [[number(data.report.figures.bookings), t(locale, 'adm.informe.reservas')], [number(data.report.figures.people), t(locale, 'adm.informe.persoas')], [`${pct(data.report.figures.occupancy)} %`, t(locale, 'adm.informe.ocupacion')], [number(data.report.figures.noShows), t(locale, 'adm.informe.ausencias')], [number(data.report.figures.cancellations), t(locale, 'adm.informe.cancelacions')], [`${number(data.report.figures.residents)} / ${number(data.report.figures.nonResidents)}`, `${t(locale, 'adm.informe.residentes')} / ${t(locale, 'adm.informe.non_residentes')}`], [number(data.report.figures.passes), t(locale, 'adm.informe.abonos')], [number(data.report.figures.socialTariffBookings), t(locale, 'adm.informe.tarifa_social')]] as figure (figure[1])}
 				<div>
 					<b>{figure[0]}</b>
 					<span>{figure[1]}</span>
@@ -83,7 +71,11 @@
 					<tr>
 						<td>{facility.name}</td>
 						<td>
-							<span class="bar" aria-label={`${facility.name}: ${pct(facility.occupancy)} %`}>
+							<span
+								role="img"
+								class="bar"
+								aria-label={`${facility.name}: ${pct(facility.occupancy)} %`}
+							>
 								<i style={`width: ${pct(facility.occupancy)}%`}></i>
 							</span>
 							{pct(facility.occupancy)} %
@@ -126,8 +118,12 @@
 	</section>
 	<section>
 		<h2>{t(locale, 'adm.informe.monedero')}</h2>
-		<p>{t(locale, 'adm.informe.monedero_recargas')}: {formatAmount(data.report.wallet.topUpsCents)}</p>
-		<p>{t(locale, 'adm.informe.monedero_pagos')}: {formatAmount(data.report.wallet.paymentsCents)}</p>
+		<p>
+			{t(locale, 'adm.informe.monedero_recargas')}: {formatAmount(data.report.wallet.topUpsCents)}
+		</p>
+		<p>
+			{t(locale, 'adm.informe.monedero_pagos')}: {formatAmount(data.report.wallet.paymentsCents)}
+		</p>
 	</section>
 </article>
 

@@ -77,7 +77,9 @@
 	/** Rectángulo do elemento resaltado (coordenadas da xanela) ou `null`: tarxeta centrada. */
 	let rect = $state<{ top: number; left: number; width: number; height: number } | null>(null);
 	let target: Element | null = null;
-	let card = $state<HTMLElement>();
+	let title = $state<HTMLHeadingElement>();
+	let nextButton = $state<HTMLButtonElement>();
+	let opener: HTMLElement | null = null;
 	let cw = $state(0);
 	let ch = $state(0);
 	let vw = $state(1280);
@@ -121,7 +123,11 @@
 		frame = requestAnimationFrame(measure);
 	}
 
-	/** Pinta o paso actual na pantalla actual: busca o elemento (con algún reintento) e enfoca a tarxeta. */
+	function rememberOpener() {
+		if (document.activeElement instanceof HTMLElement) opener = document.activeElement;
+	}
+
+	/** Pinta o paso actual na pantalla actual: busca o elemento (con algún reintento) e enfoca o diálogo. */
 	async function show() {
 		target = null;
 		rect = null;
@@ -146,7 +152,7 @@
 			}
 		}
 		await tick();
-		card?.focus({ preventScroll: true });
+		(title ?? nextButton)?.focus({ preventScroll: true });
 	}
 
 	/** Href da primeira ligazón do elemento `via` (prefírense os deportes con horas libres). */
@@ -183,18 +189,22 @@
 		await goto(href);
 	}
 
-	function skip() {
+	async function skip() {
+		const focus = opener;
 		cur = null;
 		target = null;
 		rect = null;
 		write(null);
+		opener = null;
+		await tick();
+		if (focus?.isConnected) focus.focus({ preventScroll: true });
 	}
 
 	/** «Percorrido guiado» e «Repetir o percorrido»: desde o primeiro paso. */
 	export function restart() {
+		rememberOpener();
 		const tour = cur?.tour ?? lastTour() ?? tourForPath(page.url.pathname);
-		const slug =
-			cur?.slug ?? (TOURS[tour].scope === 'concello' ? slugOf(page.url.pathname) : null);
+		const slug = cur?.slug ?? (TOURS[tour].scope === 'concello' ? slugOf(page.url.pathname) : null);
 		cur = { tour, paso: 0, slug, urls: {}, fin: false };
 		go(0);
 	}
@@ -203,6 +213,7 @@
 		if (!loaded) {
 			loaded = true;
 			cur = read();
+			if (cur) rememberOpener();
 		} else if (cur?.fin && type !== 'enter') {
 			// A tarxeta final queda só na pantalla onde se rematou.
 			skip();
@@ -216,6 +227,7 @@
 		const url = page.url;
 		const asked = url.searchParams.get('tour');
 		if (isTourKey(asked)) {
+			rememberOpener();
 			const n = Number(url.searchParams.get('paso') ?? '1');
 			const max = TOURS[asked].steps.length;
 			const paso = Number.isInteger(n) && n >= 1 && n <= max ? n - 1 : 0;
@@ -236,7 +248,19 @@
 				// Se o router aínda non está listo, o parámetro queda no URL: non pasa nada.
 			}
 		}
+		if (cur && !cur.fin && step && !matchesStep(cur.tour, step, cur.slug, page.url.pathname)) {
+			skip();
+			return;
+		}
 		show();
+	});
+
+	// O percorrido escurece a páxina e actúa como modal: nada fóra da tarxeta recibe foco.
+	$effect(() => {
+		const app = document.querySelector('.modo-demo');
+		if (!app) return;
+		app.toggleAttribute('inert', open);
+		return () => app.removeAttribute('inert');
 	});
 
 	// Calquera desprazamento (a xanela ou un contedor) move o elemento: o anel ségueo.
@@ -292,12 +316,7 @@
 	const sheetTop = $derived(!!rect && narrow && rect.top + rect.height / 2 > vh / 2);
 </script>
 
-<svelte:window
-	bind:innerWidth={vw}
-	bind:innerHeight={vh}
-	{onkeydown}
-	onresize={remeasure}
-/>
+<svelte:window bind:innerWidth={vw} bind:innerHeight={vh} {onkeydown} onresize={remeasure} />
 
 {#if open}
 	<div class="tour">
@@ -323,8 +342,6 @@
 			role="dialog"
 			aria-labelledby="tour-titulo"
 			aria-describedby="tour-texto"
-			tabindex="-1"
-			bind:this={card}
 			bind:offsetWidth={cw}
 			bind:offsetHeight={ch}
 		>
@@ -332,17 +349,19 @@
 				<p class="k">
 					{t(locale, 'demo.tour.paso', { n: cur.paso + 1, total: steps.length })}
 				</p>
-				<h2 id="tour-titulo">{t(locale, step.title)}</h2>
+				<h2 id="tour-titulo" tabindex="-1" bind:this={title}>{t(locale, step.title)}</h2>
 				<p id="tour-texto">{t(locale, step.body)}</p>
 				<div class="botons">
-					<button type="button" class="saltar" onclick={skip}>{t(locale, 'demo.tour.saltar')}</button>
+					<button type="button" class="saltar" onclick={skip}
+						>{t(locale, 'demo.tour.saltar')}</button
+					>
 					<span class="sp"></span>
 					{#if cur.paso > 0}
 						<button type="button" class="out" onclick={() => go(cur!.paso - 1)}
 							>{t(locale, 'demo.tour.atras')}</button
 						>
 					{/if}
-					<button type="button" class="seg" onclick={() => go(cur!.paso + 1)}
+					<button type="button" class="seg" onclick={() => go(cur!.paso + 1)} bind:this={nextButton}
 						>{t(
 							locale,
 							cur.paso === steps.length - 1 ? 'demo.tour.rematar' : 'demo.tour.seguinte'
@@ -350,12 +369,18 @@
 					>
 				</div>
 			{:else}
-				<h2 id="tour-titulo">{t(locale, 'demo.tour.fin.titulo')}</h2>
+				<h2 id="tour-titulo" tabindex="-1" bind:this={title}>
+					{t(locale, 'demo.tour.fin.titulo')}
+				</h2>
 				<p id="tour-texto">{t(locale, 'demo.tour.fin.texto')}</p>
 				<div class="botons fin">
-					<button type="button" class="seg" onclick={restart}>{t(locale, 'demo.tour.repetir')}</button>
+					<button type="button" class="seg" onclick={restart}
+						>{t(locale, 'demo.tour.repetir')}</button
+					>
 					<a class="out" href="/demo" onclick={skip}>{t(locale, 'demo.tour.volver')}</a>
-					<button type="button" class="saltar" onclick={skip}>{t(locale, 'demo.tour.pechar')}</button>
+					<button type="button" class="saltar" onclick={skip}
+						>{t(locale, 'demo.tour.pechar')}</button
+					>
 				</div>
 			{/if}
 		</div>
@@ -394,6 +419,8 @@
 		border-radius: 16px;
 		background: var(--branco);
 		color: var(--txt);
+		opacity: 1;
+		isolation: isolate;
 		box-shadow: 0 12px 32px rgb(23 32 42 / 0.28);
 		pointer-events: auto;
 	}
@@ -417,7 +444,7 @@
 	.folla {
 		top: auto;
 		right: 8px;
-		bottom: calc(8px + env(safe-area-inset-bottom));
+		bottom: calc(var(--nav-alto, 0px) + 8px + env(safe-area-inset-bottom));
 		left: 8px;
 		width: auto;
 		max-height: 60vh;

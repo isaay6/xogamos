@@ -16,6 +16,14 @@
 	});
 </script>
 
+<svelte:head>
+	<title
+		>{t(data.locale, 'adm.torneo.titulo')}{data.municipality
+			? ` · ${data.municipality.name}`
+			: ''}</title
+	>
+</svelte:head>
+
 <h1>{t(data.locale, 'adm.torneo.titulo')}</h1>
 {#if errorKey}<p role="alert">{t(data.locale, errorKey)}</p>{/if}
 <form method="POST" action="?/crear" class="formulario">
