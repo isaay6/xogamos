@@ -47,7 +47,12 @@
 		/>
 	{/if}
 	<!-- Cada página trae su propio <main>; este contenedor es el destino del salto. -->
-	<div id={staff ? undefined : 'contido'} class="cuerpo" class:estreito={!bare} class:con-nav={!bare}>
+	<div
+		id={staff ? undefined : 'contido'}
+		class="cuerpo"
+		class:estreito={!bare}
+		class:con-nav={!bare}
+	>
 		{@render children()}
 	</div>
 	{#if !bare}

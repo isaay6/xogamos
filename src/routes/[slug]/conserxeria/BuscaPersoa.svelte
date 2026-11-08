@@ -78,7 +78,14 @@
 	<div class="carne" role="status" aria-labelledby="carne-h">
 		<p class="ok">✓ {t(locale, 'cons.busca.atopado')}</p>
 		<div class="cab">
-			<Avatar avatar={c.avatar} userId={c.userId} name={c.displayName} size={56} {locale} decorative />
+			<Avatar
+				avatar={c.avatar}
+				userId={c.userId}
+				name={c.displayName}
+				size={56}
+				{locale}
+				decorative
+			/>
 			<h3 id="carne-h">{c.displayName}</h3>
 		</div>
 		<dl>

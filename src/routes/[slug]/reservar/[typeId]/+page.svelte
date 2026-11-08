@@ -72,8 +72,8 @@
 				{closedDay.holiday
 					? t(locale, 'dia.festivo', { nome: closedDay.reason })
 					: closedDay.reason
-					? t(locale, 'dia.pechada.motivo', { motivo: closedDay.reason })
-					: t(locale, 'hora.pechada.curto')}
+						? t(locale, 'dia.pechada.motivo', { motivo: closedDay.reason })
+						: t(locale, 'hora.pechada.curto')}
 			</p>
 		{/if}
 		<noscript>
@@ -97,8 +97,11 @@
 		{/if}
 
 		<div class="enviar">
-			<Button type="submit" disabled={shut}>{t(locale, `vec.dia.ver.${noun}` as MessageKey)}</Button>
-			<a class="pedir" href={`/${data.municipality.slug}/solicitudes/nova`}>{t(locale, 'vec.sol.pedir')}</a>
+			<Button type="submit" disabled={shut}>{t(locale, `vec.dia.ver.${noun}` as MessageKey)}</Button
+			>
+			<a class="pedir" href={`/${data.municipality.slug}/solicitudes/nova`}
+				>{t(locale, 'vec.sol.pedir')}</a
+			>
 		</div>
 	</form>
 </main>

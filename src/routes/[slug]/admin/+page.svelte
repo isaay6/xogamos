@@ -25,7 +25,12 @@
 
 <header class="mh">
 	<div>
-		<p class="k">{t(data.locale, 'adm.periodo.rango', { from: longDate(data.locale, data.from), to: longDate(data.locale, data.to) })}</p>
+		<p class="k">
+			{t(data.locale, 'adm.periodo.rango', {
+				from: longDate(data.locale, data.from),
+				to: longDate(data.locale, data.to)
+			})}
+		</p>
 		<h1>{t(data.locale, 'adm.resumo.titulo')}</h1>
 	</div>
 	<div class="acc">
@@ -47,8 +52,10 @@
 	<div><b>{nf.format(data.kpi.bookings)}</b>{t(data.locale, 'adm.kpi.reservas')}</div>
 	<div><b>{pct(data.kpi.noShowRate, 1)}%</b>{t(data.locale, 'adm.kpi.ausencias')}</div>
 	<div>
-		<b>{data.kpi.peak ? `${data.kpi.peak.from}–${data.kpi.peak.to} h` : '–'}</b
-		>{t(data.locale, 'adm.kpi.punta')}
+		<b>{data.kpi.peak ? `${data.kpi.peak.from}–${data.kpi.peak.to} h` : '–'}</b>{t(
+			data.locale,
+			'adm.kpi.punta'
+		)}
 	</div>
 </div>
 
@@ -190,6 +197,5 @@
 		.kpi {
 			grid-template-columns: 1fr 1fr;
 		}
-
 	}
 </style>

@@ -66,7 +66,13 @@
 								{r.name}
 								{#if r.season}<small>· {t(locale, 'cons.folla.tempada')}</small>{/if}
 							</td>
-							<td>{#if r.seats !== null}{t(locale, 'cons.folla.prazas', { n: r.seats })}{:else if r.unitIndex !== null}{t(locale, 'cons.folla.pista_n', { n: r.unitIndex + 1 })}{:else}—{/if}</td>
+							<td
+								>{#if r.seats !== null}{t(locale, 'cons.folla.prazas', {
+										n: r.seats
+									})}{:else if r.unitIndex !== null}{t(locale, 'cons.folla.pista_n', {
+										n: r.unitIndex + 1
+									})}{:else}—{/if}</td
+							>
 							<td class="p">{r.code === null ? '—' : formatCode(r.code)}</td>
 							<td class="c">
 								{#if !r.season}

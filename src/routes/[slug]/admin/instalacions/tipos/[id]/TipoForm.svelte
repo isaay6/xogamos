@@ -8,7 +8,16 @@
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	// Los tokens de color del sistema (spec §3): un clic los pone en el campo hexadecimal.
-	const TOKENS = ['#F2762E', '#1AA6C8', '#2E9E4F', '#9AA1A0', '#E3B26A', '#FFD84D', '#C2372A', '#17202A'];
+	const TOKENS = [
+		'#F2762E',
+		'#1AA6C8',
+		'#2E9E4F',
+		'#9AA1A0',
+		'#E3B26A',
+		'#FFD84D',
+		'#C2372A',
+		'#17202A'
+	];
 	const MODES = ['slot', 'unit', 'capacity', 'day'] as const;
 
 	const base = $derived(`/${data.municipality.slug}/admin/instalacions`);

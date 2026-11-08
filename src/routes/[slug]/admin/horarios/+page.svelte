@@ -43,7 +43,9 @@
 				: null;
 		const week: Week = values
 			? weekFromValues(values)
-			: DAYS.map((d) => dayRanges(f?.hours ?? [], d).map(({ opens, closes }) => ({ opens, closes })));
+			: DAYS.map((d) =>
+					dayRanges(f?.hours ?? [], d).map(({ opens, closes }) => ({ opens, closes }))
+				);
 		return week.map((pairs) => [
 			...pairs,
 			...Array.from({ length: Math.max(0, 2 - pairs.length) }, () => ({ opens: '', closes: '' }))
@@ -78,7 +80,9 @@
 <p class="axuda">{t(data.locale, 'adm.hor.axuda')}</p>
 
 {#if saved}
-	<p class="ok" role="status">{t(data.locale, 'adm.hor.gardado', { nome: nameOf(saved.facilityId ?? '') })}</p>
+	<p class="ok" role="status">
+		{t(data.locale, 'adm.hor.gardado', { nome: nameOf(saved.facilityId ?? '') })}
+	</p>
 {/if}
 
 {#if data.facilities.length === 0}
@@ -87,7 +91,13 @@
 	<p class="desliza" aria-hidden="true">{t(data.locale, 'taboa.desliza')}</p>
 	<!-- Rexión desprazable: debe poder recibir o foco para moverse co teclado (WCAG 2.1.1). -->
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-	<div class="taboa" data-tour="horarios" role="region" aria-label={t(data.locale, 'taboa.rexion')} tabindex="0">
+	<div
+		class="taboa"
+		data-tour="horarios"
+		role="region"
+		aria-label={t(data.locale, 'taboa.rexion')}
+		tabindex="0"
+	>
 		<table>
 			<thead>
 				<tr>
@@ -103,12 +113,16 @@
 					<tr id="f-{f.id}" class:off={!f.active} class:editando={isEditing}>
 						<th scope="row">
 							<span class="nome">
-								<Mascot kind={type?.mascot ?? 'sala'} size={28} animated={false} color={type?.color} />
+								<Mascot
+									kind={type?.mascot ?? 'sala'}
+									size={28}
+									animated={false}
+									color={type?.color}
+								/>
 								<span>
 									<a
 										href="{base}/{f.id}"
-										aria-label={t(data.locale, 'adm.horarios.ficha', { nome: f.name })}
-										>{f.name}</a
+										aria-label={t(data.locale, 'adm.horarios.ficha', { nome: f.name })}>{f.name}</a
 									>
 									{#if !f.active}<small>{t(data.locale, 'adm.inst.pechada')}</small>{/if}
 								</span>
@@ -178,7 +192,8 @@
 										>{t(data.locale, 'adm.hor.gardar')}</Button
 									>
 								</form>
-								<a class="ligazon" href="?" onclick={cancel}>{t(data.locale, 'adm.hor.cancelar')}</a>
+								<a class="ligazon" href="?" onclick={cancel}>{t(data.locale, 'adm.hor.cancelar')}</a
+								>
 							{:else}
 								<a
 									class="ligazon"
@@ -215,9 +230,13 @@
 							<td colspan="9">
 								<form method="POST" action="?/horario" class="afectadas" role="alert">
 									<p>
-										{t(data.locale, affected.affected === 1 ? 'adm.afectadas.un' : 'adm.afectadas', {
-											n: affected.affected ?? 0
-										})}
+										{t(
+											data.locale,
+											affected.affected === 1 ? 'adm.afectadas.un' : 'adm.afectadas',
+											{
+												n: affected.affected ?? 0
+											}
+										)}
 									</p>
 									{#each Object.entries(affected.values ?? {}) as [name, value] (name)}
 										{#if name !== 'confirmar'}<input type="hidden" {name} {value} />{/if}
@@ -272,10 +291,19 @@
 		<ul class="holiday-list">
 			{#each data.holidays as holiday (holiday.id)}
 				<li>
-					<span><b>{holiday.date}</b> · {holiday.name} · {t(data.locale, holiday.mode === 'closed' ? 'adm.festivos.pechado' : 'adm.festivos.domingo')}</span>
+					<span
+						><b>{holiday.date}</b> · {holiday.name} · {t(
+							data.locale,
+							holiday.mode === 'closed' ? 'adm.festivos.pechado' : 'adm.festivos.domingo'
+						)}</span
+					>
 					<form method="POST" action="?/borrarFestivo">
 						<input type="hidden" name="holidayId" value={holiday.id} />
-						<button type="submit" class="remove" aria-label={t(data.locale, 'adm.festivos.quitar', { nome: holiday.name })}>×</button>
+						<button
+							type="submit"
+							class="remove"
+							aria-label={t(data.locale, 'adm.festivos.quitar', { nome: holiday.name })}>×</button
+						>
 					</form>
 				</li>
 			{/each}
@@ -568,7 +596,9 @@
 		font: inherit;
 	}
 
-	.fixed-form { margin-top: 10px; }
+	.fixed-form {
+		margin-top: 10px;
+	}
 
 	.holiday-list {
 		max-width: 700px;
@@ -599,6 +629,8 @@
 	}
 
 	@media (max-width: 680px) {
-		.holiday-form { grid-template-columns: 1fr; }
+		.holiday-form {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

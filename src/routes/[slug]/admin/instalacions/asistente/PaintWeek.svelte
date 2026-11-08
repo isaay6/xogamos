@@ -183,13 +183,7 @@
 		</p>
 	{/if}
 	<!-- La rejilla es un atajo con el ratón; las mismas horas se escriben en «Escribir as horas» -->
-	<div
-		class="pg"
-		aria-hidden="true"
-		onpointerdown={down}
-		onpointermove={move}
-		role="presentation"
-	>
+	<div class="pg" aria-hidden="true" onpointerdown={down} onpointermove={move} role="presentation">
 		<div class="pgh"></div>
 		{#each DAYS as d (d)}<div class="pgh" class:mal={!!errorOf(d)}>
 				{dayLabel(d)}{#if fixed.includes(d)}*{/if}

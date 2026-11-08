@@ -34,7 +34,7 @@
 			<img
 				class="foto"
 				src="/api/v1/m/{slug}/facilities/{f.id}/photos/{data.photo.id}"
-				alt={locale === 'es' ? data.photo.altEs ?? data.photo.altGl : data.photo.altGl}
+				alt={locale === 'es' ? (data.photo.altEs ?? data.photo.altGl) : data.photo.altGl}
 			/>
 		{:else}
 			<Mascot kind={f.mascot} color={f.color} size={72} />
@@ -106,5 +106,10 @@
 		margin-top: 12px;
 	}
 
-	.foto { width: 152px; height: 104px; object-fit: cover; border-radius: 12px; }
+	.foto {
+		width: 152px;
+		height: 104px;
+		object-fit: cover;
+		border-radius: 12px;
+	}
 </style>

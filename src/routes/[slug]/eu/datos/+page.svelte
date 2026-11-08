@@ -77,7 +77,9 @@
 		<h2 id="descarga-titulo">{t(locale, 'vec.datos.descarga.titulo')}</h2>
 		<p>{t(locale, 'vec.datos.descarga.axuda')}</p>
 		<div class="descarga-enlaces">
-			<a href="{base}/eu/descargar-datos?formato=json" download>{t(locale, 'vec.datos.descarga.json')}</a>
+			<a href="{base}/eu/descargar-datos?formato=json" download
+				>{t(locale, 'vec.datos.descarga.json')}</a
+			>
 			<a href="{base}/eu/descargar-datos" download>{t(locale, 'vec.datos.descarga.html')}</a>
 		</div>
 	</section>

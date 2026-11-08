@@ -7,13 +7,7 @@
 	import Bubble from '#lib/ui/Bubble.svelte';
 	import Mascot from '#lib/ui/Mascot.svelte';
 	import { formatEuros } from '#lib/ui/format.js';
-	import {
-		durationLabel,
-		howText,
-		parseEuros,
-		pricesLabel,
-		weekSummary
-	} from '../text';
+	import { durationLabel, howText, parseEuros, pricesLabel, weekSummary } from '../text';
 	import { filledRanges, weekFromValues } from './hours';
 	import PaintWeek from './PaintWeek.svelte';
 	import Preview from './Preview.svelte';
@@ -101,8 +95,7 @@
 
 	const sportName = (m: string) =>
 		(MASCOTS as readonly string[]).includes(m) ? t(locale, `adm.mascota.${m}` as MessageKey) : '';
-	const modelName = (key: string) =>
-		key ? t(locale, `adm.asis.modelo.${key}` as MessageKey) : '';
+	const modelName = (key: string) => (key ? t(locale, `adm.asis.modelo.${key}` as MessageKey) : '');
 
 	// Deportes: primero los de la familia del elegido; el resto, en «Ver os 21».
 	// svelte-ignore state_referenced_locally
@@ -162,7 +155,9 @@
 			weekSummary(locale, filledRanges(weekFromValues(v))),
 			[
 				pricesLabel(locale, res, non),
-				social === null ? '' : t(locale, 'adm.asis.resumo.social', { prezo: formatEuros(social, locale) })
+				social === null
+					? ''
+					: t(locale, 'adm.asis.resumo.social', { prezo: formatEuros(social, locale) })
 			]
 				.filter(Boolean)
 				.join(' · ')
@@ -522,7 +517,9 @@
 					>{t(locale, 'adm.asis.seguinte')}</button
 				>
 			{:else}
-				<button type="submit" class="b2 ok" formaction="?/crear">{t(locale, 'adm.asis.crear')}</button>
+				<button type="submit" class="b2 ok" formaction="?/crear"
+					>{t(locale, 'adm.asis.crear')}</button
+				>
 			{/if}
 			{#if step > 0}
 				<button type="submit" class="b2 out" name="ir" value={String(step - 1)} formnovalidate

@@ -160,7 +160,9 @@
 		color: var(--texto-suave);
 	}
 
-	.conc form { display: block; }
+	.conc form {
+		display: block;
+	}
 
 	.conc :global(button) {
 		min-width: 100px;

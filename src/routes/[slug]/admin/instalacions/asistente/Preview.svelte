@@ -47,7 +47,9 @@
 		<div class="who">
 			<Mascot kind={mascot} size={56} />
 			{#if sport}
-				<div class="bub"><Bubble>{t(locale, 'adm.asis.preview_bub', { deporte: sport })}</Bubble></div>
+				<div class="bub">
+					<Bubble>{t(locale, 'adm.asis.preview_bub', { deporte: sport })}</Bubble>
+				</div>
 			{/if}
 		</div>
 		<p class="nome">{values.nome?.trim() || t(locale, 'adm.fac.preview_nome')}</p>

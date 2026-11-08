@@ -54,7 +54,8 @@
 					<select name="passTypeId" bind:value={passTypeId} required>
 						{#each data.types as type (type.id)}
 							<option value={type.id}>
-								{type.name} · {type.days} {t(locale, 'adm.abonos.dias')} ·
+								{type.name} · {type.days}
+								{t(locale, 'adm.abonos.dias')} ·
 								{formatEuros(type.priceCents, locale)}
 							</option>
 						{/each}
@@ -83,16 +84,70 @@
 	{#if data.currentPasses.length === 0}
 		<p>{t(locale, 'adm.abonos.sen_vixentes')}</p>
 	{:else}
-		<ul>{#each data.currentPasses as pass (pass.id)}<li><b>{pass.displayName}</b> · {pass.name} · {t(locale, 'adm.abonos.valido_ata', { ata: longDate(locale, pass.endsOn) })}</li>{/each}</ul>
+		<ul>
+			{#each data.currentPasses as pass (pass.id)}<li>
+					<b>{pass.displayName}</b> · {pass.name} · {t(locale, 'adm.abonos.valido_ata', {
+						ata: longDate(locale, pass.endsOn)
+					})}
+				</li>{/each}
+		</ul>
 	{/if}
 </section>
-<section><h2>{t(locale, 'adm.abonos.novo_tipo')}</h2><form method="POST" action="?/crearTipo"><label>{t(locale, 'adm.abonos.nome')}<input name="name" required maxlength="80" /></label><label>{t(locale, 'adm.abonos.deporte')}<select name="facilityTypeId" required>{#each data.sports as row (row.id)}<option value={row.id}>{locale === 'gl' ? row.nameGl : row.nameEs}</option>{/each}</select></label><label>{t(locale, 'adm.abonos.dias')}<input name="days" type="number" min="1" required /></label><label>{t(locale, 'adm.abonos.prezo_centimos')}<input name="priceCents" inputmode="decimal" required /></label><Button type="submit" variant="out">{t(locale, 'adm.abonos.crear')}</Button></form></section>
-<section><h2>{t(locale, 'adm.abonos.tipos')}</h2><ul>{#each data.types as type (type.id)}<li>{type.name} · {type.days} {t(locale, 'adm.abonos.dias')} · {formatEuros(type.priceCents, locale)}</li>{/each}</ul></section>
+<section>
+	<h2>{t(locale, 'adm.abonos.novo_tipo')}</h2>
+	<form method="POST" action="?/crearTipo">
+		<label>{t(locale, 'adm.abonos.nome')}<input name="name" required maxlength="80" /></label><label
+			>{t(locale, 'adm.abonos.deporte')}<select name="facilityTypeId" required
+				>{#each data.sports as row (row.id)}<option value={row.id}
+						>{locale === 'gl' ? row.nameGl : row.nameEs}</option
+					>{/each}</select
+			></label
+		><label
+			>{t(locale, 'adm.abonos.dias')}<input name="days" type="number" min="1" required /></label
+		><label
+			>{t(locale, 'adm.abonos.prezo_centimos')}<input
+				name="priceCents"
+				inputmode="decimal"
+				required
+			/></label
+		><Button type="submit" variant="out">{t(locale, 'adm.abonos.crear')}</Button>
+	</form>
+</section>
+<section>
+	<h2>{t(locale, 'adm.abonos.tipos')}</h2>
+	<ul>
+		{#each data.types as type (type.id)}<li>
+				{type.name} · {type.days}
+				{t(locale, 'adm.abonos.dias')} · {formatEuros(type.priceCents, locale)}
+			</li>{/each}
+	</ul>
+</section>
 
 <style>
-	section { margin: 24px 0; }
-	form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
-	label { display: grid; gap: 4px; font-weight: 700; }
-	input, select { min-height: var(--toque); padding: 0 10px; border: 2px solid var(--txt); border-radius: 10px; font: inherit; }
-	.ok { color: #1f7a3b; font-weight: 800; }
+	section {
+		margin: 24px 0;
+	}
+	form {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		align-items: end;
+	}
+	label {
+		display: grid;
+		gap: 4px;
+		font-weight: 700;
+	}
+	input,
+	select {
+		min-height: var(--toque);
+		padding: 0 10px;
+		border: 2px solid var(--txt);
+		border-radius: 10px;
+		font: inherit;
+	}
+	.ok {
+		color: #1f7a3b;
+		font-weight: 800;
+	}
 </style>

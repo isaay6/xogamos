@@ -17,7 +17,9 @@
 		axuste: 'vec.monedero.mov.axuste'
 	};
 	let code = $state('');
-	function scanned(value: string) { code = value; }
+	function scanned(value: string) {
+		code = value;
+	}
 </script>
 
 <svelte:head>
@@ -86,14 +88,50 @@
 </main>
 
 <style>
-	main { padding: 16px; }
-	.saldo { display: grid; gap: 4px; padding: 16px; background: var(--ceo); border-radius: var(--radio); font-size: 18px; }
-	.saldo b { font-size: 30px; }
-	section { margin-top: 24px; }
-	form { display: grid; gap: 10px; max-width: 360px; }
-	label { display: grid; gap: 4px; font-weight: 800; }
-	input, button { min-height: var(--toque); font: inherit; }
-	ul { padding: 0; list-style: none; }
-	li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--granito); }
-	.negativo { color: var(--perigo); }
+	main {
+		padding: 16px;
+	}
+	.saldo {
+		display: grid;
+		gap: 4px;
+		padding: 16px;
+		background: var(--ceo);
+		border-radius: var(--radio);
+		font-size: 18px;
+	}
+	.saldo b {
+		font-size: 30px;
+	}
+	section {
+		margin-top: 24px;
+	}
+	form {
+		display: grid;
+		gap: 10px;
+		max-width: 360px;
+	}
+	label {
+		display: grid;
+		gap: 4px;
+		font-weight: 800;
+	}
+	input,
+	button {
+		min-height: var(--toque);
+		font: inherit;
+	}
+	ul {
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 10px 0;
+		border-bottom: 1px solid var(--granito);
+	}
+	.negativo {
+		color: var(--perigo);
+	}
 </style>

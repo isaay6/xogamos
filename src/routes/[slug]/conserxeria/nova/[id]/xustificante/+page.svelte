@@ -39,7 +39,10 @@
 			{dayLabel(locale, r.startsAt.toISOString())} · {formatTime(r.startsAt)}–{formatTime(r.endsAt)}
 		</dd>
 		<dt>{t(locale, 'cons.xus.prezo')}</dt>
-		<dd>{formatEuros(r.priceCents, locale)}{#if r.priceCents > 0} · {t(locale, 'cons.nova.pago')}{/if}</dd>
+		<dd>
+			{formatEuros(r.priceCents, locale)}{#if r.priceCents > 0}
+				· {t(locale, 'cons.nova.pago')}{/if}
+		</dd>
 	</dl>
 	<p class="codigo-l">{t(locale, 'cons.xus.codigo')}</p>
 	<p class="codigo">{formatCode(r.accessCode)}</p>

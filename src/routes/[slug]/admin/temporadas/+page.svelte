@@ -200,7 +200,9 @@
 				<select name="entityId" aria-label={t(locale, 'adm.temp.entidade')}>
 					<option value="">{t(locale, 'adm.temp.texto_libre')}</option>
 					{#each data.entities as entity (entity.id)}
-						<option value={entity.id} selected={entity.id === initial.entityId}>{entity.name}</option>
+						<option value={entity.id} selected={entity.id === initial.entityId}
+							>{entity.name}</option
+						>
 					{/each}
 				</select>
 			</div>

@@ -23,12 +23,16 @@
 
 <header class="mh">
 	<div>
-		<p class="k">{t(data.locale, data.facilities.length === 1 ? 'adm.inst.k.un' : 'adm.inst.k', {
+		<p class="k">
+			{t(data.locale, data.facilities.length === 1 ? 'adm.inst.k.un' : 'adm.inst.k', {
 				n: data.facilities.length
-			})}</p>
+			})}
+		</p>
 		<h1>{t(data.locale, 'adm.inst.titulo')}</h1>
 	</div>
-	<Button href="{base}/asistente" data-tour="nova-instalacion">{t(data.locale, 'adm.inst.nova')}</Button>
+	<Button href="{base}/asistente" data-tour="nova-instalacion"
+		>{t(data.locale, 'adm.inst.nova')}</Button
+	>
 </header>
 
 {#if data.facilities.length === 0}

@@ -28,7 +28,11 @@
 			: summary.streak < 4
 				? summary.streak === 3
 					? t(locale, 'vec.eu.racha.case', { n: summary.streak })
-					: t(locale, 'vec.eu.racha.pouca', { n: summary.streak, plural: summary.streak === 1 ? '' : 's', faltan: 4 - summary.streak })
+					: t(locale, 'vec.eu.racha.pouca', {
+							n: summary.streak,
+							plural: summary.streak === 1 ? '' : 's',
+							faltan: 4 - summary.streak
+						})
 				: t(locale, 'vec.eu.racha.torre', { n: summary.streak })
 	);
 
@@ -58,19 +62,11 @@
 		<span>{t(locale, 'vec.eu.idioma')}</span>
 		<form method="POST" action="{base}/idioma">
 			<input type="hidden" name="redirectTo" value="{base}/eu" />
-			<button
-				type="submit"
-				name="lingua"
-				value="gl"
-				lang="gl"
-				aria-pressed={locale === 'gl'}>{t(locale, 'vec.eu.idioma.gl')}</button
+			<button type="submit" name="lingua" value="gl" lang="gl" aria-pressed={locale === 'gl'}
+				>{t(locale, 'vec.eu.idioma.gl')}</button
 			>
-			<button
-				type="submit"
-				name="lingua"
-				value="es"
-				lang="es"
-				aria-pressed={locale === 'es'}>{t(locale, 'vec.eu.idioma.es')}</button
+			<button type="submit" name="lingua" value="es" lang="es" aria-pressed={locale === 'es'}
+				>{t(locale, 'vec.eu.idioma.es')}</button
 			>
 		</form>
 	</li>
@@ -164,10 +160,12 @@
 		<section class="cifras">
 			<div class="cifra">
 				<b>{summary.bookingsThisYear}</b>
-				<span>{t(
+				<span
+					>{t(
 						locale,
 						summary.bookingsThisYear === 1 ? 'vec.eu.reservas_ano.un' : 'vec.eu.reservas_ano'
-					)}</span>
+					)}</span
+				>
 			</div>
 			{#if data.favourite}
 				<div class="cifra">
@@ -179,7 +177,9 @@
 		</section>
 
 		<ul class="menu">
-			<li><a href="{base}/eu/historial" data-tour="eu-historial">{t(locale, 'vec.eu.historial')}</a></li>
+			<li>
+				<a href="{base}/eu/historial" data-tour="eu-historial">{t(locale, 'vec.eu.historial')}</a>
+			</li>
 			<li><a href="{base}/eu/monedero">{t(locale, 'vec.monedero.titulo')}</a></li>
 			<li><a href="{base}/eu/concellos">{t(locale, 'vec.eu.concellos')}</a></li>
 			<li><a href="{base}/solicitudes">{t(locale, 'vec.sol.titulo')}</a></li>
@@ -192,7 +192,9 @@
 			<li><a href="{base}/eu/datos">{t(locale, 'vec.eu.datos')}</a></li>
 			{#if $installPrompt}
 				<li data-tour="instalar-app">
-					<button type="button" class="instalar" onclick={install}>{t(locale, 'vec.eu.instalar')}</button>
+					<button type="button" class="instalar" onclick={install}
+						>{t(locale, 'vec.eu.instalar')}</button
+					>
 				</li>
 			{:else if ios || data.demo}
 				<li data-tour="instalar-app" class="instalar-axuda">{t(locale, 'vec.eu.instalar.ios')}</li>
@@ -269,14 +271,22 @@
 		font-weight: 800;
 	}
 
-	.instalar, .instalar-axuda {
+	.instalar,
+	.instalar-axuda {
 		min-height: var(--toque);
 		font: inherit;
 		font-weight: 800;
 	}
 
-	.instalar { color: var(--txt); cursor: pointer; }
-	.instalar-axuda { display: flex; align-items: center; color: var(--texto-suave); }
+	.instalar {
+		color: var(--txt);
+		cursor: pointer;
+	}
+	.instalar-axuda {
+		display: flex;
+		align-items: center;
+		color: var(--texto-suave);
+	}
 
 	.aviso {
 		margin: 14px 0 0;
