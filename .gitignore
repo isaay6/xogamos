@@ -27,3 +27,6 @@ vite.config.ts.timestamp-*
 
 # Backups de sed -i en macOS
 *-E
+
+# Copias de seguridade locais
+/backups/

@@ -15,11 +15,13 @@
 		"licenses": "license-checker-rseidelsohn --production --excludePrivatePackages --onlyAllow \"MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;0BSD;EUPL-1.2;MPL-2.0;Unlicense;CC0-1.0;BlueOak-1.0.0;OFL-1.1;Python-2.0;CC-BY-4.0\"",
 		"spdx": "node scripts/check-spdx.mjs",
 		"check:bundle": "node scripts/check-bundle.mjs",
-		"db:seed": "tsx scripts/seed.ts"
+		"db:seed": "tsx scripts/seed.ts",
+		"db:migrate": "node scripts/migrate.mjs",
+		"start": "node scripts/migrate.mjs && node build"
 	},
 	"devDependencies": {
 		"@electric-sql/pglite": "^0.5.10",
-		"@sveltejs/adapter-auto": "^8.0.0",
+		"@sveltejs/adapter-node": "6.0.1",
 		"@sveltejs/kit": "3.1.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@types/node": "22.20.5",

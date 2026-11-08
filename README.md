@@ -6,6 +6,11 @@ Proposta presentada ao **I Certame GOBTEC de Software Libre**. Licenza: **EUPL-1
 
 Pila: SvelteKit + TypeScript. Requírese Node 22 (`.nvmrc`).
 
+## Instalación
+
+Para instalar a plataforma nun servidor municipal con Docker, consulte a guía de
+[instalación](docs/instalacion.md).
+
 ## Scripts
 
 - `npm run dev`: servidor de desenvolvemento.

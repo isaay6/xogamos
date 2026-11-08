@@ -17,7 +17,8 @@ export const RESERVED_SLUGS = [
 	'conserxeria',
 	'entrar',
 	'benvida',
-	'demo'
+	'demo',
+	'healthz'
 ];
 
 /** ¿Tiene la persona el rol provincial `deputacion` (sin concello)? */
