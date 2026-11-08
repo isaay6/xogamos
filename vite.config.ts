@@ -18,6 +18,21 @@ export default defineConfig({
 	},
 	plugins: [
 		sveltekit({
+			csp: {
+				mode: 'auto',
+				directives: {
+					'default-src': ['self'],
+					'img-src': ['self', 'data:', 'blob:'],
+					// A aplicación usa atributos style dinámicos en compoñentes Svelte e SVG.
+					'style-src': ['self', 'unsafe-inline'],
+					'font-src': ['self'],
+					'connect-src': ['self'],
+					'frame-ancestors': ['none'],
+					'form-action': ['self'],
+					'base-uri': ['self'],
+					'object-src': ['none']
+				}
+			},
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
 				runes: ({ filename }) =>

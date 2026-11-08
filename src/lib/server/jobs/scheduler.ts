@@ -2,8 +2,10 @@
 import type { Db } from '../db/client';
 import { createMailTransport, sendPending } from '../services/mailer';
 import { runReminders } from './reminders';
+import { purgeExpiredData } from './retention';
 
 export const JOBS_INTERVAL_MS = 10 * 60_000;
+export const RETENTION_INTERVAL_MS = 24 * 60 * 60_000;
 
 let started = false;
 
@@ -31,5 +33,14 @@ export function startBackgroundJobs(db: Db, env: { smtpUrl?: string; mailFrom?: 
 	};
 	void tick();
 	setInterval(tick, JOBS_INTERVAL_MS).unref();
+	const retention = async () => {
+		try {
+			await purgeExpiredData(db, new Date());
+		} catch (e) {
+			console.error('[retención] fallo en el trabajo diario:', e instanceof Error ? e.message : e);
+		}
+	};
+	void retention();
+	setInterval(retention, RETENTION_INTERVAL_MS).unref();
 	return true;
 }

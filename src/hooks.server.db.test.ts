@@ -25,7 +25,13 @@ async function freshHandle() {
 
 function event() {
 	const cookies = { get: () => undefined, delete: () => {}, set: () => {} };
-	return { cookies, locals: {} } as never;
+	return {
+		cookies,
+		locals: {},
+		url: new URL('http://localhost/'),
+		request: new Request('http://localhost/'),
+		getClientAddress: () => '127.0.0.1'
+	} as never;
 }
 
 afterEach(() => {

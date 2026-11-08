@@ -7,6 +7,8 @@ import { readIdentityConfig } from './lib/server/auth/config';
 import type { Db } from './lib/server/db/client';
 import { startBackgroundJobs } from './lib/server/jobs/scheduler';
 import { resolveDb } from './lib/server/db/resolve-db';
+import { createRateLimiter, rateLimitRule } from './lib/server/http/rate-limit';
+import { securityHeaders } from './lib/server/http/security-headers';
 import {
 	SESSION_COOKIE,
 	sessionCookieOptions,
@@ -20,6 +22,7 @@ const ACCESSIBILITY_COOKIE = 'quenda_accessibility';
 // Una sola instancia por proceso, creada en la primera petición.
 let db: Promise<Db> | undefined;
 let configChecked = false;
+const rateLimiter = createRateLimiter();
 
 function getDb(): Promise<Db> {
 	if (!configChecked) {
@@ -48,6 +51,16 @@ function getDb(): Promise<Db> {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const rateLimit = rateLimitRule(event.url.pathname, event.request.method);
+	if (rateLimit) {
+		const limited = rateLimiter.check(event.getClientAddress(), rateLimit);
+		if (!limited.allowed) {
+			return new Response('Too Many Requests', {
+				status: 429,
+				headers: { 'Retry-After': String(limited.retryAfter) }
+			});
+		}
+	}
 	event.locals.db = await getDb();
 	event.locals.now = () => new Date();
 	event.locals.user = null;
@@ -89,8 +102,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const [textSize = 'normal', contrast = 'normal', motion = 'system'] = accessibility.split('|');
 	const attrs = ` data-texto="${textSize === 'large' ? 'grande' : textSize === 'very_large' ? 'moi-grande' : 'normal'}" data-contraste="${contrast === 'alto' ? 'alto' : 'normal'}" data-movemento="${motion === 'always' ? 'reducido' : 'sistema'}"`;
 	// `<html lang>` según el idioma (app.html lleva `%lang%`).
-	return resolve(event, {
+	const response = await resolve(event, {
 		transformPageChunk: ({ html }) =>
 			html.replace('%lang%', locale).replace('<html ', `<html${attrs} `)
 	});
+	for (const [name, value] of Object.entries(securityHeaders(event.url, dev))) {
+		response.headers.set(name, value);
+	}
+	return response;
 };
