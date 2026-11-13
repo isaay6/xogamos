@@ -3,6 +3,9 @@
 // Antes de guardar se enseña lo que pisa: otra temporada (bloqueado) o reservas confirmadas
 // (hay que confirmar su cancelación; cada dueño recibe su aviso).
 import { error, fail } from '@sveltejs/kit';
+import { z } from 'zod';
+import { eq } from 'drizzle-orm';
+import { municipalities } from '../../../../lib/server/db/schema';
 import { localDateOf, localTimeOf } from '../../../../lib/server/domain/time';
 import type { BookingRow, SeasonRow } from '../../../../lib/server/db/schema';
 import { listAllFacilities } from '../../../../lib/server/services/admin';
@@ -74,7 +77,8 @@ export const load: PageServerLoad = async (event) => {
 			.map((entity) => ({ id: entity.id, name: entity.name })),
 		facilities,
 		seasons: seasons.map((s) => ({ ...seasonView(s), facilityName: s.facilityName })),
-		editing: editing ? seasonView(editing) : null
+		editing: editing ? seasonView(editing) : null,
+		seasonPriorityCriteria: municipality.seasonPriorityCriteria
 	};
 };
 
@@ -89,6 +93,17 @@ function weekdaysOf(form: FormData): number[] | null {
 }
 
 export const actions: Actions = {
+	criterios: async (event) => {
+		const { municipality } = await requireAdminPage(event);
+		const form = await event.request.formData();
+		const parsed = z.string().trim().max(1000).safeParse(field(form, 'seasonPriorityCriteria'));
+		if (!parsed.success) return fail(400, { criteriaError: true });
+		await event.locals.db
+			.update(municipalities)
+			.set({ seasonPriorityCriteria: parsed.data })
+			.where(eq(municipalities.id, municipality.id));
+		return { criteriaSaved: true };
+	},
 	/**
 	 * Crear (un día o varios a la vez) o, con `id`, editar una temporada (un solo día).
 	 * Sin `confirmar=1`, si pisa reservas confirmadas → 409 con la lista; si pisa otra temporada

@@ -52,11 +52,7 @@
 				<td></td>
 				{#each days as d (d.date)}
 					{@const f = formatDay(locale, d.date)}
-					<th
-						scope="col"
-						class:today={d.isToday}
-						aria-current={d.isToday ? 'date' : undefined}
-					>
+					<th scope="col" class:today={d.isToday} aria-current={d.isToday ? 'date' : undefined}>
 						{f.weekday} <b>{f.day}</b>
 					</th>
 				{/each}

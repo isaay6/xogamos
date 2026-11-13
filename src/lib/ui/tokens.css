@@ -23,8 +23,12 @@
 	--toque: 44px;
 }
 
-html[data-texto='grande'] { font-size: 112.5%; }
-html[data-texto='moi-grande'] { font-size: 125%; }
+html[data-texto='grande'] {
+	font-size: 112.5%;
+}
+html[data-texto='moi-grande'] {
+	font-size: 125%;
+}
 html[data-contraste='alto'] {
 	--txt: #000;
 	--gris: #202020;
@@ -39,7 +43,9 @@ html[data-contraste='alto'] {
 	--liña: #333;
 	--texto-suave: #202020;
 }
-html[data-movemento='reducido'] *, html[data-movemento='reducido'] *::before, html[data-movemento='reducido'] *::after {
+html[data-movemento='reducido'] *,
+html[data-movemento='reducido'] *::before,
+html[data-movemento='reducido'] *::after {
 	animation-duration: 0.01ms !important;
 	animation-iteration-count: 1 !important;
 	scroll-behavior: auto !important;

@@ -34,9 +34,7 @@
 
 	const base = $derived(`/${slug}`);
 	// Detalle, cambiar y cancelar cuelgan de «As miñas reservas»; «Xa é túa!» sigue en Reservar.
-	const isOwnBooking = $derived(
-		current.startsWith(`${base}/reserva/`) && !current.endsWith('/xa')
-	);
+	const isOwnBooking = $derived(current.startsWith(`${base}/reserva/`) && !current.endsWith('/xa'));
 	// Reservar cubre el inicio y todo el flujo de reserva; los otros dos tienen su prefijo.
 	const active = $derived(
 		current.startsWith(`${base}/reservas`) || isOwnBooking
@@ -59,16 +57,51 @@
 <nav class="nav2" bind:this={nav} aria-label={t(locale, 'nav.etiqueta')}>
 	<a href={base} aria-current={active === 'reservar' ? 'page' : undefined}>
 		<svg viewBox="0 0 24 24" aria-hidden="true">
-			<rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.4" />
-			<line x1="8" y1="3" x2="8" y2="7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
-			<line x1="16" y1="3" x2="16" y2="7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
-			<path d="M12 10 v7 M8.5 13.5 h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+			<rect
+				x="3"
+				y="5"
+				width="18"
+				height="16"
+				rx="3"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.4"
+			/>
+			<line
+				x1="8"
+				y1="3"
+				x2="8"
+				y2="7"
+				stroke="currentColor"
+				stroke-width="2.4"
+				stroke-linecap="round"
+			/>
+			<line
+				x1="16"
+				y1="3"
+				x2="16"
+				y2="7"
+				stroke="currentColor"
+				stroke-width="2.4"
+				stroke-linecap="round"
+			/>
+			<path
+				d="M12 10 v7 M8.5 13.5 h7"
+				stroke="currentColor"
+				stroke-width="2.4"
+				stroke-linecap="round"
+			/>
 		</svg>
 		{t(locale, 'nav.reservar')}
 	</a>
 	<a href="{base}/reservas" aria-current={active === 'reservas' ? 'page' : undefined}>
 		<svg viewBox="0 0 24 24" aria-hidden="true">
-			<path d="M6 3 h12 a2 2 0 0 1 2 2 v8 a8 8 0 0 1 -16 0 v-8 a2 2 0 0 1 2 -2z" fill="none" stroke="currentColor" stroke-width="2.4" />
+			<path
+				d="M6 3 h12 a2 2 0 0 1 2 2 v8 a8 8 0 0 1 -16 0 v-8 a2 2 0 0 1 2 -2z"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.4"
+			/>
 			<circle cx="12" cy="7.5" r="2" fill="currentColor" />
 		</svg>
 		{t(locale, 'nav.reservas')}
@@ -76,8 +109,20 @@
 	<a href="{base}/avisos" aria-current={active === 'avisos' ? 'page' : undefined}>
 		<span class="ico">
 			<svg viewBox="0 0 24 24" aria-hidden="true">
-				<path d="M12 3 a6 6 0 0 1 6 6 v4 l2 4 h-16 l2 -4 v-4 a6 6 0 0 1 6 -6z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" />
-				<path d="M9.5 20.5 a2.8 2.8 0 0 0 5 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+				<path
+					d="M12 3 a6 6 0 0 1 6 6 v4 l2 4 h-16 l2 -4 v-4 a6 6 0 0 1 6 -6z"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.4"
+					stroke-linejoin="round"
+				/>
+				<path
+					d="M9.5 20.5 a2.8 2.8 0 0 0 5 0"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.4"
+					stroke-linecap="round"
+				/>
 			</svg>
 			{#if unread > 0}
 				<span class="globo" aria-hidden="true">{unread > 9 ? '9+' : unread}</span>
@@ -89,7 +134,13 @@
 	<a href="{base}/eu" aria-current={active === 'eu' ? 'page' : undefined}>
 		<svg viewBox="0 0 24 24" aria-hidden="true">
 			<circle cx="12" cy="8" r="4.2" fill="none" stroke="currentColor" stroke-width="2.4" />
-			<path d="M4 21 a8 7 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+			<path
+				d="M4 21 a8 7 0 0 1 16 0"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2.4"
+				stroke-linecap="round"
+			/>
 		</svg>
 		{t(locale, 'nav.eu')}
 	</a>

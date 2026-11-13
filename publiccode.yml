@@ -1,0 +1,94 @@
+# Metadatos de reutilización segundo o estándar publiccode.yml (https://yml.publiccode.tools).
+# ⚠ Completar url e landingURL ao publicar o repositorio.
+publiccodeYmlVersion: '0.4'
+
+name: Xogamos
+url: 'https://github.com/[⚠ usuario]/[⚠ repositorio]'
+landingURL: '[⚠ URL da demo]'
+softwareVersion: '0.1.0'
+releaseDate: '2026-11-18'
+platforms:
+  - web
+
+categories:
+  - booking
+  - facility-management
+  - government-websites
+
+developmentStatus: beta
+softwareType: 'standalone/web'
+
+description:
+  gl:
+    shortDescription: >-
+      Plataforma libre para reservar e xestionar as instalacións deportivas
+      municipais, multi-concello.
+    longDescription: >-
+      Xogamos permite que a veciñanza reserve as instalacións deportivas
+      municipais desde o móbil e entre cun PIN ou un QR, e que o concello
+      xestione instalacións, horarios, normas, clubs, tempadas, tarifas e
+      monedeiro, con indicadores e informes mensuais. A conserxería reserva
+      por teléfono para quen non usa internet e un papel «Apertura» avisa a
+      quen abre as instalacións. Unha Deputación pode aloxar nunha soa
+      instalación todos os concellos pequenos, cos datos separados. A
+      identidade faise só a través de Cl@ve e Chave365. Non incorpora
+      intelixencia artificial nin envía datos a terceiros. Pensada a partir
+      do caso real do Concello de Viana do Bolo (Ourense).
+    features:
+      - Reserva en liña, cambio e cancelación
+      - Acceso con PIN e QR e papel de apertura
+      - Tarifas, monedeiro, bonos e abonos
+      - Clubs, tempadas e solicitudes en liña
+      - Conserxería con reserva por teléfono
+      - Indicadores, informe mensual e datos abertos
+      - Multi-concello para deputacións
+      - API REST con OpenAPI 3.1
+  es:
+    shortDescription: >-
+      Plataforma libre para reservar y gestionar las instalaciones deportivas
+      municipales, multi-ayuntamiento.
+    longDescription: >-
+      Xogamos permite que los vecinos reserven las instalaciones deportivas
+      municipales desde el móvil y entren con un PIN o un QR, y que el
+      ayuntamiento gestione instalaciones, horarios, normas, clubes,
+      temporadas, tarifas y monedero, con indicadores e informes mensuales.
+      La conserjería reserva por teléfono para quien no usa internet y un rol
+      «Apertura» avisa a quien abre las instalaciones. Una Diputación puede
+      alojar en una sola instalación a todos los ayuntamientos pequeños, con
+      los datos separados. La identidad se hace solo a través de Cl@ve y
+      Chave365. No incorpora inteligencia artificial ni envía datos a terceros.
+    features:
+      - Reserva en línea, cambio y cancelación
+      - Acceso con PIN y QR y rol de apertura
+      - Tarifas, monedero, bonos y abonos
+      - Clubes, temporadas y solicitudes en línea
+      - Conserjería con reserva por teléfono
+      - Indicadores, informe mensual y datos abiertos
+      - Multi-ayuntamiento para diputaciones
+      - API REST con OpenAPI 3.1
+
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: 'Sonia Fidalgo García (ViboAsesor)'
+  repoOwner: 'Sonia Fidalgo García (ViboAsesor)'
+
+maintenance:
+  type: internal
+  contacts:
+    - name: Isay Rodríguez Fidalgo
+      email: '[⚠ correo de contacto]'
+
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - gl
+    - es
+
+dependsOn:
+  open:
+    - name: PostgreSQL
+      versionMin: '17'
+    - name: Node.js
+      versionMin: '22'
+    - name: Docker
+      optional: true

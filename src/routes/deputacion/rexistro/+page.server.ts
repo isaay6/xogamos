@@ -9,5 +9,9 @@ export const load: PageServerLoad = async (event) => {
 	const municipalities = await listMunicipalities(event.locals.db);
 	const selected = event.url.searchParams.get('concello');
 	const municipality = municipalities.find((item) => item.id === selected) ?? municipalities[0];
-	return { municipalities, selected: municipality?.id ?? '', entries: municipality ? await listActivity(event.locals.db, municipality.id) : [] };
+	return {
+		municipalities,
+		selected: municipality?.id ?? '',
+		entries: municipality ? await listActivity(event.locals.db, municipality.id) : []
+	};
 };

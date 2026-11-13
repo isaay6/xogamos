@@ -61,7 +61,12 @@ export const load: PageServerLoad = async (event) => {
 			: []
 	]);
 	if (id && (!old[0] || old[0].status !== 'mais_datos')) error(404);
-	return { facilities: facilityRows, entities, request: old[0] ?? null };
+	return {
+		facilities: facilityRows,
+		entities,
+		request: old[0] ?? null,
+		seasonPriorityCriteria: municipality.seasonPriorityCriteria
+	};
 };
 
 export const actions: Actions = {

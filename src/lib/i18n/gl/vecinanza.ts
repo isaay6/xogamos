@@ -2,6 +2,7 @@
 // Textos en galego da zona «vecinanza» (Track A). Claves novas con prefixo da zona.
 
 export const glVecinanza = {
+	'vec.sol.criterios': 'Criterios públicos de prioridade:',
 	'vec.aviso.opening.created':
 		'Nova reserva para abrir: {facilityName}, {date} ás {time} ({personName}).',
 	'vec.aviso.opening.cancelled':
@@ -453,6 +454,19 @@ export const glVecinanza = {
 	'vec.datos.descarga.axuda': 'Leva unha copia das túas reservas, abonos, avisos e configuración.',
 	'vec.datos.descarga.json': 'Descargar JSON',
 	'vec.datos.descarga.html': 'Descargar páxina imprimible',
+	'vec.datos.borrar.titulo': 'Borrar a miña conta',
+	'vec.datos.borrar.axuda':
+		'Cancelarase calquera reserva futura. Borraranse os teus datos; o historial quedará anónimo para estatísticas e contabilidade. Non se pode desfacer. Recomendamos descargar antes os teus datos.',
+	'vec.datos.borrar.confirmar': 'Escribe BORRAR para confirmar',
+	'vec.datos.borrar.enviar': 'Borrar a conta definitivamente',
+	'vec.datos.borrar.erro.CONFIRMATION': 'Escribe BORRAR para confirmar.',
+	'vec.datos.borrar.erro.STAFF_MEMBER':
+		'Tes un papel de persoal. Pide que o retiren antes de borrar a conta.',
+	'vec.datos.borrar.erro.SOLE_ENTITY_RESPONSIBLE':
+		'Es a única persoa responsable dun club. Engade outra responsable antes de borrar a conta.',
+	'vec.datos.borrar.erro.WALLET_BALANCE':
+		'Tes saldo no monedeiro. Pide a devolución na conserxería antes de borrar a conta.',
+	'vec.datos.borrar.feito': 'A túa conta borrouse. Grazas por usar as instalacións do concello.',
 	'vec.legal.aviso-legal': 'Aviso legal',
 	'vec.legal.privacidade': 'Política de privacidade',
 	'vec.legal.normas': 'Normas de uso',

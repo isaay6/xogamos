@@ -52,10 +52,18 @@ export type DemoMunicipality = {
 	province: 'Ourense';
 	/** Color principal: texto branco lexible (contraste ≥ 4,5). */
 	primaryColor: string;
+	seasonPriorityCriteria?: string;
 };
 
 export const DEMO_MUNICIPALITIES: DemoMunicipality[] = [
-	{ slug: 'viana-do-bolo', name: 'Viana do Bolo', province: 'Ourense', primaryColor: '#0B5C8A' },
+	{
+		slug: 'viana-do-bolo',
+		name: 'Viana do Bolo',
+		province: 'Ourense',
+		primaryColor: '#0B5C8A',
+		seasonPriorityCriteria:
+			'Prioridade para clubs con sede no concello; despois, escolas deportivas e equipos de menores. Se non hai horas para todos, o reparto será proporcional.'
+	},
 	{ slug: 'a-rua', name: 'A Rúa', province: 'Ourense', primaryColor: '#8A2D3B' },
 	{
 		slug: 'o-barco-de-valdeorras',

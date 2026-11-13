@@ -11,7 +11,11 @@
 		{ href: '/deputacion', label: t(data.locale, 'dep.menu.comparativa'), icon: 'resumo' },
 		{ href: '/deputacion/novo', label: t(data.locale, 'dep.menu.novo'), icon: 'nova' },
 		{ href: '/deputacion/rexistro', label: t(data.locale, 'dep.menu.rexistro'), icon: 'rexistro' },
-		{ href: '/deputacion/administradores', label: t(data.locale, 'dep.menu.admins'), icon: 'persoal' }
+		{
+			href: '/deputacion/administradores',
+			label: t(data.locale, 'dep.menu.admins'),
+			icon: 'persoal'
+		}
 	]);
 </script>
 

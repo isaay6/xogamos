@@ -12,7 +12,12 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	if (!facilityId.success || !photoId.success) return fail('NOT_FOUND');
 	const municipality = await getMunicipalityBySlug(locals.db, params.slug ?? '');
 	if (!municipality) return fail('NOT_FOUND');
-	const photo = await getPublicFacilityPhoto(locals.db, municipality.id, facilityId.data, photoId.data);
+	const photo = await getPublicFacilityPhoto(
+		locals.db,
+		municipality.id,
+		facilityId.data,
+		photoId.data
+	);
 	if (!photo) return fail('NOT_FOUND');
 	return new Response(photo.bytes as BodyInit, {
 		headers: {

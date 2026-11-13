@@ -2,6 +2,14 @@
 // Textos en galego da zona «admin» (Track C). Claves novas con prefixo da zona.
 
 export const glAdmin = {
+	'adm.temp.criterios': 'Criterios de prioridade das tempadas',
+	'adm.temp.criterios_axuda':
+		'Publica como se reparten as horas fixas entre clubs. Máximo 1.000 caracteres.',
+	'adm.temp.criterios_gardados': 'Criterios de prioridade gardados.',
+	'adm.temp.criterios_erro': 'Os criterios non poden superar os 1.000 caracteres.',
+	'adm.ocupacion.ver_taboa': 'Ver como táboa',
+	'adm.ocupacion.instalacion': 'Instalación',
+	'adm.ocupacion.porcentaxe': 'Ocupación',
 	'adm.menu.torneos': 'Torneos',
 	'adm.torneo.titulo': 'Torneos',
 	'adm.torneo.novo': 'Crear torneo',

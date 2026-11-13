@@ -29,6 +29,21 @@
 		</div>
 	{/each}
 </div>
+<details class="taboa">
+	<summary>{t(locale, 'adm.ocupacion.ver_taboa')}</summary>
+	<table>
+		<thead
+			><tr
+				><th scope="col">{t(locale, 'adm.ocupacion.instalacion')}</th><th scope="col"
+					>{t(locale, 'adm.ocupacion.porcentaxe')}</th
+				></tr
+			></thead
+		>
+		<tbody
+			>{#each rows as r (r.id)}<tr><td>{r.name}</td><td>{pct(r.occupancy)}%</td></tr>{/each}</tbody
+		>
+	</table>
+</details>
 
 <style>
 	.r {
@@ -62,5 +77,22 @@
 
 	.v {
 		text-align: right;
+	}
+	.taboa summary {
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+		font-weight: 800;
+		cursor: pointer;
+	}
+	.taboa table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+	.taboa th,
+	.taboa td {
+		padding: 6px 8px;
+		border-bottom: 1px solid var(--liña);
+		text-align: left;
 	}
 </style>

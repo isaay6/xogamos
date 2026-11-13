@@ -54,6 +54,7 @@ export type Settings = {
 	legalNotice: string;
 	privacyPolicy: string;
 	usageRules: string;
+	seasonPriorityCriteria: string;
 };
 
 const settingsColumns = {
@@ -65,7 +66,8 @@ const settingsColumns = {
 	penaltyDays: municipalities.penaltyDays,
 	legalNotice: municipalities.legalNotice,
 	privacyPolicy: municipalities.privacyPolicy,
-	usageRules: municipalities.usageRules
+	usageRules: municipalities.usageRules,
+	seasonPriorityCriteria: municipalities.seasonPriorityCriteria
 };
 
 export async function getSettings(db: Db, municipalityId: string): Promise<Settings> {

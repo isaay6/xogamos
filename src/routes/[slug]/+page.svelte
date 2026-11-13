@@ -10,6 +10,7 @@
 	import Lamps from '#lib/ui/Lamps.svelte';
 	import { localDate } from '#lib/ui/closure-text.js';
 	import Mascot from '#lib/ui/Mascot.svelte';
+	import { page } from '$app/state';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -88,6 +89,9 @@
 </svelte:head>
 
 <main class="inicio">
+	{#if page.url.searchParams.has('conta-eliminada')}
+		<p class="conta-eliminada" role="status">{t(locale, 'vec.datos.borrar.feito')}</p>
+	{/if}
 	{#if data.signedIn && data.walletCents !== null}
 		<a class="monedero-chip" href="{base}/eu/monedero">
 			{t(locale, 'vec.monedero.saldo')}: {formatAmount(data.walletCents)}
@@ -582,5 +586,11 @@
 	.abonos .mostrador {
 		display: block;
 		color: var(--texto-suave);
+	}
+	.conta-eliminada {
+		padding: 12px 16px;
+		border: 2px solid currentColor;
+		border-radius: 12px;
+		font-weight: 700;
 	}
 </style>

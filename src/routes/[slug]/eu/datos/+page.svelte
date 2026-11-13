@@ -83,6 +83,23 @@
 			<a href="{base}/eu/descargar-datos" download>{t(locale, 'vec.datos.descarga.html')}</a>
 		</div>
 	</section>
+	<section class="borrado" aria-labelledby="borrado-titulo">
+		<h2 id="borrado-titulo">{t(locale, 'vec.datos.borrar.titulo')}</h2>
+		<p>{t(locale, 'vec.datos.borrar.axuda')}</p>
+		{#if form?.deleteError}<p class="erro" role="alert">
+				{t(locale, `vec.datos.borrar.erro.${form.deleteError}` as MessageKey)}
+			</p>{/if}
+		<form method="POST" action="?/borrar">
+			<label
+				><span>{t(locale, 'vec.datos.borrar.confirmar')}</span><input
+					name="confirmacion"
+					required
+					autocomplete="off"
+				/></label
+			>
+			<Button type="submit" variant="perigo">{t(locale, 'vec.datos.borrar.enviar')}</Button>
+		</form>
+	</section>
 </main>
 
 <style>
@@ -166,6 +183,20 @@
 		padding: 14px;
 		border: 2px solid var(--liña);
 		border-radius: var(--radio);
+	}
+	.borrado {
+		max-width: 620px;
+		margin-top: 28px;
+		padding: 14px;
+		border: 2px solid var(--perigo);
+		border-radius: var(--radio);
+	}
+	.borrado h2,
+	.borrado p {
+		margin: 0;
+	}
+	.borrado p {
+		margin-top: 6px;
 	}
 
 	.descarga h2,

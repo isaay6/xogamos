@@ -3,6 +3,7 @@
 import type { glVecinanza } from '../gl/vecinanza';
 
 export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
+	'vec.sol.criterios': 'Criterios públicos de prioridad:',
 	'vec.aviso.opening.created':
 		'Nueva reserva para abrir: {facilityName}, {date} a las {time} ({personName}).',
 	'vec.aviso.opening.cancelled':
@@ -441,6 +442,20 @@ export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
 	'vec.datos.descarga.axuda': 'Llévate una copia de tus reservas, abonos, avisos y configuración.',
 	'vec.datos.descarga.json': 'Descargar JSON',
 	'vec.datos.descarga.html': 'Descargar página imprimible',
+	'vec.datos.borrar.titulo': 'Borrar mi cuenta',
+	'vec.datos.borrar.axuda':
+		'Se cancelará cualquier reserva futura. Se borrarán tus datos; el historial quedará anónimo para estadísticas y contabilidad. No se puede deshacer. Recomendamos descargar antes tus datos.',
+	'vec.datos.borrar.confirmar': 'Escribe BORRAR para confirmar',
+	'vec.datos.borrar.enviar': 'Borrar la cuenta definitivamente',
+	'vec.datos.borrar.erro.CONFIRMATION': 'Escribe BORRAR para confirmar.',
+	'vec.datos.borrar.erro.STAFF_MEMBER':
+		'Tienes un papel de personal. Pide que lo retiren antes de borrar la cuenta.',
+	'vec.datos.borrar.erro.SOLE_ENTITY_RESPONSIBLE':
+		'Eres la única persona responsable de un club. Añade otra responsable antes de borrar la cuenta.',
+	'vec.datos.borrar.erro.WALLET_BALANCE':
+		'Tienes saldo en el monedero. Pide la devolución en conserjería antes de borrar la cuenta.',
+	'vec.datos.borrar.feito':
+		'Tu cuenta se ha borrado. Gracias por usar las instalaciones del ayuntamiento.',
 	'vec.legal.aviso-legal': 'Aviso legal',
 	'vec.legal.privacidade': 'Política de privacidad',
 	'vec.legal.normas': 'Normas de uso',

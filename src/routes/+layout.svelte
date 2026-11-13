@@ -106,6 +106,10 @@
 		text-align: center;
 	}
 
-	.sen-rede p { margin: 0; }
-	.sen-rede p + p { margin-top: 3px; }
+	.sen-rede p {
+		margin: 0;
+	}
+	.sen-rede p + p {
+		margin-top: 3px;
+	}
 </style>

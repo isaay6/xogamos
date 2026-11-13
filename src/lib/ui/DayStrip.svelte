@@ -29,7 +29,11 @@
 			<b>{f.day}</b>
 			{#if d.closed}
 				<!-- Pechado, non cheo: o motivo vai enteiro para os lectores de pantalla -->
-				<small>{d.closed.holiday ? t(locale, 'dia.festivo', { nome: d.closed.reason }) : t(locale, 'dia.pechada')}</small>
+				<small
+					>{d.closed.holiday
+						? t(locale, 'dia.festivo', { nome: d.closed.reason })
+						: t(locale, 'dia.pechada')}</small
+				>
 				{#if d.closed.reason}<span class="sr">{d.closed.reason}</span>{/if}
 			{:else if d.full}<small>{t(locale, 'dia.completo')}</small>{/if}
 		</label>

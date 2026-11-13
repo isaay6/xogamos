@@ -130,6 +130,27 @@
 	<p class="erro" role="alert">{t(locale, 'adm.erro.NOT_FOUND')}</p>
 {/if}
 
+<section class="nova" aria-labelledby="criterios-t">
+	<h2 id="criterios-t">{t(locale, 'adm.temp.criterios')}</h2>
+	<p class="axuda">{t(locale, 'adm.temp.criterios_axuda')}</p>
+	{#if form && 'criteriaSaved' in form}<p class="ok" role="status">
+			{t(locale, 'adm.temp.criterios_gardados')}
+		</p>{/if}
+	{#if form && 'criteriaError' in form}<p class="erro" role="alert">
+			{t(locale, 'adm.temp.criterios_erro')}
+		</p>{/if}
+	<form method="POST" action="?/criterios" class="campos">
+		<label class="campo ancho" for="criterios"
+			><span>{t(locale, 'adm.temp.criterios')}</span><textarea
+				id="criterios"
+				name="seasonPriorityCriteria"
+				maxlength="1000">{data.seasonPriorityCriteria}</textarea
+			></label
+		>
+		<div class="botons ancho"><Button type="submit">{t(locale, 'adm.gardar')}</Button></div>
+	</form>
+</section>
+
 <section class="nova" data-tour="tempadas" aria-labelledby="temp-form-t">
 	<h2 id="temp-form-t">{t(locale, editing ? 'adm.temp.editar' : 'adm.temp.nova')}</h2>
 

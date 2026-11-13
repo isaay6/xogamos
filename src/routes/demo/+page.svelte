@@ -61,7 +61,10 @@
 						<span class="tx">
 							<b class="rol">{t(locale, k(p.key))}</b>
 							<span class="quen"
-								>{t(locale, k(p.key, '.de'), { nome: p.name, concello: p.municipality ?? '' })}</span
+								>{t(locale, k(p.key, '.de'), {
+									nome: p.name,
+									concello: p.municipality ?? ''
+								})}</span
 							>
 							<span class="ve">{t(locale, k(p.key, '.ve'))}</span>
 						</span>
@@ -87,8 +90,10 @@
 	</section>
 
 	<footer>
-		<a class="outra" href="/{home?.slug ?? 'viana-do-bolo'}/entrar?redirectTo=%2F{home?.slug ??
-				'viana-do-bolo'}">{t(locale, 'demo.outra')}</a
+		<a
+			class="outra"
+			href="/{home?.slug ?? 'viana-do-bolo'}/entrar?redirectTo=%2F{home?.slug ?? 'viana-do-bolo'}"
+			>{t(locale, 'demo.outra')}</a
 		>
 		<form method="POST" action={idioma} class="lingua">
 			<input type="hidden" name="redirectTo" value="/demo" />

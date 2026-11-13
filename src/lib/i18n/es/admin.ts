@@ -3,6 +3,14 @@
 import type { glAdmin } from '../gl/admin';
 
 export const esAdmin: Record<keyof typeof glAdmin, string> = {
+	'adm.temp.criterios': 'Criterios de prioridad de las temporadas',
+	'adm.temp.criterios_axuda':
+		'Publica cómo se reparten las horas fijas entre clubes. Máximo 1.000 caracteres.',
+	'adm.temp.criterios_gardados': 'Criterios de prioridad guardados.',
+	'adm.temp.criterios_erro': 'Los criterios no pueden superar los 1.000 caracteres.',
+	'adm.ocupacion.ver_taboa': 'Ver como tabla',
+	'adm.ocupacion.instalacion': 'Instalación',
+	'adm.ocupacion.porcentaxe': 'Ocupación',
 	'adm.menu.torneos': 'Torneos',
 	'adm.torneo.titulo': 'Torneos',
 	'adm.torneo.novo': 'Crear torneo',

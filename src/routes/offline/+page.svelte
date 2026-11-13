@@ -33,7 +33,16 @@
 </main>
 
 <style>
-	.offline { max-width: 640px; margin: 0 auto; padding: 48px 16px; }
-	h1 { font-size: 30px; }
-	a { color: var(--txt); font-weight: 800; }
+	.offline {
+		max-width: 640px;
+		margin: 0 auto;
+		padding: 48px 16px;
+	}
+	h1 {
+		font-size: 30px;
+	}
+	a {
+		color: var(--txt);
+		font-weight: 800;
+	}
 </style>

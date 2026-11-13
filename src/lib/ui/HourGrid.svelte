@@ -51,7 +51,11 @@
 			/>
 			<span>{h.time}</span>
 			{#if h.closed}
-				<small aria-hidden="true">{h.closed.reason.startsWith('Evento:') ? h.closed.reason : t(locale, 'hora.pechada.curto')}</small>
+				<small aria-hidden="true"
+					>{h.closed.reason.startsWith('Evento:')
+						? h.closed.reason
+						: t(locale, 'hora.pechada.curto')}</small
+				>
 			{:else if h.free && h.remainingSeats !== null}
 				<small>{t(locale, 'hora.libres', { n: h.remainingSeats })}</small>
 			{:else if h.past}

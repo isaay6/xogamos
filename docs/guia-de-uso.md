@@ -14,7 +14,7 @@ Unha páxina por papel. Na demo, cada papel ten unha persoa ficticia en `/demo` 
    - **Torneos:** ver os próximos e inscribirse.
    - **Solicitudes:** pedir horas fixas de tempada ou un evento.
    - **Monedeiro e abonos:** saldo e movementos.
-   - **Eu → Os meus datos:** descargar todo o que garda a plataforma.
+   - **Eu → Os meus datos:** descargar todo o que garda a plataforma ou borrar a conta. Antes de borrar, descarga unha copia: as reservas futuras cancélanse e o historial queda anónimo.
 
 ## Responsables de club
 

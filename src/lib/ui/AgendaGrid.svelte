@@ -194,7 +194,9 @@
 					time
 				};
 			});
-			return [{ key: f.facilityId, label: f.facilityName, f, blocks: [...seasonBlocks, ...blocks] }];
+			return [
+				{ key: f.facilityId, label: f.facilityName, f, blocks: [...seasonBlocks, ...blocks] }
+			];
 		}
 		return [
 			{

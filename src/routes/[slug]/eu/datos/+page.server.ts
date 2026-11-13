@@ -2,6 +2,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { requirePageUser } from '../../../../lib/server/http/page-guards';
 import { ContactInput, getSummary, updateContact } from '../../../../lib/server/services/me';
+import { deleteAccount } from '../../../../lib/server/services/account-deletion';
+import { SESSION_COOKIE } from '../../../../lib/server/services/sessions';
 import { requireMunicipality } from '../../municipality.server';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -24,6 +26,16 @@ const text = (form: FormData, name: string) => {
 };
 
 export const actions: Actions = {
+	borrar: async (event) => {
+		const municipality = await requireMunicipality(event.locals.db, event.params.slug);
+		const user = requirePageUser(event);
+		const form = await event.request.formData();
+		if (text(form, 'confirmacion') !== 'BORRAR') return fail(400, { deleteError: 'CONFIRMATION' });
+		const result = await deleteAccount(event.locals.db, user.id, event.locals.now());
+		if (!result.ok) return fail(400, { deleteError: result.error });
+		event.cookies.delete(SESSION_COOKIE, { path: '/' });
+		redirect(303, `/${municipality.slug}?conta-eliminada=1`);
+	},
 	default: async (event) => {
 		const municipality = await requireMunicipality(event.locals.db, event.params.slug);
 		const user = requirePageUser(event);

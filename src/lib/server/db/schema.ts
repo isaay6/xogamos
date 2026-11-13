@@ -92,6 +92,7 @@ export const municipalities = pgTable(
 		legalNotice: text('legal_notice').notNull().default(''),
 		privacyPolicy: text('privacy_policy').notNull().default(''),
 		usageRules: text('usage_rules').notNull().default(''),
+		seasonPriorityCriteria: text('season_priority_criteria').notNull().default(''),
 		// Escudo: bytes y tipo verificados por bytes mágicos (services/logo.ts).
 		logo: bytea('logo'),
 		logoMime: text('logo_mime'),
@@ -755,7 +756,8 @@ export const passes = pgTable(
 		createdBy: uuid('created_by')
 			.notNull()
 			.references(() => users.id, { onDelete: 'restrict' }),
-		createdAt: tstz('created_at').notNull().defaultNow()
+		createdAt: tstz('created_at').notNull().defaultNow(),
+		cancelledAt: tstz('cancelled_at')
 	},
 	(t) => [
 		index('passes_profile_idx').on(t.profileId),

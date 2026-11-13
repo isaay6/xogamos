@@ -121,7 +121,9 @@
 			<span class="marco" aria-hidden="true"></span>
 		</div>
 		<p class="k" role="status">{t(locale, 'cons.val.camara.apunta')}</p>
-		<button type="button" class="pechar" onclick={stop}>{t(locale, 'cons.val.camara.pechar')}</button>
+		<button type="button" class="pechar" onclick={stop}
+			>{t(locale, 'cons.val.camara.pechar')}</button
+		>
 	{/if}
 	{#if failed}
 		<p class="k" role="status">{t(locale, 'cons.val.camara.erro')}</p>

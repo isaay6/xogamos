@@ -52,7 +52,9 @@
 
 	const summary = (d: number) => {
 		const rs = ranges(d);
-		return rs.length ? rs.map((r) => `${r.opens}–${r.closes}`).join(' · ') : t(locale, 'adm.fac.pechado');
+		return rs.length
+			? rs.map((r) => `${r.opens}–${r.closes}`).join(' · ')
+			: t(locale, 'adm.fac.pechado');
 	};
 </script>
 

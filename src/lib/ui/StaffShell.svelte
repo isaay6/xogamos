@@ -39,7 +39,9 @@
 	const title = $derived(municipality ? municipality.name : t(locale, 'staff.deputacion'));
 	const home = $derived(municipality ? `/${municipality.slug}` : '/deputacion');
 	const veciño = $derived(municipality ? `/${municipality.slug}` : '/');
-	const idiomaAction = $derived(municipality ? `/${municipality.slug}/idioma` : '/deputacion/idioma');
+	const idiomaAction = $derived(
+		municipality ? `/${municipality.slug}/idioma` : '/deputacion/idioma'
+	);
 	const logoutTo = $derived(municipality ? `/${municipality.slug}` : '/');
 
 	let open = $state(false);
@@ -59,7 +61,8 @@
 		normas: 'M4 2.5h8v11H4zM6 6h4M6 8.5h4M6 11h2.5',
 		temporadas: 'M2.5 3.5h11v10h-11zM2.5 6.5h11M5.5 2v3M10.5 2v3M5 9h2M9 9h2M5 11.2h2M9 11.2h2',
 		avisos: 'M4 11V7.5a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.6 14h2.8',
-		persoal: 'M6 7.5a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM2 13c.4-2.2 1.9-3.4 4-3.4s3.6 1.2 4 3.4M11 3.4a2.2 2.2 0 0 1 0 4.1M12 9.8c1.2.5 1.8 1.4 2 3.2',
+		persoal:
+			'M6 7.5a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4zM2 13c.4-2.2 1.9-3.4 4-3.4s3.6 1.2 4 3.4M11 3.4a2.2 2.2 0 0 1 0 4.1M12 9.8c1.2.5 1.8 1.4 2 3.2',
 		// Abono: un billete co corte á esquerda e unha liña de picado.
 		abonos: 'M2 4.5h12v2a1.5 1.5 0 0 0 0 3v2H2v-2a1.5 1.5 0 0 0 0-3zM10 4.5v7',
 		concello: 'M2 6.5L8 2.5l6 4M3.5 6.5v6.5M7 6.5v6.5M9 6.5v6.5M12.5 6.5v6.5M2 13.5h12',

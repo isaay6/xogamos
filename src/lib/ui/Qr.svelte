@@ -28,9 +28,7 @@
 	// Un único trazo con un cuadrado por módulo oscuro.
 	const path = $derived(
 		qr.data
-			.flatMap((row, y) =>
-				row.map((dark, x) => (dark ? `M${x + quiet} ${y + quiet}h1v1h-1z` : ''))
-			)
+			.flatMap((row, y) => row.map((dark, x) => (dark ? `M${x + quiet} ${y + quiet}h1v1h-1z` : '')))
 			.join('')
 	);
 	const side = $derived(qr.size + quiet * 2);
