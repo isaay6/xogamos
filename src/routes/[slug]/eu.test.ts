@@ -307,7 +307,7 @@ describe('datos', () => {
 	it('un correo non válido dá fail(400) con issues en email', async () => {
 		const { db, u } = await fresh();
 		const r = await outcome(() =>
-			call(datosActions.default, post(db, u, { email: 'nope', phone: '' }))
+			call(datosActions.gardar, post(db, u, { email: 'nope', phone: '' }))
 		);
 		expect(isActionFailure(r.value)).toBe(true);
 		const failure = r.value as { status: number; data: { issues: { email?: boolean } } };
@@ -321,10 +321,28 @@ describe('datos', () => {
 		expect(out).toContain('Escribe un correo válido');
 	});
 
+	it('borrar a conta sen escribir BORRAR dá fail(400)', async () => {
+		const { db, u } = await fresh();
+		const r = await outcome(() => call(datosActions.borrar, post(db, u, { confirmacion: 'non' })));
+		expect(isActionFailure(r.value)).toBe(true);
+		expect((r.value as { status: number }).status).toBe(400);
+	});
+
+	it('borrar a conta con BORRAR anonimiza e redirixe ao inicio con aviso', async () => {
+		const { db, f, u } = await fresh();
+		const r = await outcome(() =>
+			call(datosActions.borrar, post(db, u, { confirmacion: 'BORRAR' }))
+		);
+		expect(isRedirect(r.thrown)).toBe(true);
+		expect((r.thrown as { location: string }).location).toContain('conta-eliminada=1');
+		const [row] = await db.select().from(users).where(eq(users.id, f.userId));
+		expect(row.displayName).toBe('Conta eliminada');
+	});
+
 	it('un correo válido persiste e redirixe con aviso', async () => {
 		const { db, f, u } = await fresh();
 		const r = await outcome(() =>
-			call(datosActions.default, post(db, u, { email: 'uxia@exemplo.gal', phone: '600 000 000' }))
+			call(datosActions.gardar, post(db, u, { email: 'uxia@exemplo.gal', phone: '600 000 000' }))
 		);
 		expect(isRedirect(r.thrown)).toBe(true);
 		expect((r.thrown as { location: string }).location).toContain('gardado=1');

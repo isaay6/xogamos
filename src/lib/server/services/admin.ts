@@ -82,7 +82,8 @@ export async function getSettings(db: Db, municipalityId: string): Promise<Setti
 export async function updateSettings(
 	db: Db,
 	municipalityId: string,
-	input: Settings
+	// Os criterios de tempada edítanse noutra pantalla: se non veñen, quedan como estaban.
+	input: Omit<Settings, 'seasonPriorityCriteria'> & { seasonPriorityCriteria?: string }
 ): Promise<AdminResult<Settings>> {
 	const [row] = await db
 		.update(municipalities)

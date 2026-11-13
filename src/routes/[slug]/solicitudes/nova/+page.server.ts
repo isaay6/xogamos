@@ -4,6 +4,7 @@ import { and, eq } from 'drizzle-orm';
 import { facilities, requests } from '../../../../lib/server/db/schema';
 import { requirePageUser } from '../../../../lib/server/http/page-guards';
 import { responsibleEntities } from '../../../../lib/server/services/entities';
+import { getSettings } from '../../../../lib/server/services/admin';
 import {
 	createRequest,
 	resendRequest,
@@ -65,7 +66,8 @@ export const load: PageServerLoad = async (event) => {
 		facilities: facilityRows,
 		entities,
 		request: old[0] ?? null,
-		seasonPriorityCriteria: municipality.seasonPriorityCriteria
+		seasonPriorityCriteria: (await getSettings(event.locals.db, municipality.id))
+			.seasonPriorityCriteria
 	};
 };
 

@@ -39,7 +39,7 @@
 		</div>
 	</dl>
 
-	<form method="POST" novalidate>
+	<form method="POST" action="?/gardar" novalidate>
 		<label>
 			<span>{t(locale, 'vec.datos.correo')}</span>
 			<input

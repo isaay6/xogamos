@@ -36,7 +36,7 @@ export const actions: Actions = {
 		event.cookies.delete(SESSION_COOKIE, { path: '/' });
 		redirect(303, `/${municipality.slug}?conta-eliminada=1`);
 	},
-	default: async (event) => {
+	gardar: async (event) => {
 		const municipality = await requireMunicipality(event.locals.db, event.params.slug);
 		const user = requirePageUser(event);
 		const form = await event.request.formData();

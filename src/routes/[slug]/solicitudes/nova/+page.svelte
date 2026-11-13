@@ -44,12 +44,11 @@
 				></label
 			>{/if}
 		{#if kind === 'tempada'}<fieldset>
+				<legend>{t(locale, 'vec.sol.dias')}</legend>
 				{#if data.seasonPriorityCriteria}<p class="axuda">
 						<b>{t(locale, 'vec.sol.criterios')}</b>
 						{data.seasonPriorityCriteria}
-					</p>{/if}
-				<legend>{t(locale, 'vec.sol.dias')}</legend>{#each [0, 1, 2, 3, 4, 5, 6] as day}<label
-						class="check"
+					</p>{/if}{#each [0, 1, 2, 3, 4, 5, 6] as day}<label class="check"
 						><input
 							type="checkbox"
 							name="weekdays"
