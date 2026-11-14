@@ -40,6 +40,15 @@
 
 <svelte:head>
 	<title>{when} · {data.municipality.name}</title>
+	<script type="application/ld+json">
+{JSON.stringify({
+		'@context': 'https://schema.org', '@type': 'SportsActivityLocation', name: f.name,
+		address: f.address, geo: f.latitude === null || f.longitude === null ? undefined : { '@type': 'GeoCoordinates', latitude: f.latitude, longitude: f.longitude },
+		isAccessibleForFree: false,
+		amenityFeature: [{ '@type': 'LocationFeatureSpecification', name: 'Accesibilidade', value: f.stepFreeAccess === 'yes' }],
+		url: `/${data.municipality.slug}/confirmar?facility=${f.id}`
+	})}
+	</script>
 </svelte:head>
 
 <main class="confirmar" class:easy={data.easy}>

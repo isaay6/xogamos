@@ -50,6 +50,9 @@
 <p class="k">{t(locale, 'dep.novo.k')}</p>
 <h1>{t(locale, 'dep.novo.titulo')}</h1>
 <p class="axuda">{t(locale, 'dep.novo.intro')}</p>
+<p class="axuda">
+	<a href="/deputacion/importar">Importar configuración / Importar configuración</a>
+</p>
 
 <form method="POST" class="datos">
 	{#if Object.keys(errors).length > 0}

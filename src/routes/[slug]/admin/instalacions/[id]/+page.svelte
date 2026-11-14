@@ -18,6 +18,8 @@
 		name: v.name ?? f.name,
 		location: v.location ?? f.location,
 		address: v.address ?? f.address,
+		latitude: v.latitude ?? (f.latitude === null ? '' : String(f.latitude)),
+		longitude: v.longitude ?? (f.longitude === null ? '' : String(f.longitude)),
 		units: v.units ?? String(f.units),
 		capacity: v.capacity ?? String(f.capacity),
 		slotMinutes: v.slotMinutes ?? String(f.slotMinutes),

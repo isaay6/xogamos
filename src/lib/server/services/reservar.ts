@@ -14,6 +14,8 @@ export type FacilityContext = {
 	facilityName: string;
 	location: string;
 	address: string;
+	latitude: number | null;
+	longitude: number | null;
 	/** Normas propias de la instalación (texto llano, puede estar vacío). */
 	rules: string;
 	/** Indicación de acceso en galego e, opcionalmente, castelán. */
@@ -52,6 +54,8 @@ export async function getFacilityContext(
 			facilityName: facilities.name,
 			location: facilities.location,
 			address: facilities.address,
+			latitude: facilities.latitude,
+			longitude: facilities.longitude,
 			rules: facilities.rules,
 			accessInfo: facilities.accessInfo,
 			accessInfoEs: facilities.accessInfoEs,

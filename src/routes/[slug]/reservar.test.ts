@@ -286,6 +286,32 @@ describe('confirmar', () => {
 		).body;
 		expect(body).toContain('Sen comprobar');
 	});
+	it('a ficha pública inclúe JSON-LD schema.org con xeolocalización e accesibilidade', async () => {
+		await db
+			.update(facilities)
+			.set({ latitude: 42.34, longitude: -7.86, stepFreeAccess: 'yes' })
+			.where(eq(facilities.id, fx.facilityId));
+		const out = await call<Promise<Record<string, unknown>>>(
+			loadConfirmar,
+			makeEvent({
+				db,
+				now: NOW,
+				params: { slug: 'ribadavila' },
+				url: confirmarUrl(fx, '12:00')
+			})
+		);
+		const body = render(ConfirmarPage as never, {
+			props: {
+				data: { ...out, locale: 'gl', municipality: { slug: 'ribadavila', name: 'Ribadávila' } },
+				form: null
+			} as never
+		}).body;
+		expect(body).toContain('type="application/ld+json"');
+		expect(body).toContain('SportsActivityLocation');
+		expect(body).toContain('GeoCoordinates');
+		expect(body).toContain('42.34');
+		expect(body).toContain('isAccessibleForFree');
+	});
 	it('unha reserva de balde non ofrece pagamento', async () => {
 		const own = await createTestDb();
 		const f = await seedFixture(own);

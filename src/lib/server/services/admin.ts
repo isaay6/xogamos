@@ -212,6 +212,8 @@ export type FacilityInput = {
 	name: string;
 	location: string;
 	address: string;
+	latitude?: number | null;
+	longitude?: number | null;
 	units: number;
 	capacity: number;
 	slotMinutes: number;

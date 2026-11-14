@@ -8,6 +8,7 @@ import {
 	foreignKey,
 	index,
 	integer,
+	doublePrecision,
 	jsonb,
 	uniqueIndex,
 	pgEnum,
@@ -327,6 +328,9 @@ export const facilities = pgTable(
 		name: text('name').notNull(),
 		location: text('location').notNull().default(''),
 		address: text('address').notNull().default(''),
+		// Coordenadas WGS84 opcionais, para reutilización como GeoJSON.
+		latitude: doublePrecision('latitude'),
+		longitude: doublePrecision('longitude'),
 		units: integer('units').notNull().default(1),
 		capacity: integer('capacity').notNull().default(1),
 		slotMinutes: integer('slot_minutes').notNull().default(60),
@@ -361,6 +365,14 @@ export const facilities = pgTable(
 		check('facilities_slot_minutes_positive', sql`${t.slotMinutes} > 0`),
 		check('facilities_units_positive', sql`${t.units} >= 1`),
 		check('facilities_capacity_positive', sql`${t.capacity} >= 1`),
+		check(
+			'facilities_latitude_range',
+			sql`${t.latitude} is null or ${t.latitude} between -90 and 90`
+		),
+		check(
+			'facilities_longitude_range',
+			sql`${t.longitude} is null or ${t.longitude} between -180 and 180`
+		),
 		check('facilities_price_resident_non_negative', sql`${t.priceResidentCents} >= 0`),
 		check(
 			'facilities_step_free_access_allowed',
