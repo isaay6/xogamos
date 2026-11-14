@@ -15,7 +15,8 @@ export const NOTICE_KINDS = [
 	'tournament_published',
 	'tournament_cancelled',
 	'tournament_reminder',
-	'opening'
+	'opening',
+	'waitlist_offer'
 ] as const;
 export type NoticeKind = (typeof NOTICE_KINDS)[number];
 
@@ -40,6 +41,8 @@ export type BookingNoticeParams = {
 	/** Aviso operativo para quen abre a instalación. */
 	openingAction?: 'created' | 'cancelled';
 	personName?: string;
+	/** Límite ISO dunha oferta da lista de espera. */
+	offeredUntil?: string;
 };
 
 export type RequestStatusNoticeParams = Partial<BookingNoticeParams> & {

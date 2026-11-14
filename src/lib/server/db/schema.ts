@@ -51,7 +51,15 @@ export const notificationKind = pgEnum('notification_kind', [
 	'tournament_published',
 	'tournament_cancelled',
 	'tournament_reminder',
-	'opening'
+	'opening',
+	'waitlist_offer'
+]);
+export const waitlistStatus = pgEnum('waitlist_status', [
+	'waiting',
+	'offered',
+	'booked',
+	'expired',
+	'withdrawn'
 ]);
 export const socialTariff = pgEnum('social_tariff', ['xove', 'maior', 'familia']);
 export const holidayMode = pgEnum('holiday_mode', ['closed', 'sunday_hours']);
@@ -669,6 +677,36 @@ export const bookings = pgTable(
 	]
 );
 
+// Cola por instalación y franja. El índice parcial de la migración impide duplicar
+// una espera viva aunque dos peticiones lleguen a la vez.
+export const waitlistEntries = pgTable(
+	'waitlist_entries',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		municipalityId: uuid('municipality_id').notNull(),
+		facilityId: uuid('facility_id').notNull(),
+		profileId: uuid('profile_id').notNull(),
+		startsAt: tstz('starts_at').notNull(),
+		createdAt: tstz('created_at').notNull().defaultNow(),
+		status: waitlistStatus('status').notNull().default('waiting'),
+		offeredUntil: tstz('offered_until')
+	},
+	(t) => [
+		index('waitlist_entries_slot_idx').on(t.facilityId, t.startsAt, t.createdAt),
+		index('waitlist_entries_profile_idx').on(t.profileId, t.status),
+		foreignKey({
+			name: 'waitlist_entries_facility_municipality_fk',
+			columns: [t.facilityId, t.municipalityId],
+			foreignColumns: [facilities.id, facilities.municipalityId]
+		}).onDelete('cascade'),
+		foreignKey({
+			name: 'waitlist_entries_profile_municipality_fk',
+			columns: [t.profileId, t.municipalityId],
+			foreignColumns: [municipalityProfiles.id, municipalityProfiles.municipalityId]
+		}).onDelete('cascade')
+	]
+);
+
 // Reservas de temporada de clubs y escuelas: cada fila es un día de la semana con su tramo
 // local, vigente de `from_date` a `to_date` (ambos incluidos). Ocupan la instalación (o una
 // unidad) como si fuesen reservas: `loadDayAvailability` las cuenta.
@@ -844,3 +882,4 @@ export type FacilityRow = typeof facilities.$inferSelect;
 export type SeasonRow = typeof seasonBookings.$inferSelect;
 export type PassRow = typeof passes.$inferSelect;
 export type EntityRow = typeof entities.$inferSelect;
+export type WaitlistEntryRow = typeof waitlistEntries.$inferSelect;

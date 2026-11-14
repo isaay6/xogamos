@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: EUPL-1.2
+import { fail } from '@sveltejs/kit';
 import { bookingQrValue } from '../../../lib/server/auth/booking-qr-secret';
 import {
 	addLocalDays,
@@ -11,8 +12,9 @@ import {
 import { getProfile, listMyBookings } from '../../../lib/server/services/profiles';
 import { listMyPasses } from '../../../lib/server/services/passes';
 import { listMyTournamentEntries } from '../../../lib/server/services/tournaments';
+import { leaveWaitlist, listMyWaitlist } from '../../../lib/server/services/waitlist';
 import { requireMunicipality } from '../municipality.server';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 /** Hasta dónde deja avanzar el calendario: un año desde el mes actual. */
 const MAX_MONTHS_AHEAD = 12;
@@ -32,7 +34,8 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 			groups: [],
 			calendar: null,
 			passes: [],
-			tournamentEntries: []
+			tournamentEntries: [],
+			waitlist: []
 		};
 
 	const profile = await getProfile(locals.db, municipality.id, locals.user.id);
@@ -45,9 +48,10 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 				includeOngoing: true
 			})
 		: [];
-	const [passes, tournamentEntries] = await Promise.all([
+	const [passes, tournamentEntries, waitlist] = await Promise.all([
 		profile ? listMyPasses(locals.db, municipality.id, profile.id, now) : [],
-		listMyTournamentEntries(locals.db, municipality.id, locals.user.id)
+		listMyTournamentEntries(locals.db, municipality.id, locals.user.id),
+		profile ? listMyWaitlist(locals.db, profile.id, now) : []
 	]);
 	const items = rows.map((b) => ({
 		id: b.id,
@@ -86,7 +90,8 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 			groups: groups.filter((g) => g.items.length > 0),
 			calendar: null,
 			passes: passes.map((p) => ({ ...p, qr: bookingQrValue(url, municipality.slug, p.id) })),
-			tournamentEntries
+			tournamentEntries,
+			waitlist: waitlist.map(({ entry, facilityName }) => ({ ...entry, facilityName }))
 		};
 	}
 
@@ -129,6 +134,20 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 			agenda: inMonth.filter((b) => b.date === selected)
 		},
 		passes: [],
-		tournamentEntries: []
+		tournamentEntries: [],
+		waitlist: waitlist.map(({ entry, facilityName }) => ({ ...entry, facilityName }))
 	};
+};
+
+export const actions: Actions = {
+	leaveWaitlist: async ({ request, locals, params }) => {
+		if (!locals.user) return fail(401, { error: 'LOGIN_REQUIRED' });
+		const id = (await request.formData()).get('id');
+		if (typeof id !== 'string') return fail(422, { error: 'NOT_FOUND' });
+		const municipality = await requireMunicipality(locals.db, params.slug);
+		const profile = await getProfile(locals.db, municipality.id, locals.user.id);
+		if (!profile) return fail(404, { error: 'NOT_FOUND' });
+		const result = await leaveWaitlist(locals.db, { id, profileId: profile.id, now: locals.now() });
+		return result.ok ? { leftWaitlist: true } : fail(404, { error: result.error });
+	}
 };

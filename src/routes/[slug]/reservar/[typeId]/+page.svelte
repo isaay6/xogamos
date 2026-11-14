@@ -12,7 +12,7 @@
 	import { textOn } from '#lib/ui/format.js';
 	import type { PageProps } from './$types';
 
-	let { data }: PageProps = $props();
+	let { data, form }: PageProps = $props();
 
 	const locale = $derived(data.locale);
 	const sport = $derived(data.sport);
@@ -63,6 +63,9 @@
 			<Bubble>{t(locale, 'vec.dia.pregunta', { deporte: name })}</Bubble>
 		</div>
 	</div>
+	{#if form?.joined}
+		<p class="sr" aria-live="polite">{t(locale, 'vec.espera.unida')}</p>
+	{/if}
 
 	<form method="GET" action={libre} {onchange} data-tour="dia-hora">
 		<p class="k" aria-hidden="true">{t(locale, 'dia.lenda')}</p>
@@ -89,7 +92,13 @@
 				<p class="pechada" role="status">{t(locale, 'dia.non_abre')}</p>
 			{/if}
 			<p class="k" aria-hidden="true">{t(locale, 'hora.lenda')}</p>
-			<HourGrid hours={data.hours} bind:selected={selectedTime} name="time" {locale} />
+			<HourGrid
+				hours={data.hours}
+				bind:selected={selectedTime}
+				name="time"
+				waitlistSlots={data.waitlistSlots}
+				{locale}
+			/>
 			<label class="calquera" class:on={selectedTime === '' && !shut} class:off={shut}>
 				<input type="radio" name="time" value="" bind:group={selectedTime} disabled={shut} />
 				<span>{t(locale, 'vec.dia.calquera')}</span>
@@ -104,6 +113,20 @@
 			>
 		</div>
 	</form>
+	{#if data.suggestions.length > 0}
+		<section class="suxestions" aria-labelledby="suxestions-titulo">
+			<h2 id="suxestions-titulo">{t(locale, 'vec.espera.proximas')}</h2>
+			<ul>
+				{#each data.suggestions as suggestion (suggestion.facilityId + suggestion.startsAt.toISOString())}
+					<li>
+						<a href={`${libre}?date=${suggestion.date}&time=${suggestion.time}`}
+							>{suggestion.time}</a
+						>
+					</li>
+				{/each}
+			</ul>
+		</section>
+	{/if}
 </main>
 
 <style>
@@ -206,5 +229,16 @@
 		margin-top: 16px;
 		padding: 10px 0 12px;
 		background: linear-gradient(to bottom, transparent, var(--branco) 30%);
+	}
+
+	.suxestions {
+		margin: 20px 0;
+	}
+	.suxestions ul {
+		padding-left: 20px;
+	}
+	.suxestions a {
+		color: var(--txt);
+		font-weight: 800;
 	}
 </style>

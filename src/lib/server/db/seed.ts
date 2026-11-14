@@ -47,7 +47,8 @@ import {
 	staffRoles,
 	users,
 	wallets,
-	walletMovements
+	walletMovements,
+	waitlistEntries
 } from './schema';
 
 /** Filas por INSERT: lonxe do límite de parámetros de Postgres (65 535). */
@@ -537,6 +538,26 @@ export async function seedDemo(
 			createdByUserId: mestreId,
 			createdAt: now
 		});
+
+		// Unha espera visible de Nerea nunha franxa xa completa. Non é unha persoa real.
+		const waitlistBooking = plan.bookings.find(
+			(booking) =>
+				booking.municipality === 'viana-do-bolo' &&
+				booking.status === 'confirmed' &&
+				booking.person !== 0 &&
+				booking.startsAt.getTime() > now.getTime()
+		);
+		if (waitlistBooking) {
+			const vianaId = muniId.get('viana-do-bolo')!;
+			await tx.insert(waitlistEntries).values({
+				municipalityId: vianaId,
+				facilityId: facId.get(waitlistBooking.facility)!,
+				profileId: profileId.get(`${personIds[0]}|${vianaId}`)!,
+				startsAt: waitlistBooking.startsAt,
+				createdAt: new Date(now.getTime() - 20 * 60_000),
+				status: 'waiting'
+			});
+		}
 
 		// Abonos ficticios de Viana do Bolo, para un deporte aberto.
 		const [vianaPassType] = await tx

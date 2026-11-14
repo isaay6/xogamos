@@ -127,6 +127,34 @@
 				</ul>
 			</section>
 		{/if}
+		{#if data.vista === 'lista' && data.waitlist.length > 0}
+			<section class="espera" aria-labelledby="espera-titulo">
+				<h2 id="espera-titulo">{t(locale, 'vec.espera.titulo')}</h2>
+				<ul>
+					{#each data.waitlist as entry (entry.id)}
+						<li>
+							<div>
+								<b>{entry.facilityName} · {formatTime(entry.startsAt)}</b>
+								<span>{t(locale, `vec.espera.${entry.status}` as MessageKey)}</span>
+								{#if entry.status === 'offered' && entry.offeredUntil}
+									<small>{t(locale, 'vec.espera.ata', { hora: formatTime(entry.offeredUntil) })}</small>
+								{/if}
+							</div>
+							{#if entry.status === 'offered'}
+								<a class="reservar-agora" href={`${base}/confirmar?facility=${entry.facilityId}&startsAt=${entry.startsAt.toISOString()}`}
+									>{t(locale, 'vec.espera.reservar')}</a
+							{/if}
+							{#if entry.status === 'waiting' || entry.status === 'offered'}
+								<form method="POST" action="?/leaveWaitlist">
+									<input type="hidden" name="id" value={entry.id} />
+									<button type="submit">{t(locale, 'vec.espera.saír')}</button>
+								</form>
+							{/if}
+						</li>
+					{/each}
+				</ul>
+			</section>
+		{/if}
 
 		{#if empty}
 			<div class="fala">
@@ -310,6 +338,15 @@
 		color: var(--texto-suave);
 		font-size: 14px;
 	}
+
+	.espera { margin: 16px 0 20px; }
+	.espera h2 { font-size: 19px; font-weight: 900; }
+	.espera ul { margin: 0; padding: 0; list-style: none; }
+	.espera li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--liña); }
+	.espera li > div { display: flex; flex: 1 1 190px; flex-direction: column; }
+	.espera span, .espera small { color: var(--texto-suave); font-size: 14px; }
+	.espera button, .reservar-agora { min-height: var(--toque); padding: 0 10px; border: 2px solid var(--txt); border-radius: 9px; background: var(--branco); color: var(--txt); font-weight: 800; text-decoration: none; }
+	.reservar-agora { display: inline-flex; align-items: center; background: var(--amarelo, #f6cf45); }
 
 	h1 {
 		margin-bottom: 12px;

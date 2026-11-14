@@ -7,6 +7,7 @@
 		hours,
 		selected = $bindable(null),
 		name,
+		waitlistSlots = {},
 		locale = 'gl'
 	}: {
 		hours: HourStatus[];
@@ -14,6 +15,8 @@
 		selected: string | null;
 		/** Nombre del grupo de radio en el formulario. */
 		name: string;
+		/** Franxas completas ás que se pode apuntar á espera, por hora local. */
+		waitlistSlots?: Record<string, { facilityId: string; startsAt: string }>;
 		locale?: Locale;
 	} = $props();
 
@@ -62,6 +65,16 @@
 				<small aria-hidden="true">{t(locale, 'hora.pasou.curto')}</small>
 			{/if}
 		</label>
+		{#if !h.free && !h.closed && !h.past && waitlistSlots[h.time]}
+			<button
+				class="waitlist"
+				type="submit"
+				name="waitlist"
+				value={`${waitlistSlots[h.time].facilityId}|${waitlistSlots[h.time].startsAt}`}
+				formaction="?/waitlist"
+				formmethod="POST"
+			>{t(locale, 'vec.espera.aviso')}</button
+		{/if}
 	{/each}
 </fieldset>
 
@@ -125,5 +138,13 @@
 		color: var(--gris);
 		text-decoration: line-through;
 		cursor: not-allowed;
+	}
+
+	.waitlist {
+		min-height: var(--toque);
+		border: 2px solid var(--txt);
+		border-radius: 10px;
+		background: var(--branco);
+		font-weight: 800;
 	}
 </style>
