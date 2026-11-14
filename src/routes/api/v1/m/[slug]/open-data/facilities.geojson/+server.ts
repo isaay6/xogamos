@@ -3,20 +3,27 @@ import { and, eq, isNotNull } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 import { facilities, facilityTypes } from '../../../../../../../lib/server/db/schema';
 import { requireMunicipality } from '../../../../../../../lib/server/http/guards';
-import { fail } from '../../../../../../../lib/server/http/respond';
 
 const CORS = { 'access-control-allow-origin': '*' };
+
+function withCors(response: Response) {
+	response.headers.set('access-control-allow-origin', '*');
+	return response;
+}
 
 /** Instalacións publicables: nunca inclúe persoas, reservas nin identificadores internos. */
 export const GET: RequestHandler = async (event) => {
 	const municipality = await requireMunicipality(event);
-	if (municipality instanceof Response) return municipality;
+	if (municipality instanceof Response) return withCors(municipality);
 	const rows = await event.locals.db
 		.select({ facility: facilities, sport: facilityTypes.nameGl })
 		.from(facilities)
 		.innerJoin(
 			facilityTypes,
-			and(eq(facilityTypes.id, facilities.typeId), eq(facilityTypes.municipalityId, facilities.municipalityId))
+			and(
+				eq(facilityTypes.id, facilities.typeId),
+				eq(facilityTypes.municipalityId, facilities.municipalityId)
+			)
 		)
 		.where(
 			and(

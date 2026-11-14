@@ -357,8 +357,14 @@ export const facilities = pgTable(
 		check('facilities_slot_minutes_positive', sql`${t.slotMinutes} > 0`),
 		check('facilities_units_positive', sql`${t.units} >= 1`),
 		check('facilities_capacity_positive', sql`${t.capacity} >= 1`),
-		check('facilities_latitude_range', sql`${t.latitude} is null or ${t.latitude} between -90 and 90`),
-		check('facilities_longitude_range', sql`${t.longitude} is null or ${t.longitude} between -180 and 180`),
+		check(
+			'facilities_latitude_range',
+			sql`${t.latitude} is null or ${t.latitude} between -90 and 90`
+		),
+		check(
+			'facilities_longitude_range',
+			sql`${t.longitude} is null or ${t.longitude} between -180 and 180`
+		),
 		check('facilities_price_resident_non_negative', sql`${t.priceResidentCents} >= 0`),
 		check(
 			'facilities_step_free_access_allowed',

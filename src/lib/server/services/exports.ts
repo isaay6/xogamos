@@ -50,50 +50,52 @@ export async function exportMunicipality(db: Db, municipalityId: string, now = n
 		.where(eq(facilities.municipalityId, municipalityId))
 		.orderBy(asc(facilities.name), asc(facilities.id));
 	const facilityIds = facs.map((f) => f.id);
-	const [types, hours, closed, holidayRows, profiles, roles, books, entityRows] = await Promise.all([
-		db
-			.select()
-			.from(facilityTypes)
-			.where(eq(facilityTypes.municipalityId, municipalityId))
-			.orderBy(asc(facilityTypes.nameGl), asc(facilityTypes.id)),
-		facilityIds.length
-			? db.select().from(openingHours).where(inArray(openingHours.facilityId, facilityIds))
-			: [],
-		facilityIds.length
-			? db.select().from(closures).where(inArray(closures.facilityId, facilityIds))
-			: [],
-		db.select().from(holidays).where(eq(holidays.municipalityId, municipalityId)),
-		db
-			.select({
-				id: municipalityProfiles.id,
-				municipalityId: municipalityProfiles.municipalityId,
-				userId: municipalityProfiles.userId,
-				isResident: municipalityProfiles.isResident,
-				noShowCount: municipalityProfiles.noShowCount,
-				penaltyUntil: municipalityProfiles.penaltyUntil,
-				displayName: users.displayName,
-				email: users.email,
-				phone: users.phone,
-				provider: users.provider
-			})
-			.from(municipalityProfiles)
-			.innerJoin(users, eq(users.id, municipalityProfiles.userId))
-			.where(eq(municipalityProfiles.municipalityId, municipalityId))
-			.orderBy(asc(users.displayName), asc(municipalityProfiles.id)),
-		db
-			.select({ id: staffRoles.id, userId: staffRoles.userId, role: staffRoles.role })
-			.from(staffRoles)
-			.where(eq(staffRoles.municipalityId, municipalityId)),
-		db
-			.select()
-			.from(bookings)
-			.where(eq(bookings.municipalityId, municipalityId))
-			.orderBy(asc(bookings.startsAt), asc(bookings.id)),
-		db
-			.select({ id: entities.id, name: entities.name })
-			.from(entities)
-			.where(eq(entities.municipalityId, municipalityId))
-	]);
+	const [types, hours, closed, holidayRows, profiles, roles, books, entityRows] = await Promise.all(
+		[
+			db
+				.select()
+				.from(facilityTypes)
+				.where(eq(facilityTypes.municipalityId, municipalityId))
+				.orderBy(asc(facilityTypes.nameGl), asc(facilityTypes.id)),
+			facilityIds.length
+				? db.select().from(openingHours).where(inArray(openingHours.facilityId, facilityIds))
+				: [],
+			facilityIds.length
+				? db.select().from(closures).where(inArray(closures.facilityId, facilityIds))
+				: [],
+			db.select().from(holidays).where(eq(holidays.municipalityId, municipalityId)),
+			db
+				.select({
+					id: municipalityProfiles.id,
+					municipalityId: municipalityProfiles.municipalityId,
+					userId: municipalityProfiles.userId,
+					isResident: municipalityProfiles.isResident,
+					noShowCount: municipalityProfiles.noShowCount,
+					penaltyUntil: municipalityProfiles.penaltyUntil,
+					displayName: users.displayName,
+					email: users.email,
+					phone: users.phone,
+					provider: users.provider
+				})
+				.from(municipalityProfiles)
+				.innerJoin(users, eq(users.id, municipalityProfiles.userId))
+				.where(eq(municipalityProfiles.municipalityId, municipalityId))
+				.orderBy(asc(users.displayName), asc(municipalityProfiles.id)),
+			db
+				.select({ id: staffRoles.id, userId: staffRoles.userId, role: staffRoles.role })
+				.from(staffRoles)
+				.where(eq(staffRoles.municipalityId, municipalityId)),
+			db
+				.select()
+				.from(bookings)
+				.where(eq(bookings.municipalityId, municipalityId))
+				.orderBy(asc(bookings.startsAt), asc(bookings.id)),
+			db
+				.select({ id: entities.id, name: entities.name })
+				.from(entities)
+				.where(eq(entities.municipalityId, municipalityId))
+		]
+	);
 	return {
 		format: 'plataforma-reservas/export' as const,
 		version: 1 as const,

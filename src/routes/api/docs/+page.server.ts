@@ -8,7 +8,11 @@ import.meta.glob('/src/routes/api/v1/**/*.openapi.ts', { eager: true });
 export const load: PageServerLoad = () => {
 	const document = buildOpenApiDocument() as { paths: Record<string, Record<string, any>> };
 	const endpoints = Object.entries(document.paths).flatMap(([path, methods]) =>
-		Object.entries(methods).map(([method, value]) => ({ path, method: method.toUpperCase(), ...(value as any) }))
+		Object.entries(methods).map(([method, value]) => ({
+			path,
+			method: method.toUpperCase(),
+			...(value as any)
+		}))
 	);
 	return { endpoints };
 };

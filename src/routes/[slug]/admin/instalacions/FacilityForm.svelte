@@ -143,8 +143,28 @@
 		</div>
 
 		<div class="prezos">
-			<div class="campo"><label for="f-lat">Latitude / Latitud</label><input id="f-lat" name="latitude" type="number" min="-90" max="90" step="any" bind:value={v.latitude} /></div>
-			<div class="campo"><label for="f-lon">Lonxitude / Longitud</label><input id="f-lon" name="longitude" type="number" min="-180" max="180" step="any" bind:value={v.longitude} /></div>
+			<div class="campo">
+				<label for="f-lat">Latitude / Latitud</label><input
+					id="f-lat"
+					name="latitude"
+					type="number"
+					min="-90"
+					max="90"
+					step="any"
+					bind:value={v.latitude}
+				/>
+			</div>
+			<div class="campo">
+				<label for="f-lon">Lonxitude / Longitud</label><input
+					id="f-lon"
+					name="longitude"
+					type="number"
+					min="-180"
+					max="180"
+					step="any"
+					bind:value={v.longitude}
+				/>
+			</div>
 		</div>
 
 		{#if mode === 'unit'}

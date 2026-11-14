@@ -84,7 +84,9 @@
 	{@render children()}
 {/if}
 
-<footer class="api-foot"><a href="/api/docs">Documentación da API / Documentación de la API</a></footer>
+<footer class="api-foot">
+	<a href="/api/docs">Documentación da API / Documentación de la API</a>
+</footer>
 
 <style>
 	.modo-demo {
@@ -115,5 +117,9 @@
 		margin-top: 3px;
 	}
 
-	.api-foot { padding: 18px; text-align: center; font-size: 14px; }
+	.api-foot {
+		padding: 18px;
+		text-align: center;
+		font-size: 14px;
+	}
 </style>
