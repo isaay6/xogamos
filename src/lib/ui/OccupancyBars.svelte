@@ -31,18 +31,22 @@
 </div>
 <details class="taboa">
 	<summary>{t(locale, 'adm.ocupacion.ver_taboa')}</summary>
-	<table>
-		<thead
-			><tr
-				><th scope="col">{t(locale, 'adm.ocupacion.instalacion')}</th><th scope="col"
-					>{t(locale, 'adm.ocupacion.porcentaxe')}</th
-				></tr
-			></thead
-		>
-		<tbody
-			>{#each rows as r (r.id)}<tr><td>{r.name}</td><td>{pct(r.occupancy)}%</td></tr>{/each}</tbody
-		>
-	</table>
+	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+	<div class="desliza" tabindex="0" role="region" aria-label={t(locale, 'adm.ocupacion.ver_taboa')}>
+		<table>
+			<thead
+				><tr
+					><th scope="col">{t(locale, 'adm.ocupacion.instalacion')}</th><th scope="col"
+						>{t(locale, 'adm.ocupacion.porcentaxe')}</th
+					></tr
+				></thead
+			>
+			<tbody
+				>{#each rows as r (r.id)}<tr><td>{r.name}</td><td>{pct(r.occupancy)}%</td></tr
+					>{/each}</tbody
+			>
+		</table>
+	</div>
 </details>
 
 <style>
@@ -94,5 +98,11 @@
 		padding: 6px 8px;
 		border-bottom: 1px solid var(--liña);
 		text-align: left;
+	}
+
+	/* As táboas largas desprázanse dentro do seu bloque, non a páxina (WCAG 1.4.10). */
+	.desliza {
+		overflow-x: auto;
+		max-width: 100%;
 	}
 </style>

@@ -64,24 +64,27 @@
 {#if ranked.length > 0}
 	<details class="taboa">
 		<summary>{t(locale, 'adm.heat.ver_taboa')}</summary>
-		<table>
-			<thead>
-				<tr>
-					<th scope="col">{t(locale, 'adm.heat.col.dia')}</th>
-					<th scope="col">{t(locale, 'adm.heat.col.hora')}</th>
-					<th scope="col">{t(locale, 'adm.heat.col.reservas')}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each ranked as p (`${p.weekday}-${p.hour}`)}
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+		<div class="desliza" tabindex="0" role="region" aria-label={t(locale, 'adm.heat.ver_taboa')}>
+			<table>
+				<thead>
 					<tr>
-						<td>{longDay(p.weekday)}</td>
-						<td>{p.hour}:00</td>
-						<td>{p.bookings}</td>
+						<th scope="col">{t(locale, 'adm.heat.col.dia')}</th>
+						<th scope="col">{t(locale, 'adm.heat.col.hora')}</th>
+						<th scope="col">{t(locale, 'adm.heat.col.reservas')}</th>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{#each ranked as p (`${p.weekday}-${p.hour}`)}
+						<tr>
+							<td>{longDay(p.weekday)}</td>
+							<td>{p.hour}:00</td>
+							<td>{p.bookings}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
 	</details>
 {/if}
 
@@ -135,5 +138,11 @@
 		padding: 6px 8px;
 		border-bottom: 1px solid var(--liña);
 		text-align: left;
+	}
+
+	/* As táboas largas desprázanse dentro do seu bloque, non a páxina (WCAG 1.4.10). */
+	.desliza {
+		overflow-x: auto;
+		max-width: 100%;
 	}
 </style>

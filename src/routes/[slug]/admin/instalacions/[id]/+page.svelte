@@ -469,12 +469,13 @@
 
 	.peche {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
 		gap: 10px;
 		align-items: end;
 	}
 
 	.campo {
+		min-width: 0;
 		display: flex;
 		flex-direction: column;
 		gap: 4px;
@@ -555,5 +556,11 @@
 		display: block;
 		color: var(--texto-suave);
 		font-weight: 600;
+	}
+
+	.foto-form > *,
+	.foto-form input[type='file'] {
+		min-width: 0;
+		max-width: 100%;
 	}
 </style>

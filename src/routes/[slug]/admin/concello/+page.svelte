@@ -134,6 +134,7 @@
 	.escudo,
 	.datos {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 12px;
 		max-width: 620px;
 		margin-bottom: 24px;
@@ -141,6 +142,12 @@
 
 	.escudo img {
 		object-fit: contain;
+	}
+
+	.escudo form > *,
+	.escudo input[type='file'] {
+		min-width: 0;
+		max-width: 100%;
 	}
 
 	.escudo form {

@@ -128,3 +128,12 @@ a {
 		}
 	}
 }
+
+/* Os controis e imaxes nunca máis anchos ca o seu bloque (reflow a 320 px, WCAG 1.4.10). */
+input,
+select,
+textarea,
+img,
+video {
+	max-width: 100%;
+}

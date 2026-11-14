@@ -28,38 +28,40 @@
 	<p class="ok" role="status">{t(data.locale, 'adm.persoal.engadido')}</p>
 {/if}
 
-<table data-tour="persoal">
-	<thead>
-		<tr>
-			<th>{t(data.locale, 'adm.persoal.nome')}</th>
-			<th>{t(data.locale, 'adm.persoal.rol')}</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		{#each data.staff as s (s.roleId)}
+<div class="desliza">
+	<table data-tour="persoal">
+		<thead>
 			<tr>
-				<td>{s.displayName}</td>
-				<td>{t(data.locale, `adm.rol.${s.role}` as MessageKey)}</td>
-				<td class="acc">
-					<!-- Dous pasos sen JS: «Quitar» abre a confirmación e só esta envía o formulario. -->
-					<details class="quitar">
-						<summary aria-label={t(data.locale, 'adm.persoal.quitar_a', { nome: s.displayName })}
-							>{t(data.locale, 'adm.persoal.quitar')}</summary
-						>
-						<form method="POST" action="?/quitar">
-							<input type="hidden" name="roleId" value={s.roleId} />
-							<p>{t(data.locale, 'adm.persoal.quitar.pregunta', { nome: s.displayName })}</p>
-							<Button type="submit" variant="perigo"
-								>{t(data.locale, 'adm.persoal.quitar.si')}</Button
-							>
-						</form>
-					</details>
-				</td>
+				<th>{t(data.locale, 'adm.persoal.nome')}</th>
+				<th>{t(data.locale, 'adm.persoal.rol')}</th>
+				<th></th>
 			</tr>
-		{/each}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{#each data.staff as s (s.roleId)}
+				<tr>
+					<td>{s.displayName}</td>
+					<td>{t(data.locale, `adm.rol.${s.role}` as MessageKey)}</td>
+					<td class="acc">
+						<!-- Dous pasos sen JS: «Quitar» abre a confirmación e só esta envía o formulario. -->
+						<details class="quitar">
+							<summary aria-label={t(data.locale, 'adm.persoal.quitar_a', { nome: s.displayName })}
+								>{t(data.locale, 'adm.persoal.quitar')}</summary
+							>
+							<form method="POST" action="?/quitar">
+								<input type="hidden" name="roleId" value={s.roleId} />
+								<p>{t(data.locale, 'adm.persoal.quitar.pregunta', { nome: s.displayName })}</p>
+								<Button type="submit" variant="perigo"
+									>{t(data.locale, 'adm.persoal.quitar.si')}</Button
+								>
+							</form>
+						</details>
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>
 
 <section class="engadir">
 	<h2>{t(data.locale, 'adm.persoal.engadir')}</h2>
@@ -248,5 +250,11 @@
 
 	.erro {
 		color: var(--perigo);
+	}
+
+	/* As táboas largas desprázanse dentro do seu bloque, non a páxina (WCAG 1.4.10). */
+	.desliza {
+		overflow-x: auto;
+		max-width: 100%;
 	}
 </style>

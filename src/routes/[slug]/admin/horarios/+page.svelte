@@ -360,6 +360,8 @@
 	}
 
 	.taboa {
+		/* Contén tamén os textos ocultos con position: absolute das celas. */
+		position: relative;
 		overflow-x: auto;
 	}
 

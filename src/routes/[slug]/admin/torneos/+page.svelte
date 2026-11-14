@@ -196,11 +196,13 @@
 <style>
 	.formulario {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 10px;
 		max-width: 640px;
 	}
 	label {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 4px;
 		font-weight: 700;
 	}
@@ -214,10 +216,12 @@
 		display: flex;
 		gap: 8px;
 		align-items: center;
+		flex-wrap: wrap;
 		margin: 12px 0;
 	}
 
 	details {
 		width: 100%;
+		min-width: 0;
 	}
 </style>

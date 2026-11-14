@@ -117,7 +117,7 @@
 
 	@media (max-width: 900px) {
 		.compor {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 
@@ -135,12 +135,13 @@
 	.campo {
 		display: flex;
 		flex-direction: column;
+		min-width: 0;
 		gap: 6px;
 	}
 
 	.datas {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
 		gap: 12px;
 	}
 
@@ -188,7 +189,7 @@
 	}
 
 	.mini {
-		max-width: 320px;
+		max-width: min(320px, 100%);
 		padding: 18px 14px 16px;
 		border: 4px solid var(--txt);
 		border-radius: 28px;

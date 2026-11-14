@@ -30,3 +30,7 @@ vite.config.ts.timestamp-*
 
 # Copias de seguridade locais
 /backups/
+
+# Probas no navegador
+/playwright-report
+/test-results

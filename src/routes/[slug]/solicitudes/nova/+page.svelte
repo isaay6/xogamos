@@ -166,8 +166,12 @@
 	}
 	.dous {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
 		gap: 12px;
+	}
+	.dous input {
+		min-width: 0;
+		width: 100%;
 	}
 	fieldset {
 		grid-template-columns: repeat(2, minmax(0, 1fr));

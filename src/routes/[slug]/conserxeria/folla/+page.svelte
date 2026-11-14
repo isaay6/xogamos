@@ -48,41 +48,44 @@
 	{#each data.sheet as g (g.facilityId)}
 		<section>
 			<h2>{g.facilityName}</h2>
-			<table>
-				<thead>
-					<tr>
-						<th scope="col" class="h">{t(locale, 'cons.folla.hora')}</th>
-						<th scope="col">{t(locale, 'cons.folla.nome')}</th>
-						<th scope="col">{t(locale, 'cons.folla.pista')}</th>
-						<th scope="col" class="p">{t(locale, 'cons.folla.pin')}</th>
-						<th scope="col" class="c">{t(locale, 'cons.folla.chegou')}</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each g.rows as r (r.key)}
-						<tr class:season={r.season}>
-							<td class="h">{r.time}</td>
-							<td>
-								{r.name}
-								{#if r.season}<small>· {t(locale, 'cons.folla.tempada')}</small>{/if}
-							</td>
-							<td
-								>{#if r.seats !== null}{t(locale, 'cons.folla.prazas', {
-										n: r.seats
-									})}{:else if r.unitIndex !== null}{t(locale, 'cons.folla.pista_n', {
-										n: r.unitIndex + 1
-									})}{:else}—{/if}</td
-							>
-							<td class="p">{r.code === null ? '—' : formatCode(r.code)}</td>
-							<td class="c">
-								{#if !r.season}
-									<span class="casa" aria-hidden="true">{r.attended ? '✓' : ''}</span>
-								{/if}
-							</td>
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<div class="desliza" tabindex="0" role="region" aria-label={g.facilityName}>
+				<table>
+					<thead>
+						<tr>
+							<th scope="col" class="h">{t(locale, 'cons.folla.hora')}</th>
+							<th scope="col">{t(locale, 'cons.folla.nome')}</th>
+							<th scope="col">{t(locale, 'cons.folla.pista')}</th>
+							<th scope="col" class="p">{t(locale, 'cons.folla.pin')}</th>
+							<th scope="col" class="c">{t(locale, 'cons.folla.chegou')}</th>
 						</tr>
-					{/each}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{#each g.rows as r (r.key)}
+							<tr class:season={r.season}>
+								<td class="h">{r.time}</td>
+								<td>
+									{r.name}
+									{#if r.season}<small>· {t(locale, 'cons.folla.tempada')}</small>{/if}
+								</td>
+								<td
+									>{#if r.seats !== null}{t(locale, 'cons.folla.prazas', {
+											n: r.seats
+										})}{:else if r.unitIndex !== null}{t(locale, 'cons.folla.pista_n', {
+											n: r.unitIndex + 1
+										})}{:else}—{/if}</td
+								>
+								<td class="p">{r.code === null ? '—' : formatCode(r.code)}</td>
+								<td class="c">
+									{#if !r.season}
+										<span class="casa" aria-hidden="true">{r.attended ? '✓' : ''}</span>
+									{/if}
+								</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
 		</section>
 	{/each}
 </article>
@@ -245,5 +248,11 @@
 		td {
 			border-color: #777;
 		}
+	}
+
+	/* As táboas largas desprázanse dentro do seu bloque, non a páxina (WCAG 1.4.10). */
+	.desliza {
+		overflow-x: auto;
+		max-width: 100%;
 	}
 </style>

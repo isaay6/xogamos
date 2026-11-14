@@ -334,13 +334,14 @@
 
 	@media (max-width: 900px) {
 		.grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 
 	.campos,
 	.dereita {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 16px;
 	}
 
@@ -375,7 +376,7 @@
 
 	.prezos {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr));
 		gap: 12px;
 	}
 
