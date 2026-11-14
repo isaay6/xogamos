@@ -412,8 +412,16 @@ export async function createBookingTx(
 		return err('SLOT_UNAVAILABLE');
 	}
 	if (!waitlist.mine && waitlist.offered.length > 0) {
-		const available = bookingMode === 'unit' ? slot.freeUnits.length : bookingMode === 'capacity' ? slot.remainingSeats : slot.free ? 1 : 0;
-		if (available <= waitlist.offered.length) return err('SLOT_UNAVAILABLE');
+		const available =
+			bookingMode === 'unit'
+				? slot.freeUnits.length
+				: bookingMode === 'capacity'
+					? slot.remainingSeats
+					: slot.free
+						? 1
+						: 0;
+		const requested = bookingMode === 'capacity' ? seats : 1;
+		if (available - waitlist.offered.length < requested) return err('SLOT_UNAVAILABLE');
 	}
 	// Só nas reservas dun club con límite de franxas seguidas.
 	if (entity && entity.maxConsecutiveSlots !== null) {

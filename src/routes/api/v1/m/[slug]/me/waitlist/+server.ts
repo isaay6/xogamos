@@ -24,6 +24,11 @@ export const POST: RequestHandler = async (event) => {
 	const body = await parseBody(event, JoinWaitlistBody);
 	if (!body.ok) return fail(body.error, { issues: body.issues });
 	const profile = await ensureProfile(event.locals.db, municipality.id, user.id);
-	const result = await joinWaitlist(event.locals.db, { ...body.value, municipalityId: municipality.id, profileId: profile.id, now: event.locals.now() });
+	const result = await joinWaitlist(event.locals.db, {
+		...body.value,
+		municipalityId: municipality.id,
+		profileId: profile.id,
+		now: event.locals.now()
+	});
 	return result.ok ? json(result.value, 201) : fail(result.error);
 };

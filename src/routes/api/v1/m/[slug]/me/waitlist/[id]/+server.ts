@@ -11,6 +11,10 @@ export const DELETE: RequestHandler = async (event) => {
 	const municipality = await requireMunicipality(event);
 	if (municipality instanceof Response) return municipality;
 	const profile = await ensureProfile(event.locals.db, municipality.id, user.id);
-	const result = await leaveWaitlist(event.locals.db, { id: event.params.id, profileId: profile.id, now: event.locals.now() });
+	const result = await leaveWaitlist(event.locals.db, {
+		id: event.params.id,
+		profileId: profile.id,
+		now: event.locals.now()
+	});
 	return result.ok ? json({ ok: true }) : fail(result.error);
 };

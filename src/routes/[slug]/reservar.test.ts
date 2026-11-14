@@ -19,7 +19,7 @@ import { load as loadInicio } from './+page.server';
 import { actions as confirmarActions, load as loadConfirmar } from './confirmar/+page.server';
 import { load as loadXa } from './reserva/[id]/xa/+page.server';
 import XaPage from './reserva/[id]/xa/+page.svelte';
-import { load as loadDia } from './reservar/[typeId]/+page.server';
+import { actions as diaActions, load as loadDia } from './reservar/[typeId]/+page.server';
 import { load as loadLibre } from './reservar/[typeId]/libre/+page.server';
 import { load as loadFacil } from './reservar/facil/+page.server';
 import { clampDate, parseDate } from './municipality.server';
@@ -101,6 +101,24 @@ describe('inicio', () => {
 });
 
 describe('día e hora', () => {
+	it('a acción progresiva apunta á lista de espera dunha hora completa', async () => {
+		const local = await createTestDb();
+		const fixture = await seedFixture(local);
+		await occupy(local, fixture, DATE, '18:00');
+		const event = postForm(
+			local,
+			{ id: fixture.userId, displayName: 'Nerea Veciña' },
+			`http://localhost/ribadavila/reservar/${fixture.typeId}?date=${DATE}`,
+			{ waitlist: `${fixture.facilityId}|${localDateTimeToUtc(DATE, '18:00').toISOString()}` }
+		);
+		(event as { params: Record<string, string> }).params = {
+			slug: 'ribadavila',
+			typeId: fixture.typeId
+		};
+		const result = await call<Promise<{ joined: boolean }>>(diaActions.waitlist, event);
+		expect(result.joined).toBe(true);
+	});
+
 	it('sen date elixe 2026-11-24', async () => {
 		const out = await call<Promise<{ date: string }>>(
 			loadDia,
