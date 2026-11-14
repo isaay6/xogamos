@@ -10,7 +10,8 @@ registerRoute({
 	summary: 'My waitlist entries',
 	auth: 'user',
 	params: z.object({ slug: Slug }),
-	response: z.array(z.unknown())
+	response: z.array(z.unknown()),
+	errors: ['NOT_FOUND']
 });
 registerRoute({
 	method: 'post',
@@ -21,4 +22,13 @@ registerRoute({
 	body: JoinWaitlistBody,
 	response: z.unknown(),
 	errors: ['NOT_FOUND', 'SLOT_AVAILABLE', 'WAITLIST_LIMIT']
+});
+registerRoute({
+	method: 'delete',
+	path: '/api/v1/m/{slug}/me/waitlist/{id}',
+	summary: 'Leave a waitlist',
+	auth: 'user',
+	params: z.object({ slug: Slug, id: Uuid }),
+	response: z.unknown(),
+	errors: ['NOT_FOUND']
 });

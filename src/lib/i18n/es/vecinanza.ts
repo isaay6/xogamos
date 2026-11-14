@@ -21,6 +21,13 @@ export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
 	'vec.espera.booked': 'Reserva hecha',
 	'vec.espera.expired': 'Oferta caducada',
 	'vec.espera.withdrawn': 'Retirada',
+	'vec.espera.xa': 'Ya estás en la lista',
+	'vec.espera.erro.xa': 'Ya estabas en la lista de espera de esta hora.',
+	'vec.espera.erro.limite':
+		'Ya tienes tres listas de espera abiertas. Sal de alguna para apuntarte en otra.',
+	'vec.espera.erro.entrar': 'Entra con tu identidad para apuntarte a la lista de espera.',
+	'vec.espera.erro.libre': 'Esta hora ya tiene sitio: puedes reservarla directamente.',
+	'vec.espera.erro.xeral': 'No pudimos apuntarte. Prueba de nuevo.',
 	'vec.espera.proximas': 'Próximas horas libres',
 	'vec.torneo.subtitulo': 'Torneos y eventos abiertos a los vecinos. Inscríbete desde aquí.',
 	'vec.torneo.datas': 'Del {desde} al {ata}',

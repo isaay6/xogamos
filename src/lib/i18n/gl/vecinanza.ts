@@ -20,6 +20,13 @@ export const glVecinanza = {
 	'vec.espera.booked': 'Reserva feita',
 	'vec.espera.expired': 'Oferta caducada',
 	'vec.espera.withdrawn': 'Retirada',
+	'vec.espera.xa': 'Xa estás na lista',
+	'vec.espera.erro.xa': 'Xa estabas na lista de espera desta hora.',
+	'vec.espera.erro.limite':
+		'Xa tes tres listas de espera abertas. Sae dalgunha para apuntarte noutra.',
+	'vec.espera.erro.entrar': 'Entra coa túa identidade para apuntarte á lista de espera.',
+	'vec.espera.erro.libre': 'Esta hora xa ten sitio: podes reservala directamente.',
+	'vec.espera.erro.xeral': 'Non puidemos apuntarte. Proba de novo.',
 	'vec.espera.proximas': 'Horas libres próximas',
 	'vec.torneo.subtitulo': 'Torneos e eventos abertos á veciñanza. Inscríbete desde aquí.',
 	'vec.torneo.datas': 'Do {desde} ao {ata}',

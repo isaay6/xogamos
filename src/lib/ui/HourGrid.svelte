@@ -8,6 +8,7 @@
 		selected = $bindable(null),
 		name,
 		waitlistSlots = {},
+		waitingTimes = [],
 		locale = 'gl'
 	}: {
 		hours: HourStatus[];
@@ -17,6 +18,8 @@
 		name: string;
 		/** Franxas completas ás que se pode apuntar á espera, por hora local. */
 		waitlistSlots?: Record<string, { facilityId: string; startsAt: string }>;
+		/** Horas nas que esta persoa xa está na lista de espera. */
+		waitingTimes?: string[];
 		locale?: Locale;
 	} = $props();
 
@@ -38,43 +41,49 @@
 <fieldset class="hours">
 	<legend class="sr">{t(locale, 'hora.lenda')}</legend>
 	{#each hours as h (h.time)}
-		<label
-			class="hour"
-			class:oc={!h.free && !h.closed}
-			class:pech={!!h.closed}
-			class:on={h.free && selected === h.time}
-		>
-			<input
-				type="radio"
-				{name}
-				value={h.time}
-				bind:group={selected}
-				disabled={!h.free}
-				aria-label={h.free ? undefined : unavailable(h)}
-			/>
-			<span>{h.time}</span>
-			{#if h.closed}
-				<small aria-hidden="true"
-					>{h.closed.reason.startsWith('Evento:')
-						? h.closed.reason
-						: t(locale, 'hora.pechada.curto')}</small
+		<div class="celda">
+			<label
+				class="hour"
+				class:oc={!h.free && !h.closed}
+				class:pech={!!h.closed}
+				class:on={h.free && selected === h.time}
+			>
+				<input
+					type="radio"
+					{name}
+					value={h.time}
+					bind:group={selected}
+					disabled={!h.free}
+					aria-label={h.free ? undefined : unavailable(h)}
+				/>
+				<span>{h.time}</span>
+				{#if h.closed}
+					<small aria-hidden="true"
+						>{h.closed.reason.startsWith('Evento:')
+							? h.closed.reason
+							: t(locale, 'hora.pechada.curto')}</small
+					>
+				{:else if h.free && h.remainingSeats !== null}
+					<small>{t(locale, 'hora.libres', { n: h.remainingSeats })}</small>
+				{:else if h.past}
+					<small aria-hidden="true">{t(locale, 'hora.pasou.curto')}</small>
+				{/if}
+			</label>
+			{#if !h.free && !h.closed && !h.past && waitingTimes.includes(h.time)}
+				<small class="xa">{t(locale, 'vec.espera.xa')}</small>
+			{:else if !h.free && !h.closed && !h.past && waitlistSlots[h.time]}
+				<button
+					class="waitlist"
+					type="submit"
+					name="waitlist"
+					value={`${waitlistSlots[h.time].facilityId}|${waitlistSlots[h.time].startsAt}`}
+					formaction="?/waitlist"
+					formmethod="POST"
+					aria-label={`${t(locale, 'vec.espera.aviso')} · ${h.time}`}
+					>{t(locale, 'vec.espera.aviso')}</button
 				>
-			{:else if h.free && h.remainingSeats !== null}
-				<small>{t(locale, 'hora.libres', { n: h.remainingSeats })}</small>
-			{:else if h.past}
-				<small aria-hidden="true">{t(locale, 'hora.pasou.curto')}</small>
 			{/if}
-		</label>
-		{#if !h.free && !h.closed && !h.past && waitlistSlots[h.time]}
-			<button
-				class="waitlist"
-				type="submit"
-				name="waitlist"
-				value={`${waitlistSlots[h.time].facilityId}|${waitlistSlots[h.time].startsAt}`}
-				formaction="?/waitlist"
-				formmethod="POST"
-			>{t(locale, 'vec.espera.aviso')}</button
-		{/if}
+		</div>
 	{/each}
 </fieldset>
 
@@ -140,11 +149,36 @@
 		cursor: not-allowed;
 	}
 
+	/* Cada hora coa súa acción debaixo, para que se saiba a que hora se refire. */
+	.celda {
+		display: grid;
+		gap: 4px;
+		align-content: start;
+	}
+
 	.waitlist {
 		min-height: var(--toque);
-		border: 2px solid var(--txt);
+		padding: 4px;
+		border: 2px dashed var(--txt);
 		border-radius: 10px;
 		background: var(--branco);
+		color: var(--txt);
+		font: inherit;
+		font-size: 12px;
 		font-weight: 800;
+		line-height: 1.15;
+		cursor: pointer;
+	}
+
+	.xa {
+		padding: 4px;
+		font-size: 12px;
+		font-weight: 800;
+		text-align: center;
+	}
+
+	.waitlist:focus-visible {
+		outline: 3px solid var(--foco);
+		outline-offset: 2px;
 	}
 </style>

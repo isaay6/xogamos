@@ -24,6 +24,35 @@
 
 	const locale = $derived(data.locale);
 	const f = $derived(data.facility);
+	// Ficha schema.org da instalación para buscadores e reutilizadores (sen datos persoais).
+	// `<` escápase para que o JSON non poida pechar a etiqueta script.
+	const jsonLd = $derived(
+		'<script type="application/ld+json">' +
+			JSON.stringify({
+				'@context': 'https://schema.org',
+				'@type': 'SportsActivityLocation',
+				name: f.name,
+				address: f.address || undefined,
+				geo:
+					f.latitude === null || f.longitude === null
+						? undefined
+						: { '@type': 'GeoCoordinates', latitude: f.latitude, longitude: f.longitude },
+				isAccessibleForFree: false,
+				amenityFeature:
+					f.stepFreeAccess === null
+						? undefined
+						: [
+								{
+									'@type': 'LocationFeatureSpecification',
+									name: 'Acceso sen chanzos',
+									value: f.stepFreeAccess === 'yes'
+								}
+							],
+				url: `/${data.municipality.slug}/confirmar?facility=${f.id}`
+			}).replace(/</g, '\\u003c') +
+			'</' +
+			'script>'
+	);
 	const accessInfo = $derived(locale === 'es' ? f.accessInfoEs || f.accessInfo : f.accessInfo);
 	const sportName = $derived(locale === 'es' ? f.nameEs : f.nameGl);
 	const noun = $derived(nounFor(f.bookingMode, f.mascot));
@@ -40,15 +69,7 @@
 
 <svelte:head>
 	<title>{when} · {data.municipality.name}</title>
-	<script type="application/ld+json">
-{JSON.stringify({
-		'@context': 'https://schema.org', '@type': 'SportsActivityLocation', name: f.name,
-		address: f.address, geo: f.latitude === null || f.longitude === null ? undefined : { '@type': 'GeoCoordinates', latitude: f.latitude, longitude: f.longitude },
-		isAccessibleForFree: false,
-		amenityFeature: [{ '@type': 'LocationFeatureSpecification', name: 'Accesibilidade', value: f.stepFreeAccess === 'yes' }],
-		url: `/${data.municipality.slug}/confirmar?facility=${f.id}`
-	})}
-	</script>
+	{@html jsonLd}
 </svelte:head>
 
 <main class="confirmar" class:easy={data.easy}>

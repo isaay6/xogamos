@@ -91,7 +91,11 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 			calendar: null,
 			passes: passes.map((p) => ({ ...p, qr: bookingQrValue(url, municipality.slug, p.id) })),
 			tournamentEntries,
-			waitlist: waitlist.map(({ entry, facilityName }) => ({ ...entry, facilityName }))
+			waitlist: waitlist.map(({ entry, facilityName }) => ({
+				...entry,
+				facilityName,
+				date: localDateOf(entry.startsAt)
+			}))
 		};
 	}
 
@@ -135,7 +139,11 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 		},
 		passes: [],
 		tournamentEntries: [],
-		waitlist: waitlist.map(({ entry, facilityName }) => ({ ...entry, facilityName }))
+		waitlist: waitlist.map(({ entry, facilityName }) => ({
+			...entry,
+			facilityName,
+			date: localDateOf(entry.startsAt)
+		}))
 	};
 };
 

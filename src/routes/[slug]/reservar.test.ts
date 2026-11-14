@@ -305,7 +305,7 @@ describe('confirmar', () => {
 				data: { ...out, locale: 'gl', municipality: { slug: 'ribadavila', name: 'Ribadávila' } },
 				form: null
 			} as never
-		}).body;
+		}).head;
 		expect(body).toContain('type="application/ld+json"');
 		expect(body).toContain('SportsActivityLocation');
 		expect(body).toContain('GeoCoordinates');

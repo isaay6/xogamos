@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: EUPL-1.2
 import { error, fail } from '@sveltejs/kit';
-import { and, eq } from 'drizzle-orm';
-import { facilities } from '../../../../../lib/server/db/schema';
+import { and, eq, inArray } from 'drizzle-orm';
 import {
-	localDateOf,
-	localDateTimeToUtc,
-	localTimeOf
-} from '../../../../../lib/server/domain/time';
-import { loadDayAvailability } from '../../../../../lib/server/services/bookings';
-import { ensureProfile } from '../../../../../lib/server/services/profiles';
+	facilities,
+	municipalityProfiles,
+	waitlistEntries
+} from '../../../../lib/server/db/schema';
+import { localDateOf, localDateTimeToUtc, localTimeOf } from '../../../../lib/server/domain/time';
+import { loadDayAvailability } from '../../../../lib/server/services/bookings';
+import { ensureProfile } from '../../../../lib/server/services/profiles';
 import { dayStrip, hoursForDay, listSports } from '../../../../lib/server/services/search';
-import { joinWaitlist, suggestAlternatives } from '../../../../../lib/server/services/waitlist';
+import { joinWaitlist, suggestAlternatives } from '../../../../lib/server/services/waitlist';
 import { parseDate, requireMunicipality } from '../../municipality.server';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -76,7 +76,37 @@ export const load: PageServerLoad = async ({ params, url, locals }) => {
 		date: localDateOf(suggestion.startsAt),
 		time: localTimeOf(suggestion.startsAt)
 	}));
-	return { sport, days, date, hours, waitlistSlots, suggestions };
+	// Horas do día nas que esta persoa xa espera, para non ofrecerlle apuntarse outra vez.
+	const waitingTimes: string[] = [];
+	if (locals.user && candidates.length > 0) {
+		const [profile] = await locals.db
+			.select({ id: municipalityProfiles.id })
+			.from(municipalityProfiles)
+			.where(
+				and(
+					eq(municipalityProfiles.municipalityId, municipality.id),
+					eq(municipalityProfiles.userId, locals.user.id)
+				)
+			);
+		if (profile) {
+			const entries = await locals.db
+				.select({ startsAt: waitlistEntries.startsAt })
+				.from(waitlistEntries)
+				.where(
+					and(
+						eq(waitlistEntries.profileId, profile.id),
+						inArray(waitlistEntries.status, ['waiting', 'offered']),
+						inArray(
+							waitlistEntries.facilityId,
+							candidates.map((c) => c.id)
+						)
+					)
+				);
+			for (const e of entries)
+				if (localDateOf(e.startsAt) === date) waitingTimes.push(localTimeOf(e.startsAt));
+		}
+	}
+	return { sport, days, date, hours, waitlistSlots, waitingTimes, suggestions };
 };
 
 export const actions: Actions = {

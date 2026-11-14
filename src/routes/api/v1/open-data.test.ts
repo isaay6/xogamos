@@ -93,7 +93,7 @@ describe('catálogo DCAT-AP-ES', () => {
 
 describe('documentación lexible', () => {
 	it('renderiza os endpoints rexistrados, incluído GeoJSON', () => {
-		const data = docs({} as never);
+		const data = docs({} as never) as unknown as { endpoints: unknown[] };
 		expect(data.endpoints).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({

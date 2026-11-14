@@ -14,6 +14,15 @@
 
 	let { data, form }: PageProps = $props();
 
+	/** Texto do resultado de apuntarse á lista de espera. */
+	function esperaErro(code: unknown): MessageKey {
+		if (code === 'ALREADY_WAITING') return 'vec.espera.erro.xa';
+		if (code === 'WAITLIST_LIMIT') return 'vec.espera.erro.limite';
+		if (code === 'LOGIN_REQUIRED') return 'vec.espera.erro.entrar';
+		if (code === 'SLOT_AVAILABLE') return 'vec.espera.erro.libre';
+		return 'vec.espera.erro.xeral';
+	}
+
 	const locale = $derived(data.locale);
 	const sport = $derived(data.sport);
 	const name = $derived(locale === 'es' ? sport.nameEs : sport.nameGl);
@@ -63,9 +72,13 @@
 			<Bubble>{t(locale, 'vec.dia.pregunta', { deporte: name })}</Bubble>
 		</div>
 	</div>
-	{#if form?.joined}
-		<p class="sr" aria-live="polite">{t(locale, 'vec.espera.unida')}</p>
-	{/if}
+	<div aria-live="polite">
+		{#if form?.joined}
+			<p class="espera-ok">{t(locale, 'vec.espera.unida')}</p>
+		{:else if form?.error}
+			<p class="espera-erro">{t(locale, esperaErro(form.error))}</p>
+		{/if}
+	</div>
 
 	<form method="GET" action={libre} {onchange} data-tour="dia-hora">
 		<p class="k" aria-hidden="true">{t(locale, 'dia.lenda')}</p>
@@ -97,6 +110,7 @@
 				bind:selected={selectedTime}
 				name="time"
 				waitlistSlots={data.waitlistSlots}
+				waitingTimes={data.waitingTimes}
 				{locale}
 			/>
 			<label class="calquera" class:on={selectedTime === '' && !shut} class:off={shut}>
@@ -240,5 +254,23 @@
 	.suxestions a {
 		color: var(--txt);
 		font-weight: 800;
+	}
+
+	.espera-ok,
+	.espera-erro {
+		margin: 0 0 12px;
+		padding: 10px 12px;
+		border: 2px solid var(--txt);
+		border-radius: 10px;
+		font-weight: 800;
+	}
+
+	.espera-ok {
+		background: var(--ceo);
+	}
+
+	.espera-erro {
+		border-color: var(--perigo);
+		color: var(--perigo);
 	}
 </style>

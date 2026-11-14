@@ -19,14 +19,12 @@ beforeEach(async () => {
 		.update(facilities)
 		.set({ latitude: 42.34, longitude: -7.86 })
 		.where(eq(facilities.id, fx.facilityId));
-	await db
-		.insert(holidays)
-		.values({
-			municipalityId: fx.municipalityId,
-			date: '2026-12-25',
-			name: 'Nadal',
-			mode: 'closed'
-		});
+	await db.insert(holidays).values({
+		municipalityId: fx.municipalityId,
+		date: '2026-12-25',
+		name: 'Nadal',
+		mode: 'closed'
+	});
 });
 
 describe('importMunicipalityConfig', () => {

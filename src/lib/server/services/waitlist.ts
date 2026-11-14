@@ -115,14 +115,20 @@ export async function leaveWaitlist(
 	db: Db,
 	input: { id: string; profileId: string; now: Date }
 ): Promise<Result<void, 'NOT_FOUND' | 'NOT_WAITLIST_OWNER'>> {
-	const [entry] = await db.select().from(waitlistEntries).where(eq(waitlistEntries.id, input.id));
-	if (!entry) return err('NOT_FOUND');
-	if (entry.profileId !== input.profileId) return err('NOT_WAITLIST_OWNER');
-	await db
-		.update(waitlistEntries)
-		.set({ status: 'withdrawn', offeredUntil: null })
-		.where(eq(waitlistEntries.id, input.id));
-	return ok(undefined);
+	return db.transaction(async (tx) => {
+		const [entry] = await tx.select().from(waitlistEntries).where(eq(waitlistEntries.id, input.id));
+		if (!entry) return err('NOT_FOUND');
+		if (entry.profileId !== input.profileId) return err('NOT_WAITLIST_OWNER');
+		await facilityLockQuery(tx, entry.municipalityId, entry.facilityId);
+		await tx
+			.update(waitlistEntries)
+			.set({ status: 'withdrawn', offeredUntil: null })
+			.where(eq(waitlistEntries.id, input.id));
+		// Quen renuncia a unha oferta vixente deixa a praza á seguinte da cola.
+		if (entry.status === 'offered')
+			await offerSlot(tx, entry.municipalityId, entry.facilityId, entry.startsAt, input.now);
+		return ok(undefined);
+	});
 }
 
 export async function listMyWaitlist(db: Db, profileId: string, now: Date) {
