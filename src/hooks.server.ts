@@ -17,7 +17,7 @@ import {
 import { users } from './lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
-const ACCESSIBILITY_COOKIE = 'quenda_accessibility';
+const ACCESSIBILITY_COOKIE = 'xogamos_accessibility';
 
 // Una sola instancia por proceso, creada en la primera petición.
 let db: Promise<Db> | undefined;

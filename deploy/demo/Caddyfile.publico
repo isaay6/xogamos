@@ -1,0 +1,5 @@
+# Demo aberta (desde o día da entrega).
+{$DEMO_HOST} {
+	encode zstd gzip
+	reverse_proxy app:3000
+}

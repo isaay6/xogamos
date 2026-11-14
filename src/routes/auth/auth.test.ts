@@ -308,8 +308,8 @@ describe('flujo de acceso simulado', () => {
 		expect(data.provider).toBe('clave');
 		expect(data.state).toBe('abc');
 		// Destacadas primeiro (Nerea, a administradora de Viana, a Deputación); o resto, aparte.
-		// Isay Rodríguez, o perfil mestre de probas, vai primeiro; despois Nerea.
-		expect(data.featured[0].displayName).toBe('Isay Rodríguez');
+		// Cibrán Ventosela, o perfil mestre de probas, vai primeiro; despois Nerea.
+		expect(data.featured[0].displayName).toBe('Cibrán Ventosela');
 		expect(data.featured[1].displayName).toBe('Nerea Cabaleiro');
 		const names = data.featured.map((i) => i.displayName);
 		expect(names).toContain('Amalia Carballal');

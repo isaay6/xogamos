@@ -213,7 +213,7 @@ const FEATURED: Pick<DemoPerson, 'name' | 'home' | 'profiles'>[] = [
 	},
 	{ name: 'Olaia Pazó', home: 'a-veiga', profiles: { 'a-veiga': true, 'viana-do-bolo': false } },
 	{
-		name: 'Isay Rodríguez',
+		name: 'Cibrán Ventosela',
 		home: 'viana-do-bolo',
 		profiles: { 'viana-do-bolo': true, 'a-rua': false, verin: false }
 	}
@@ -244,8 +244,8 @@ export function generateDemoPeople(): DemoPerson[] {
 	const people: DemoPerson[] = FEATURED.map((f, i) => ({
 		...f,
 		subject: demoPersonSubject(i),
-		// Isay Rodríguez (o perfil de probas con todos os papeis) entra sempre por Cl@ve.
-		provider: f.name === 'Isay Rodríguez' ? 'clave' : demoPersonProvider(i),
+		// Cibrán Ventosela (o perfil de probas con todos os papeis) entra sempre por Cl@ve.
+		provider: f.name === 'Cibrán Ventosela' ? 'clave' : demoPersonProvider(i),
 		email: null,
 		phone: null,
 		activity: 1,

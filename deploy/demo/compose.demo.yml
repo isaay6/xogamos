@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: EUPL-1.2
+# Demo pública con datos ficticios: Caddy (HTTPS automático) diante da aplicación.
+# Uso: docker compose -f compose.yml -f deploy/demo/compose.demo.yml --env-file deploy/demo/.env up -d
+services:
+  app:
+    environment:
+      DEMO: '1'
+      IDENTITY_MODE: simulated
+      DEMO_DATABASE_IS_DISPOSABLE: '1'
+      PUBLIC_ORIGIN: https://${DEMO_HOST}
+
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      DEMO_HOST: ${DEMO_HOST}
+      DEMO_USER: ${DEMO_USER:-xurado}
+      DEMO_PASS_HASH: ${DEMO_PASS_HASH:-}
+    volumes:
+      - ./deploy/demo/${CADDYFILE:-Caddyfile.privado}:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  caddy-data:
+  caddy-config:

@@ -174,7 +174,7 @@ describe('seedDemo', () => {
 		expect(await db.$count(municipalities)).toBe(11);
 		expect(await db.$count(facilities)).toBe(49);
 		expect(await db.$count(bookings)).toBe(first.bookings);
-		// +1 da Deputación, +3 dos papeis de Isay e +1 da Policía Local de Viana.
+		// +1 da Deputación, +3 dos papeis de Cibrán e +1 da Policía Local de Viana.
 		expect(await db.$count(staffRoles)).toBe(DEMO_STAFF.length + 5);
 		expect(await db.$count(users)).toBe(DEMO_PEOPLE.length + DEMO_STAFF.length + 1);
 		expect(await db.select().from(users).where(eq(users.subject, 'demo-3'))).toHaveLength(0);
@@ -316,9 +316,9 @@ describe('seedDemo', () => {
 		expect(staff).toContainEqual({ name: 'Celia Rivas', role: 'deputacion', slug: null });
 		expect(staff).toEqual(
 			expect.arrayContaining([
-				{ name: 'Isay Rodríguez', role: 'admin', slug: 'viana-do-bolo' },
-				{ name: 'Isay Rodríguez', role: 'conserxe', slug: 'viana-do-bolo' },
-				{ name: 'Isay Rodríguez', role: 'deputacion', slug: null }
+				{ name: 'Cibrán Ventosela', role: 'admin', slug: 'viana-do-bolo' },
+				{ name: 'Cibrán Ventosela', role: 'conserxe', slug: 'viana-do-bolo' },
+				{ name: 'Cibrán Ventosela', role: 'deputacion', slug: null }
 			])
 		);
 		const seededPasses = await db
@@ -329,7 +329,7 @@ describe('seedDemo', () => {
 			.innerJoin(municipalityProfiles, eq(municipalityProfiles.id, passes.profileId))
 			.innerJoin(users, eq(users.id, municipalityProfiles.userId))
 			.where(eq(passTypes.municipalityId, viana.id));
-		expect(seededPasses.map((p) => p.name).sort()).toEqual(['Isay Rodríguez', 'Nerea Cabaleiro']);
+		expect(seededPasses.map((p) => p.name).sort()).toEqual(['Cibrán Ventosela', 'Nerea Cabaleiro']);
 		expect(seededPasses.every((p) => p.sport === 'Pavillón')).toBe(true);
 		expect(new Set(seededPasses.map((p) => p.pin)).size).toBe(2);
 	});
@@ -371,7 +371,7 @@ describe('seedDemo', () => {
 		expect(declared.every((p) => !p.isResident)).toBe(true);
 	});
 
-	it('acepta as normas nos perfís con reservas e dálle a Isay unha racha recente', async () => {
+	it('acepta as normas nos perfís con reservas e dálle a Cibrán unha racha recente', async () => {
 		const db = await createTestDb();
 		await seedDemo(db, SMALL);
 		const bookedProfiles = await db
@@ -379,11 +379,11 @@ describe('seedDemo', () => {
 			.from(bookings)
 			.innerJoin(municipalityProfiles, eq(municipalityProfiles.id, bookings.profileId));
 		expect(bookedProfiles.every((profile) => profile.accepted !== null)).toBe(true);
-		const isay = DEMO_PEOPLE.findIndex((person) => person.name === 'Isay Rodríguez');
+		const mestre = DEMO_PEOPLE.findIndex((person) => person.name === 'Cibrán Ventosela');
 		const plan = planDemoWorld(SMALL);
 		const recentWeeks = new Set(
 			plan.bookings
-				.filter((booking) => booking.person === isay && booking.status === 'attended')
+				.filter((booking) => booking.person === mestre && booking.status === 'attended')
 				.map((booking) =>
 					Math.floor((NOW.getTime() - booking.startsAt.getTime()) / (7 * 86_400_000))
 				)

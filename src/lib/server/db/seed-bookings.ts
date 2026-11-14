@@ -623,13 +623,13 @@ export function planDemoWorld(opts: { now: Date; weeksBack?: number }): DemoPlan
 	story('Rebeca Viñas Toimil', 'viana-pavillon', 21, '10:00', '9903');
 	story('Rebeca Viñas Toimil', 'viana-futbol-7', 28, '10:00', '9904');
 	story('Rebeca Viñas Toimil', 'viana-pavillon', 35, '10:00', '9905');
-	story('Isay Rodríguez', 'viana-pavillon', 7, '19:00', '9906');
-	// Racha de Isay: xoga ao tenis o xoves de cada unha das tres semanas anteriores. Contando
+	story('Cibrán Ventosela', 'viana-pavillon', 7, '19:00', '9906');
+	// Racha de Cibrán: xoga ao tenis o xoves de cada unha das tres semanas anteriores. Contando
 	// desde o xoves, se ese día está collido retrocede como moito ata o luns da mesma semana.
 	const thursdayOf = (weeksBack: number) => weekdayOf(today) + 7 * weeksBack - 3;
-	story('Isay Rodríguez', 'viana-tenis', thursdayOf(1), '10:00', '9907');
-	story('Isay Rodríguez', 'viana-tenis', thursdayOf(2), '10:00', '9908');
-	story('Isay Rodríguez', 'viana-tenis', thursdayOf(3), '10:00', '9909');
+	story('Cibrán Ventosela', 'viana-tenis', thursdayOf(1), '10:00', '9907');
+	story('Cibrán Ventosela', 'viana-tenis', thursdayOf(2), '10:00', '9908');
+	story('Cibrán Ventosela', 'viana-tenis', thursdayOf(3), '10:00', '9909');
 
 	return { bookings, closures, seasons, profiles };
 }

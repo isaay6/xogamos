@@ -78,7 +78,7 @@ export const actions: Actions = {
 			.set({ textSize, highContrast, reduceMotion, easyBooking })
 			.where(eq(users.id, user.id));
 		event.cookies.set(
-			'quenda_accessibility',
+			'xogamos_accessibility',
 			`${textSize}|${highContrast ? 'alto' : 'normal'}|${reduceMotion}`,
 			{ path: '/', maxAge: 365 * 24 * 60 * 60, sameSite: 'lax', httpOnly: true, secure: !dev }
 		);

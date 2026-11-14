@@ -1,0 +1,9 @@
+# Demo con contrasinal (antes da entrega). O hash xérase con:
+#   docker run --rm caddy:2.8-alpine caddy hash-password --plaintext 'O-TEU-CONTRASINAL'
+{$DEMO_HOST} {
+	encode zstd gzip
+	basic_auth {
+		{$DEMO_USER} {$DEMO_PASS_HASH}
+	}
+	reverse_proxy app:3000
+}

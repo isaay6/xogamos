@@ -274,14 +274,14 @@ export async function seedDemo(
 			});
 			for (const r of rows) profileId.set(`${r.userId}|${r.municipalityId}`, r.id);
 		});
-		// Isay é unha única identidade de demostración para probar as zonas de Viana e Deputación.
-		const isayIndex = DEMO_PEOPLE.findIndex((person) => person.name === 'Isay Rodríguez');
-		const isayId = personIds[isayIndex];
+		// Cibrán é unha única identidade de demostración para probar as zonas de Viana e Deputación.
+		const mestreIndex = DEMO_PEOPLE.findIndex((person) => person.name === 'Cibrán Ventosela');
+		const mestreId = personIds[mestreIndex];
 		// Pequenos saldos para probar o monedero nos dous perfís principais da demostración.
 		const uxiaIndex = DEMO_PEOPLE.findIndex((person) => person.name === 'Nerea Cabaleiro');
-		const [uxiaWallet, isayWallet] = await tx
+		const [uxiaWallet, mestreWallet] = await tx
 			.insert(wallets)
-			.values([{ userId: personIds[uxiaIndex] }, { userId: isayId }])
+			.values([{ userId: personIds[uxiaIndex] }, { userId: mestreId }])
 			.returning();
 		await tx.insert(walletMovements).values([
 			{
@@ -301,32 +301,32 @@ export async function seedDemo(
 				createdAt: now
 			},
 			{
-				walletId: isayWallet.id,
+				walletId: mestreWallet.id,
 				amountCents: 2000,
 				kind: 'recarga_tarxeta',
 				municipalityId: muniId.get('viana-do-bolo')!,
-				reference: 'demo-isay-recarga',
+				reference: 'demo-mestre-recarga',
 				createdAt: welcomed
 			},
 			{
-				walletId: isayWallet.id,
+				walletId: mestreWallet.id,
 				amountCents: -1500,
 				kind: 'pago_reserva',
 				municipalityId: muniId.get('viana-do-bolo')!,
-				reference: 'demo-isay-reserva-pavillon',
+				reference: 'demo-mestre-reserva-pavillon',
 				createdAt: now
 			}
 		]);
 		await tx.insert(staffRoles).values([
-			{ userId: isayId, municipalityId: muniId.get('viana-do-bolo')!, role: 'admin' },
-			{ userId: isayId, municipalityId: muniId.get('viana-do-bolo')!, role: 'conserxe' },
+			{ userId: mestreId, municipalityId: muniId.get('viana-do-bolo')!, role: 'admin' },
+			{ userId: mestreId, municipalityId: muniId.get('viana-do-bolo')!, role: 'conserxe' },
 			{
 				userId:
 					personIds[DEMO_PEOPLE.findIndex((person) => person.name === 'Policía Local de Viana')],
 				municipalityId: muniId.get('viana-do-bolo')!,
 				role: 'apertura'
 			},
-			{ userId: isayId, municipalityId: null, role: 'deputacion' }
+			{ userId: mestreId, municipalityId: null, role: 'deputacion' }
 		]);
 
 		// ── Tipos, instalacións, horarios e peches ─────────────────────────────
@@ -430,7 +430,7 @@ export async function seedDemo(
 			{ entityId: cdViana.id, facilityId: facId.get('viana-futbol')! },
 			{ entityId: cdViana.id, facilityId: facId.get('viana-futbol-7')! }
 		]);
-		await tx.insert(entityMembers).values({ entityId: cdViana.id, userId: isayId });
+		await tx.insert(entityMembers).values({ entityId: cdViana.id, userId: mestreId });
 
 		await tx.insert(openingHours).values(
 			DEMO_FACILITIES.flatMap((f) =>
@@ -494,7 +494,7 @@ export async function seedDemo(
 						accessCode: b.accessCode,
 						priceCents: b.priceCents,
 						paymentMethod:
-							userId === isayId && b.facility === 'viana-pavillon' && b.accessCode === '9906'
+							userId === mestreId && b.facility === 'viana-pavillon' && b.accessCode === '9906'
 								? ('wallet' as const)
 								: ('facility' as const),
 						channel: b.channel,
@@ -505,7 +505,7 @@ export async function seedDemo(
 				})
 			)
 		);
-		// Reserva próxima de Isay como responsable do CD Viana no campo de fútbol 7.
+		// Reserva próxima de Cibrán como responsable do CD Viana no campo de fútbol 7.
 		const clubSlot = Array.from({ length: 21 }, (_, day) => addLocalDays(today, day + 1))
 			.map((date) => ({
 				startsAt: localDateTimeToUtc(date, '21:00'),
@@ -525,7 +525,7 @@ export async function seedDemo(
 		await tx.insert(bookings).values({
 			municipalityId: muniId.get('viana-do-bolo')!,
 			facilityId: facId.get('viana-futbol-7')!,
-			profileId: profileId.get(`${isayId}|${muniId.get('viana-do-bolo')!}`)!,
+			profileId: profileId.get(`${mestreId}|${muniId.get('viana-do-bolo')!}`)!,
 			entityId: cdViana.id,
 			startsAt: clubSlot.startsAt,
 			endsAt: clubSlot.endsAt,
@@ -534,7 +534,7 @@ export async function seedDemo(
 			priceCents: 0,
 			paymentMethod: 'facility' as const,
 			channel: 'online' as const,
-			createdByUserId: isayId,
+			createdByUserId: mestreId,
 			createdAt: now
 		});
 
@@ -564,13 +564,13 @@ export async function seedDemo(
 			priceCents: 1800,
 			createdBy: adminOf('viana-do-bolo')
 		});
-		const isayPassPin = await pickPassPin(tx, vianaId, passStartsOn, passEndsOn);
+		const mestrePassPin = await pickPassPin(tx, vianaId, passStartsOn, passEndsOn);
 		await tx.insert(passes).values({
 			passTypeId: vianaPassType.id,
-			profileId: profileId.get(`${isayId}|${vianaId}`)!,
+			profileId: profileId.get(`${mestreId}|${vianaId}`)!,
 			startsOn: passStartsOn,
 			endsOn: passEndsOn,
-			pin: isayPassPin,
+			pin: mestrePassPin,
 			priceCents: 1800,
 			createdBy: adminOf('viana-do-bolo')
 		});
@@ -584,7 +584,7 @@ export async function seedDemo(
 			.values([
 				{
 					municipalityId: vianaId,
-					userId: isayId,
+					userId: mestreId,
 					kind: 'evento',
 					facilityId: facId.get('viana-padel')!,
 					fromDate: requestStart,
@@ -602,7 +602,7 @@ export async function seedDemo(
 				},
 				{
 					municipalityId: vianaId,
-					userId: isayId,
+					userId: mestreId,
 					kind: 'evento',
 					facilityId: facId.get('viana-tenis')!,
 					fromDate: tennisDay,
@@ -616,7 +616,7 @@ export async function seedDemo(
 				},
 				{
 					municipalityId: vianaId,
-					userId: isayId,
+					userId: mestreId,
 					entityId: cdViana.id,
 					kind: 'tempada',
 					facilityId: facId.get('viana-futbol-7')!,
@@ -633,7 +633,7 @@ export async function seedDemo(
 				},
 				{
 					municipalityId: vianaId,
-					userId: isayId,
+					userId: mestreId,
 					entityId: cdViana.id,
 					kind: 'tempada',
 					facilityId: facId.get('viana-futbol-7')!,
@@ -702,7 +702,7 @@ export async function seedDemo(
 		await tx.insert(tournamentEntries).values([
 			{
 				tournamentId: publishedTournament.id,
-				userId: isayId,
+				userId: mestreId,
 				members: 'Telmo Empadroado',
 				createdAt: now
 			},
@@ -812,7 +812,7 @@ export async function seedDemo(
 			municipalities: munis.length,
 			facilities: facs.length,
 			people: DEMO_PEOPLE.length,
-			// +1: a reserva de club de Isay (CD Viana), que non sae do plan xerado.
+			// +1: a reserva de club de Cibrán (CD Viana), que non sae do plan xerado.
 			bookings: plan.bookings.length + 1,
 			holidays: 2
 		};

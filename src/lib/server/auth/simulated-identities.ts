@@ -40,10 +40,10 @@ const people = DEMO_PEOPLE.map((p) => ({
 }));
 
 export const SIMULATED_IDENTITIES: SimulatedIdentity[] = [
-	// Isay Rodríguez vai o primeiro: é o perfil mestre para probar todo.
-	...people.filter((p) => p.featured && p.displayName === 'Isay Rodríguez'),
+	// Cibrán Ventosela vai o primeiro: é o perfil mestre para probar todo.
+	...people.filter((p) => p.featured && p.displayName === 'Cibrán Ventosela'),
 	// Despois as demais destacadas na orde de DEMO_PEOPLE (a Policía Local vai ao final).
-	...people.filter((p) => p.featured && p.displayName !== 'Isay Rodríguez'),
+	...people.filter((p) => p.featured && p.displayName !== 'Cibrán Ventosela'),
 	...DEMO_STAFF.map((s) => ({
 		provider: s.provider,
 		subject: s.subject,
