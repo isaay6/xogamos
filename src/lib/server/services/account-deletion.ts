@@ -15,6 +15,7 @@ import {
 	tournaments,
 	users
 } from '../db/schema';
+import { waitlistEntries } from '../db/schema';
 import { cancelBookingTx } from './bookings';
 import { err, ok, type Result } from './result';
 import { walletBalance } from './wallet';
@@ -55,6 +56,10 @@ export async function deleteAccount(
 			.where(eq(municipalityProfiles.userId, userId));
 		const profileIds = profiles.map((profile) => profile.id);
 		if (profileIds.length) {
+			await tx
+				.update(waitlistEntries)
+				.set({ status: 'withdrawn', offeredUntil: null })
+				.where(inArray(waitlistEntries.profileId, profileIds));
 			const future = await tx
 				.select({ id: bookings.id, municipalityId: bookings.municipalityId })
 				.from(bookings)

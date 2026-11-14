@@ -8,6 +8,7 @@ export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
 		'Nueva reserva para abrir: {facilityName}, {date} a las {time} ({personName}).',
 	'vec.aviso.opening.cancelled':
 		'Ya no hay que abrir: se canceló la reserva de {facilityName}, {date} a las {time} ({personName}).',
+	'vec.aviso.waitlist_offer': 'Quedó libre {facilityName}, el {date} a las {time}. Reserva antes de {offeredUntil}.',
 	'vec.torneo.subtitulo': 'Torneos y eventos abiertos a los vecinos. Inscríbete desde aquí.',
 	'vec.torneo.datas': 'Del {desde} al {ata}',
 	'vec.torneo.limite_data': 'Inscripción hasta el {data}',

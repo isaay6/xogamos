@@ -183,6 +183,13 @@
 			"when": 1794595200000,
 			"tag": "0025_season_priority_criteria",
 			"breakpoints": true
+		},
+		{
+			"idx": 27,
+			"version": "7",
+			"when": 1794681600000,
+			"tag": "0027_waitlist",
+			"breakpoints": true
 		}
 	]
 }

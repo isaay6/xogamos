@@ -7,6 +7,8 @@ export const glVecinanza = {
 		'Nova reserva para abrir: {facilityName}, {date} ás {time} ({personName}).',
 	'vec.aviso.opening.cancelled':
 		'Xa non hai que abrir: cancelouse a reserva de {facilityName}, {date} ás {time} ({personName}).',
+	'vec.aviso.waitlist_offer': 'Quedou libre {facilityName}, o {date} ás {time}. Reserva antes de {offeredUntil}.',
+	'vec.aviso.waitlist_offer': 'Quedou libre {facilityName}, o {date} ás {time}. Reserva antes de {offeredUntil}.',
 	'vec.torneo.subtitulo': 'Torneos e eventos abertos á veciñanza. Inscríbete desde aquí.',
 	'vec.torneo.datas': 'Do {desde} ao {ata}',
 	'vec.torneo.limite_data': 'Inscrición ata o {data}',

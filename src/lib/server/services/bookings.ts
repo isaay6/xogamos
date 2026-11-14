@@ -41,6 +41,7 @@ import { notifyBooking, notifyOpeners } from './notifications';
 import { err, ok, type Result } from './result';
 import { writeActivity } from './activity-log';
 import { payWalletTx, refundWalletTx } from './wallet';
+import { claimWaitlistOffer, mayBookOfferedSlot, offerFreedSlot } from './waitlist';
 
 export type BookingError =
 	| 'NOT_FOUND'
@@ -388,6 +389,14 @@ export async function createBookingTx(
 	);
 	const slot = availability.find((s) => s.startsAt.getTime() === startsAt.getTime());
 	if (!slot) return err('NOT_ALIGNED');
+	// Una oferta vigente aparta una plaza para quien estaba en la cola. Si hay varias
+	// plazas, las restantes siguen disponibles para el resto de vecinas.
+	const waitlist = await mayBookOfferedSlot(tx, {
+		facilityId: facility.id,
+		startsAt,
+		profileId: profile.id,
+		now
+	});
 
 	// 5. Disponibilidad según el modo.
 	let seats = 1;
@@ -401,6 +410,10 @@ export async function createBookingTx(
 		if (seats > slot.remainingSeats) return err('CAPACITY_EXCEEDED');
 	} else if (!slot.free) {
 		return err('SLOT_UNAVAILABLE');
+	}
+	if (!waitlist.mine && waitlist.offered.length > 0) {
+		const available = bookingMode === 'unit' ? slot.freeUnits.length : bookingMode === 'capacity' ? slot.remainingSeats : slot.free ? 1 : 0;
+		if (available <= waitlist.offered.length) return err('SLOT_UNAVAILABLE');
 	}
 	// Só nas reservas dun club con límite de franxas seguidas.
 	if (entity && entity.maxConsecutiveSlots !== null) {
@@ -487,6 +500,7 @@ export async function createBookingTx(
 		input.channel === 'online'
 	);
 	await notifyOpeners(tx, row, 'created', now);
+	if (waitlist.mine) await claimWaitlistOffer(tx, profile.id, facility.id, slot.startsAt);
 	return ok(row);
 }
 
@@ -588,6 +602,7 @@ export async function cancelBookingTx(
 		!input.byStaff
 	);
 	await notifyOpeners(tx, row, 'cancelled', input.now);
+	await offerFreedSlot(tx, row, input.now);
 	return ok(row);
 }
 
@@ -666,6 +681,7 @@ export async function rescheduleBooking(
 			created.value = paidBooking;
 		}
 		await markCancelled(tx, booking, input.now);
+		await offerFreedSlot(tx, booking, input.now);
 		return created;
 	});
 }
