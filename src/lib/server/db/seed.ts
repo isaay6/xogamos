@@ -50,6 +50,15 @@ import {
 	walletMovements
 } from './schema';
 
+// Centros aproximados dos concellos da demo; son datos ficticios para probar mapas abertos.
+const DEMO_COORDINATES: Record<string, [number, number]> = {
+	'viana-do-bolo': [42.179, -7.113], 'a-rua': [42.392, -7.121],
+	'o-barco-de-valdeorras': [42.416, -6.99], 'a-pobra-de-trives': [42.339, -7.254],
+	manzaneda: [42.309, -7.232], 'vilarino-de-conso': [42.166, -7.183],
+	'a-veiga': [42.241, -7.028], 'o-bolo': [42.289, -7.098], petin: [42.382, -7.126],
+	larouco: [42.346, -7.164], verin: [41.94, -7.438]
+};
+
 /** Filas por INSERT: lonxe do límite de parámetros de Postgres (65 535). */
 const CHUNK = 2000;
 
@@ -355,6 +364,8 @@ export async function seedDemo(
 			.insert(facilities)
 			.values(
 				DEMO_FACILITIES.map((f) => ({
+					latitude: DEMO_COORDINATES[f.municipality][0],
+					longitude: DEMO_COORDINATES[f.municipality][1],
 					municipalityId: muniId.get(f.municipality)!,
 					typeId: typeId.get(typeKey(f))!,
 					name: f.name,

@@ -5,6 +5,8 @@
 		name: string;
 		location: string;
 		address: string;
+		latitude: string;
+		longitude: string;
 		units: string;
 		capacity: string;
 		slotMinutes: string;
@@ -138,6 +140,11 @@
 		<div class="campo">
 			<label for="f-address">{t(locale, 'adm.fac.enderezo')}</label>
 			<input id="f-address" name="address" maxlength="200" bind:value={v.address} />
+		</div>
+
+		<div class="prezos">
+			<div class="campo"><label for="f-lat">Latitude / Latitud</label><input id="f-lat" name="latitude" type="number" min="-90" max="90" step="any" bind:value={v.latitude} /></div>
+			<div class="campo"><label for="f-lon">Lonxitude / Longitud</label><input id="f-lon" name="longitude" type="number" min="-180" max="180" step="any" bind:value={v.longitude} /></div>
 		</div>
 
 		{#if mode === 'unit'}

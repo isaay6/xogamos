@@ -7,6 +7,7 @@ import {
 	entities,
 	facilities,
 	facilityTypes,
+	holidays,
 	passes,
 	passTypes,
 	seasonBookings,
@@ -49,7 +50,7 @@ export async function exportMunicipality(db: Db, municipalityId: string, now = n
 		.where(eq(facilities.municipalityId, municipalityId))
 		.orderBy(asc(facilities.name), asc(facilities.id));
 	const facilityIds = facs.map((f) => f.id);
-	const [types, hours, closed, profiles, roles, books, entityRows] = await Promise.all([
+	const [types, hours, closed, holidayRows, profiles, roles, books, entityRows] = await Promise.all([
 		db
 			.select()
 			.from(facilityTypes)
@@ -61,6 +62,7 @@ export async function exportMunicipality(db: Db, municipalityId: string, now = n
 		facilityIds.length
 			? db.select().from(closures).where(inArray(closures.facilityId, facilityIds))
 			: [],
+		db.select().from(holidays).where(eq(holidays.municipalityId, municipalityId)),
 		db
 			.select({
 				id: municipalityProfiles.id,
@@ -101,6 +103,7 @@ export async function exportMunicipality(db: Db, municipalityId: string, now = n
 		facilities: facs,
 		openingHours: hours,
 		closures: closed,
+		holidays: holidayRows,
 		profiles,
 		staffRoles: roles,
 		bookings: books.map((booking) => ({

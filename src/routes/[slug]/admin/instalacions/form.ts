@@ -96,6 +96,14 @@ export function parseFacilityForm(
 	const name = field(form, 'name').trim();
 	const location = field(form, 'location').trim();
 	const address = field(form, 'address').trim();
+	const coordinate = (name: string, min: number, max: number) => {
+		const raw = field(form, name).trim();
+		if (!raw) return null;
+		const value = Number(raw);
+		return Number.isFinite(value) && value >= min && value <= max ? value : undefined;
+	};
+	const latitude = coordinate('latitude', -90, 90);
+	const longitude = coordinate('longitude', -180, 180);
 	const slotMinutes = intField(form, 'slotMinutes', 1, 100_000);
 	const resident = parseEuros(field(form, 'priceResident'));
 	const nonResident = parseEuros(field(form, 'priceNonResident'));
@@ -113,6 +121,8 @@ export function parseFacilityForm(
 		name.length > 120 ||
 		location.length > 200 ||
 		address.length > 200 ||
+		latitude === undefined ||
+		longitude === undefined ||
 		slotMinutes === null ||
 		resident === null ||
 		nonResident === null ||
@@ -127,6 +137,8 @@ export function parseFacilityForm(
 			name,
 			location,
 			address,
+			latitude,
+			longitude,
 			units,
 			capacity,
 			slotMinutes,

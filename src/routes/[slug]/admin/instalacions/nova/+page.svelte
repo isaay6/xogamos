@@ -14,6 +14,8 @@
 		name: v.name ?? '',
 		location: v.location ?? '',
 		address: v.address ?? '',
+		latitude: v.latitude ?? '',
+		longitude: v.longitude ?? '',
 		units: v.units ?? '2',
 		capacity: v.capacity ?? '10',
 		slotMinutes: v.slotMinutes ?? '60',

@@ -184,5 +184,13 @@
 			"tag": "0025_season_priority_criteria",
 			"breakpoints": true
 		}
+		,
+		{
+			"idx": 26,
+			"version": "7",
+			"when": 1794700000000,
+			"tag": "0026_facility_coordinates",
+			"breakpoints": true
+		}
 	]
 }
