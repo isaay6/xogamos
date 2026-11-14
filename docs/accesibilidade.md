@@ -4,6 +4,7 @@
 
 | Proba | Alcance | Resultado |
 |---|---|---|
+| **Batería automática na CI** (Playwright + axe-core 4.10, WCAG 2.0/2.1 A e AA), desde o 14 de novembro de 2026 | 48 pantallas dos catro papeis e públicas, en escritorio (1280 px) e a **320 px**, en cada cambio (`npm run test:a11y`) | 0 incidencias e sen desprazamento horizontal. Corrixíronse 9 desbordamentos a 320 px e as táboas desprazables fixéronse enfocables co teclado |
 | Auditoría automática con **axe-core 4.10** (regras WCAG 2.0/2.1 A e AA) | 50 pantallas dos catro papeis: veciñanza, conserxería, administración e Deputación, ademais das públicas (demo, entrada, privacidade, sen conexión) | 5 incidencias en 4 pantallas e no percorrido da demo, todas corrixidas (apartado 3) |
 | Ancho de **320 px** (reflow, 1.4.10) | Inicio, reserva, ficha de reserva, historial, torneo | Sen desprazamento horizontal da páxina. As filas de días e as tarxetas desprázanse dentro do seu propio bloque |
 | **Letra moi grande** e **alto contraste** (axustes propios da app) | Inicio a 320 px, nas tres combinacións | Sen incidencias de axe nin desbordamento |

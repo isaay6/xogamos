@@ -31,6 +31,9 @@ ademais de reservar, a plataforma dixitaliza o traballo dun concello pequeno:
 - **Tarifas** de empadroados e tarifa social, **monedeiro** con tarxetas de recarga, **bonos e abonos**.
 - **Conserxería** que reserva por teléfono ou en persoa para quen non usa internet.
 - **Identidade só pública** (Cl@ve e Chave365): sen contrasinais propios nin contas de terceiros.
+- **Lista de espera:** se unha hora está chea, avísase cando quede libre e gárdase a praza media hora.
+- **Datos abertos e portables:** catálogo DCAT-AP-ES, GeoJSON das instalacións, schema.org, API OpenAPI con [documentación lexible](/api/docs) e importación da configuración dun concello.
+- **Accesibilidade comprobada en cada cambio:** axe-core en 48 pantallas, en escritorio e a 320 px.
 - **Sen IA e sen enviar datos a terceiros.**
 - Páxinas que se renderizan no servidor e funcionan sen JavaScript e sen conexión estable.
 
@@ -73,6 +76,7 @@ Para colaborar: [CONTRIBUTING.md](CONTRIBUTING.md). Para informar dunha vulnerab
 - `npm run dev:demo`: desenvolvemento sen PostgreSQL: usa PGlite en memoria con datos de demostración e identidade simulada. Só para desenvolvemento.
 - `npm run build`: compilación de produción.
 - `npm test`: probas (Vitest).
+- `npm run test:a11y`: accesibilidade no navegador (Playwright + axe-core) contra a demo.
 - `npm run check`: comprobación de tipos (svelte-check).
 - `npm run licenses`: verifica que as licenzas das dependencias de produción son permitidas.
 - `npm run spdx`: verifica a cabeceira `SPDX-License-Identifier: EUPL-1.2` nos ficheiros fonte.

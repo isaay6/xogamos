@@ -13,6 +13,7 @@ Primeira versión completa, con datos ficticios.
 - PIN de 4 cifras e QR asinado por reserva; historial, racha de semanas activas e avisos.
 - Monedeiro, bonos e abonos; tarifa de empadroados e tarifa social.
 - Torneos con inscrición, solicitudes de horas fixas e eventos, conta de club.
+- Lista de espera nas horas completas (a praza gárdase 30 min á primeira da cola) e horas libres suxeridas cando un día está cheo.
 - Calendario iCalendar, descarga dos datos propios, borrado da conta.
 - Axustes de accesibilidade (letra, contraste, movemento), galego e castelán, PWA con pantalla sen conexión.
 
@@ -26,8 +27,12 @@ Primeira versión completa, con datos ficticios.
 
 ### Deputación
 - Multi-concello nunha soa instalación, alta de concellos e comparativa agregada.
+- Importación da configuración dun concello desde a súa exportación.
 
 ### Plataforma
+- Datos abertos: catálogo DCAT-AP-ES (JSON-LD e Turtle), GeoJSON das instalacións e schema.org JSON-LD en cada ficha.
+- Documentación lexible da API en `/api/docs`, xerada do OpenAPI.
+- Batería de accesibilidade (axe-core) en 48 pantallas e dous anchos, na CI.
 - API REST `/api/v1` con OpenAPI 3.1 e datos abertos de ocupación.
 - Identidade só a través de Cl@ve e Chave365 (simulador para a demo).
 - Seguridade: CSP con *nonce*, HSTS, límite de peticións, sesións con hash e borrado automático de datos vellos.
