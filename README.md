@@ -32,7 +32,7 @@ ademais de reservar, a plataforma dixitaliza o traballo dun concello pequeno:
 - **Conserxería** que reserva por teléfono ou en persoa para quen non usa internet.
 - **Identidade só pública** (Cl@ve e Chave365): sen contrasinais propios nin contas de terceiros.
 - **Lista de espera:** se unha hora está chea, avísase cando quede libre e gárdase a praza media hora.
-- **Datos abertos e portables:** catálogo DCAT-AP-ES, GeoJSON das instalacións, schema.org, API OpenAPI con [documentación lexible](/api/docs) e importación da configuración dun concello.
+- **Datos abertos e portables:** catálogo DCAT-AP-ES, GeoJSON das instalacións, schema.org, API OpenAPI con documentación lexible en `/api/docs` e importación da configuración dun concello.
 - **Accesibilidade comprobada en cada cambio:** axe-core en 48 pantallas, en escritorio e a 320 px.
 - **Sen IA e sen enviar datos a terceiros.**
 - Páxinas que se renderizan no servidor e funcionan sen JavaScript e sen conexión estable.
