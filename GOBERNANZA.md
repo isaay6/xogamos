@@ -20,7 +20,7 @@ deste documento explica como.
 | Calquera pode continuala | Licenza **EUPL-1.2**: usar, modificar e redistribuír sen pedir permiso. |
 | Calquera empresa galega pode mantela | Pila estándar e moi común: TypeScript, SvelteKit e PostgreSQL. Sen pezas propias nin de pago. |
 | Enténdese sen falar con nós | Arquitectura e decisións documentadas ([docs/arquitectura.md](docs/arquitectura.md)), guías de instalación e de operación, e código comentado. |
-| Os cambios non rompen nada sen aviso | Máis de 1.300 probas automáticas, accesibilidade e seguridade comprobadas en cada cambio (CI). |
+| Os cambios non rompen nada sen aviso | Máis de 1.400 probas automáticas, accesibilidade e seguridade comprobadas en cada cambio (CI). |
 | Os datos son do concello | Exportación completa en formatos abertos e copias en PostgreSQL estándar. Pódese marchar en calquera momento. |
 | Pouco que manter | Unha aplicación e unha base de datos. Sen servizos de terceiros obrigatorios. |
 

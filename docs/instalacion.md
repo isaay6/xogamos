@@ -2,17 +2,20 @@
 
 ## Instalación nun comando
 
-No servidor, entre no directorio onde queira gardar a instalación e execute:
+Nun servidor con Docker, execute:
 
 ```sh
-curl -fsSLO https://github.com/isaay6/xogamos/releases/latest/download/install.sh
-chmod +x install.sh && ./install.sh
+git clone https://github.com/[⚠ usuario]/[⚠ repositorio].git xogamos && cd xogamos
+./install.sh
 ```
 
 O asistente pide o dominio e o correo para o certificado HTTPS, crea `.env` con segredos aleatorios,
 descarga a imaxe publicada e arrinca Caddy, a aplicación, PostgreSQL e as copias diarias. Para unha
 demo con datos ficticios use `./install.sh --demo`; para probala só no propio servidor use
 `./install.sh --local`. En automatización, indique `XOGAMOS_DOMAIN`, `XOGAMOS_EMAIL` e `--yes`.
+
+Nunha instalación real, o paso seguinte é conectar a identidade e crear a primeira persoa operadora:
+ver [despregar nunha Deputación](guias/despregamento-deputacion.md).
 
 ## Requisitos
 

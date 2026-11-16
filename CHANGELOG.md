@@ -6,7 +6,6 @@ incluír cambios incompatibles, que se indican aquí.
 
 ## Sen publicar
 
-- Instalación nun comando, imaxe publicada, proxy HTTPS, copias automáticas verificadas e actualización con volta atrás.
 
 ## [0.1.0] — 2026-11 (proposta ao I Certame GOBTEC)
 
@@ -29,7 +28,15 @@ Primeira versión completa, con datos ficticios.
 - Papel «Apertura» para quen abre as instalacións.
 - Indicadores, informe mensual, exportacións CSV, XLSX e iCalendar, rexistro de actividade.
 
+### Instalación e operación
+- Instalación nun comando (`install.sh`), imaxe Docker publicada en cada versión e proxy HTTPS incluído.
+- Copias diarias automáticas con rotación; restauración probada en cada cambio (`scripts/test-restore.sh`).
+- Actualización con volta atrás automática se a versión nova non responde.
+- Análise de seguridade en CI: dependencias, imaxe Docker (Trivy) e código (CodeQL).
+- Guías por tarefa, plan de implantación, gobernanza e folla de ruta.
+
 ### Deputación
+- Primeira persoa operadora dunha instalación real con `scripts/create-operator.mjs`.
 - Multi-concello nunha soa instalación, alta de concellos e comparativa agregada.
 - Importación da configuración dun concello desde a súa exportación.
 

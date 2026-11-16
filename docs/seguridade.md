@@ -41,3 +41,16 @@ medidas organizativas (política, persoas responsables, formación, xestión de 
 - O límite de peticións é por proceso: con varias réplicas hai que levalo ao proxy.
 - Non houbo aínda unha auditoría de seguridade independente: está prevista antes de tratar datos reais (fase 1 do piloto).
 - A integración real con Cl@ve e Chave365 require a alta administrativa (ver `interoperabilidade.md`).
+
+## Análise automática en cada cambio
+
+O fluxo `Seguridade` da integración continua (`.github/workflows/seguridade.yml`) execútase en cada cambio e cada luns:
+
+| Que | Ferramenta | Falla se |
+|---|---|---|
+| Dependencias de produción | `npm audit` | hai unha vulnerabilidade alta ou crítica |
+| Imaxe Docker (sistema e bibliotecas) | Trivy | hai unha alta ou crítica con corrección dispoñible |
+| Código | CodeQL | (informa na pestana de seguridade do repositorio) |
+
+A imaxe de produción non leva `npm` nin ferramentas de compilación, e execútase cun usuario sen privilexios.
+

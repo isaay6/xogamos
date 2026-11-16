@@ -207,10 +207,16 @@ describe('[slug]/entrar', () => {
 	});
 
 	it('sen sesión devolve o redirectTo seguro; por defecto o concello', async () => {
+		// Fóra do modo OIDC ofrécense os dous provedores.
+		const enabledProviders = ['clave', 'chave365'];
 		expect(await call(loadEntrar, ev('?redirectTo=%2Fribadavila%2Feu', null))).toEqual({
-			redirectTo: '/ribadavila/eu'
+			redirectTo: '/ribadavila/eu',
+			enabledProviders
 		});
-		expect(await call(loadEntrar, ev('', null))).toEqual({ redirectTo: '/ribadavila' });
+		expect(await call(loadEntrar, ev('', null))).toEqual({
+			redirectTo: '/ribadavila',
+			enabledProviders
+		});
 	});
 });
 

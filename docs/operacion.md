@@ -30,7 +30,7 @@ Complementa a [instalación](instalacion.md). Pensado para unha persoa técnica 
 	scripts/update.sh v0.1.0
 	```
 
-O script garda unha copia, comproba a saúde e, se falla, restaura automaticamente a imaxe e a copia anteriores.
+O script garda a imaxe actual e unha copia dos datos, arrinca a versión nova e comproba que responde. Se falla, volve só á imaxe e á copia anteriores.
 
 ## 3. Reverter
 

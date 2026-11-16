@@ -4,11 +4,26 @@ A plataforma segue o Esquema Nacional de Interoperabilidade (ENI) en tres planos
 
 ## 1. Identidade dixital pública: Cl@ve e Chave365
 
-**Como está deseñado.** A aplicación non xestiona contrasinais. A integración real usa OpenID Connect, fluxo Authorization Code con PKCE S256: comproba a sinatura, emisor, audiencia, caducidade e `nonce` do ID token antes de abrir sesión. Configúrase por provedor mediante `OIDC_CLAVE_*` ou `OIDC_CHAVE365_*`.
+**Como está deseñado.** A aplicación non xestiona contrasinais. A persoa identifícase sempre nun **provedor de identidade público** e a aplicación recibe o resultado por **OpenID Connect**, o estándar aberto máis usado para iso:
 
-**Cl@ve e Chave365.** Keycloak pode actuar opcionalmente como broker SAML 2.0 de Cl@ve e publicar OIDC para a aplicación. A alta administrativa ante AGE ou Xunta, os metadatos, certificados e as probas de preprodución seguen sendo necesarios; a persoa operadora debe mapear o DNI/NIE ao claim de suxeito estable.
+- fluxo de **código de autorización con PKCE** (S256), con `state` e `nonce`;
+- descubrimento automático do provedor (`/.well-known/openid-configuration`);
+- validación do **ID token**: sinatura coas claves públicas do provedor (JWKS), emisor, destinatario, caducidade e `nonce`. Só se aceptan RS256, ES256 e PS256;
+- un provedor por separado para Cl@ve e para Chave365 (`OIDC_CLAVE_...` e `OIDC_CHAVE365_...`). Na pantalla de entrada só aparecen os configurados.
 
-**Demo.** O simulador mantense só para demostración (`IDENTITY_MODE=simulated` e base desbotable). É o único camiño que usa a aserción HMAC de `src/lib/server/auth/assertion.ts`; non forma parte da integración OIDC real.
+Código: `src/lib/server/auth/oidc.ts`. Probas: 22, cun provedor falso que cobre sinaturas falsas, tokens caducados ou doutro destinatario e intentos de reutilización.
+
+**Cl@ve fala SAML 2.0.** Por iso o repositorio inclúe unha ponte lista con **Keycloak** (software libre): recibe a persoa desde Cl@ve por SAML e entrégalla á aplicación por OpenID Connect. Está en [`deploy/keycloak/`](../deploy/keycloak/README.md), cun «Cl@ve simulado» que emite os mesmos atributos (`PersonIdentifier`, `FirstName`, `FamilyName`). O percorrido enteiro está **probado**: aplicación → Keycloak → Cl@ve simulado → sesión aberta. Se o provedor xa ofrece OpenID Connect, Keycloak non fai falta.
+
+**Que falta para a integración real.** A alta administrativa, que só pode pedir unha administración:
+
+1. **Cl@ve:** alta como entidade usuaria ante a Secretaría Xeral de Administración Dixital. Cos metadatos que entrega, cámbianse tres valores en Keycloak (ver a guía). **A aplicación non se toca.**
+2. **Chave365:** alta ante a AMTEGA, co protocolo que indique a Xunta.
+3. **Proba en preprodución.**
+
+Estímase en 4–8 semanas, polos prazos de alta. É o **primeiro paso do piloto**.
+
+**Demo.** O simulador de Cl@ve e Chave365 con identidades ficticias mantense só para demostracións (`IDENTITY_MODE=simulated`). A aplicación rexeita arrincar con el sobre unha base de datos real.
 
 Persoas sen identidade dixital: a conserxería pode darlles de alta e reservar no seu nome por teléfono ou en persoa. Ese acceso queda identificado pola busca por DNI (só se garda o seu hash).
 

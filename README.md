@@ -53,8 +53,8 @@ Pila: SvelteKit (Svelte 5, TypeScript estrito), Node 22 (`.nvmrc`), PostgreSQL 1
 Nun servidor con Docker, instale cun só comando:
 
 ```sh
-curl -fsSLO https://github.com/isaay6/xogamos/releases/latest/download/install.sh
-chmod +x install.sh && ./install.sh
+git clone https://github.com/[⚠ usuario]/[⚠ repositorio].git xogamos && cd xogamos
+./install.sh
 ```
 
 Para opcións de demo, instalación local e operación, consulte a guía de
