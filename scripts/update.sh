@@ -22,8 +22,14 @@ health() {
 }
 
 mkdir -p backups
-previous="$(docker image inspect "$(compose images -q app)" --format '{{index .RepoTags 0}}')"
-printf '%s\n' "$previous" > backups/.previous-version
+# Gárdase a imaxe actual cunha etiqueta propia: «latest» vai cambiar ao descargar a nova.
+previous_id="$(compose images -q app | head -n 1)"
+if [[ -z "$previous_id" ]]; then
+	echo "A aplicación non está arrincada: non hai versión anterior á que volver." >&2
+	exit 1
+fi
+docker tag "$previous_id" xogamos-rollback:previous
+printf '%s\n' "xogamos-rollback:previous" > backups/.previous-version
 scripts/backup.sh
 latest_backup="$(find backups -maxdepth 1 -type f -name 'reservas-*.dump' -print | sort -r | head -n 1)"
 printf '%s\n' "$latest_backup" > backups/.previous-backup

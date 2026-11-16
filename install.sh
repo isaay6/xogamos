@@ -61,27 +61,8 @@ if [[ "$demo" -eq 1 ]]; then
 fi
 chmod 600 .env
 
-if [[ "$local" -eq 0 ]]; then
-	cat > Caddyfile <<EOF
-# SPDX-License-Identifier: EUPL-1.2
-{
-	email $email
-}
-
-$domain {
-	encode zstd gzip
-	header {
-		X-Content-Type-Options "nosniff"
-		X-Frame-Options "DENY"
-		Referrer-Policy "strict-origin-when-cross-origin"
-		Permissions-Policy "geolocation=(), microphone=(), camera=()"
-	}
-	reverse_proxy app:3000
-}
-EOF
-fi
-
-if docker compose pull; then
+# Se a imaxe publicada non está dispoñible, constrúese desde o código.
+if docker compose pull 2>/dev/null; then
 	:
 else
 	docker compose build

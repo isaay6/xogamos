@@ -29,4 +29,5 @@ export XOGAMOS_IMAGE="$image"
 export XOGAMOS_VERSION="$version"
 compose up -d app
 scripts/restore.sh "$(<"$backup_file")" --yes
-echo "Volta atrás completada con $previous."
+echo "Volta atrás completada. A aplicación usa a imaxe gardada antes de actualizar."
+echo "Para fixala, poña XOGAMOS_IMAGE=$image e XOGAMOS_VERSION=$version no .env."
