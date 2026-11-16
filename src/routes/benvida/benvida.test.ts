@@ -59,7 +59,8 @@ const html = (data: object, form?: object) =>
 
 const location = (r: { thrown?: unknown }) => (r.thrown as { location: string }).location;
 
-describe('benvida', () => {
+// Cada proba crea a súa base de datos; coa batería enteira en paralelo pode pasar dos 30 s.
+describe('benvida', { timeout: 90_000 }, () => {
 	it('sen sesión vai á raíz', async () => {
 		const { db } = await fresh();
 		const r = await outcome(() => call(load, get(db, null)));
