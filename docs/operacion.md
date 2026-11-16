@@ -18,42 +18,75 @@ Complementa a [instalación](instalacion.md). Pensado para unha persoa técnica 
 
 ## 2. Actualizar
 
-```bash
-./scripts/backup.sh                      # 1. copia antes de nada
-git fetch --tags && git checkout vX.Y.Z  # 2. versión nova (ver CHANGELOG.md)
-docker compose build app                 # 3. construír a imaxe
-docker compose up -d app                 # 4. arrinca; as migracións aplícanse soas
-curl -fsS http://127.0.0.1:${APP_PORT:-3000}/healthz   # 5. debe responder {"ok":true}
-```
+1. Execute a actualización publicada:
 
-As migracións só engaden cambios e aplícanse en orde ao arrincar. Se fallan, a aplicación non
-arrinca e a base queda como estaba.
+	```sh
+	scripts/update.sh
+	```
+
+2. Para unha versión concreta, indique a etiqueta:
+
+	```sh
+	scripts/update.sh v0.1.0
+	```
+
+O script garda unha copia, comproba a saúde e, se falla, restaura automaticamente a imaxe e a copia anteriores.
 
 ## 3. Reverter
 
-Se a versión nova dá problemas:
+1. Volva manualmente á última actualización gardada:
 
-```bash
-git checkout vANTERIOR
-./scripts/restore.sh backups/<copia-de-antes>.dump   # volve ao estado previo á actualización
-docker compose build app && docker compose up -d app
-```
+ 	```sh
+	scripts/rollback.sh
+	```
 
-Restaurar a copia é necesario porque as migracións non se desfán. As reservas feitas despois da
-copia pérdense: por iso convén actualizar fóra de horas.
+2. Confirme que a saúde responde:
+
+	```sh
+	curl -fsS http://127.0.0.1:${APP_PORT:-3000}/healthz
+	```
+
+As reservas feitas despois da copia previa pérdense; actualice fóra de horas.
 
 ## 4. Copias
 
-- **Diarias** con `scripts/backup.sh` (por exemplo, nun `cron` ás 03:00), gardadas **fóra do servidor**.
-- **Proba de restauración** trimestral nunha máquina á parte.
-- Conservación recomendada: 7 diarias, 4 semanais e 12 mensuais.
+1. As copias automáticas execútanse ás 03:00 en `backups/`. Axuste `BACKUP_HOUR` e
+	`BACKUP_KEEP_DAYS` no `.env`; as tres máis novas nunca se borran.
 
-## 5. Vixilancia
+2. Cree unha copia antes dunha intervención:
+
+	```sh
+	scripts/backup.sh
+	```
+
+3. Copie periodicamente `backups/` fóra do servidor.
+
+## 5. Restauración probada
+
+1. Consulte primeiro a copia dispoñible:
+
+	```sh
+	ls -lt backups/
+	```
+
+2. Restaure unha copia. O script pide confirmación, fai outra copia de seguridade e comproba a saúde:
+
+	```sh
+	scripts/restore.sh backups/reservas-AAAAMMDD-HHMM.dump
+	```
+
+3. Para comprobar o procedemento completo nun proxecto illado:
+
+	```sh
+	scripts/test-restore.sh
+	```
+
+## 6. Vixilancia
 
 - `GET /healthz` responde 200 se a aplicación e a base están ben (o `compose.yml` xa o usa como *healthcheck*).
 - Rexistros: `docker compose logs app`. Os traballos diarios (lembranzas, conservación) avisan alí se fallan.
 
-## 6. Soporte
+## 7. Soporte
 
 | Nivel | Quen | Exemplos |
 |---|---|---|

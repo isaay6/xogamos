@@ -4,6 +4,10 @@ Formato baseado en [Keep a Changelog](https://keepachangelog.com/gl/1.1.0/). Ver
 [Semantic Versioning](https://semver.org/lang/es/). Mentres sexa 0.x, calquera versión menor pode
 incluír cambios incompatibles, que se indican aquí.
 
+## Sen publicar
+
+- Instalación nun comando, imaxe publicada, proxy HTTPS, copias automáticas verificadas e actualización con volta atrás.
+
 ## [0.1.0] — 2026-11 (proposta ao I Certame GOBTEC)
 
 Primeira versión completa, con datos ficticios.

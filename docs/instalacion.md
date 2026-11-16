@@ -1,5 +1,19 @@
 # Instalación
 
+## Instalación nun comando
+
+No servidor, entre no directorio onde queira gardar a instalación e execute:
+
+```sh
+curl -fsSLO https://github.com/isaay6/xogamos/releases/latest/download/install.sh
+chmod +x install.sh && ./install.sh
+```
+
+O asistente pide o dominio e o correo para o certificado HTTPS, crea `.env` con segredos aleatorios,
+descarga a imaxe publicada e arrinca Caddy, a aplicación, PostgreSQL e as copias diarias. Para unha
+demo con datos ficticios use `./install.sh --demo`; para probala só no propio servidor use
+`./install.sh --local`. En automatización, indique `XOGAMOS_DOMAIN`, `XOGAMOS_EMAIL` e `--yes`.
+
 ## Requisitos
 
 Precísase un servidor con Docker Engine e o complemento Docker Compose. A aplicación publica o
@@ -36,18 +50,18 @@ porto 3000; coloque un proxy HTTPS diante dela antes de abrila á cidadanía.
 
 ## Actualización
 
-Obteña a nova versión do código e reconstrúa os contedores:
+Use a actualización con copia previa e volta atrás automática:
 
 ```sh
-git pull
-docker compose up -d --build
+scripts/update.sh
 ```
 
 As migracións necesarias execútanse no inicio do contedor da aplicación.
 
 ## Copias de seguridade
 
-Cree unha copia en `backups/`:
+Caddy executa unha copia verificada cada día ás 03:00. Están en `backups/`; cambie `BACKUP_HOUR` e
+`BACKUP_KEEP_DAYS` no `.env` se cómpre. Cree tamén unha copia manual:
 
 ```sh
 scripts/backup.sh
@@ -56,7 +70,7 @@ scripts/backup.sh
 Para restaurala (a operación substitúe os datos existentes):
 
 ```sh
-scripts/restore.sh backups/reservas-AAAAMMDD-HHMM.dump
+scripts/restore.sh backups/reservas-AAAAMMDD-HHMM.dump --yes
 ```
 
 Garde esas copias fóra do servidor de produción de forma periódica.
