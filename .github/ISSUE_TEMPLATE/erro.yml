@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: EUPL-1.2
+name: Erro
+description: Algo non funciona como debería
+labels: [erro]
+body:
+  - type: markdown
+    attributes:
+      value: Se é un problema de seguridade, non o publiques aquí. Segue o SECURITY.md.
+  - type: textarea
+    id: que
+    attributes:
+      label: Que pasou
+      description: Que facías, que esperabas e que viches.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para repetilo
+      placeholder: |
+        1. Entro como conserxería
+        2. Abro a axenda de hoxe
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: papel
+    attributes:
+      label: Papel
+      options: [Veciñanza, Club, Conserxería, Apertura, Administración, Deputación, Instalación ou operación]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión
+      description: A que aparece no CHANGELOG.md ou a etiqueta da imaxe Docker.
+  - type: input
+    id: contorna
+    attributes:
+      label: Navegador e dispositivo

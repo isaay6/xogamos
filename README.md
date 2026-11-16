@@ -65,6 +65,10 @@ Para instalar a plataforma nun servidor municipal con Docker, consulte a guía d
 - [Encargo do tratamento](docs/encargo-tratamento.md): modelo de contrato e reparto de responsabilidades.
 - [Operación](docs/operacion.md): actualizar, reverter, soporte e quen fai que.
 - [Cumprimento das bases](docs/cumprimento.md): cada requisito, onde se demostra e que falta.
+- [Guías de operación](docs/guias/README.md): despregar nunha Deputación, dar de alta un concello, restaurar unha copia e soporte.
+- [Plan de implantación](docs/plan-implantacion.md): calendario de 8 semanas para un concello pequeno, indicadores e riscos.
+- [Gobernanza e mantemento](GOBERNANZA.md): quen a mantén, compromisos e que pasa se o equipo cambia.
+- [Folla de ruta](docs/folla-de-ruta.md).
 
 Para colaborar: [CONTRIBUTING.md](CONTRIBUTING.md). Para informar dunha vulnerabilidade:
 [SECURITY.md](SECURITY.md). Cambios: [CHANGELOG.md](CHANGELOG.md). Metadatos de reutilización:

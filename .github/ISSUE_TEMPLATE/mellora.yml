@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: EUPL-1.2
+name: Mellora
+description: Unha función nova ou un cambio
+labels: [mellora]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Que problema resolve
+      description: Conta o caso real. Quen o ten e cada canto pasa.
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+  - type: dropdown
+    id: quen
+    attributes:
+      label: Quen o pide
+      options: [Un concello, Unha Deputación, Un club, Unha persoa usuaria, Outro]
+    validations:
+      required: true
+  - type: checkboxes
+    id: datos
+    attributes:
+      label: Datos persoais
+      options:
+        - label: Este cambio garda ou mostra datos persoais novos

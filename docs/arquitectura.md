@@ -81,6 +81,8 @@
 
 ## Límites coñecidos (folla de ruta)
 
+A folla de ruta completa e ordenada está en [folla-de-ruta.md](folla-de-ruta.md).
+
 - Integración real con Cl@ve e Chave365 (trámite de alta).
 - Anonimización automática de reservas antigas.
 - Proba con lectores de pantalla.

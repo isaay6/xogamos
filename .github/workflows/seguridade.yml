@@ -1,0 +1,50 @@
+# SPDX-License-Identifier: EUPL-1.2
+# Análise de seguridade: dependencias, imaxe Docker e código. Execútase en cada cambio e cada luns.
+name: Seguridade
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '17 5 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  dependencias:
+    # Falla se unha dependencia de produción ten unha vulnerabilidade alta ou crítica.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm audit --omit=dev --audit-level=high
+
+  imaxe:
+    # Constrúe a imaxe de produción e analízaa con Trivy (sistema e bibliotecas).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --target production -t xogamos:ci .
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: xogamos:ci
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'
+
+  codigo:
+    # CodeQL só está dispoñible sen custo nos repositorios públicos.
+    if: github.event.repository.visibility == 'public'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/analyze@v3
