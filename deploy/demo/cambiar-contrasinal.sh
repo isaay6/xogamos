@@ -41,4 +41,4 @@ if [[ -n "$ACCESO" ]]; then
 		"$HOST" "$USUARIO" "$PASS" > "$ACCESO"
 	echo "== Gardado en $ACCESO"
 fi
-echo "== Feito. Proba a entrar co usuario «$USUARIO»."
+echo "== Feito. Proba a entrar co usuario «${USUARIO}»."
