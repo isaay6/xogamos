@@ -10,7 +10,7 @@ Mentres o proxecto estea na versión 0, só se manteñen correccións na última
 
 ## Como informar dunha vulnerabilidade
 
-**Non abras unha incidencia pública.** Escribe a **[⚠ correo de contacto de seguridade]** con:
+**Non abras unha incidencia pública.** Escribe a **isay6rodfidal@gmail.com** con:
 
 - unha descrición do problema e do seu impacto;
 - os pasos para reproducilo (versión, configuración, petición);
