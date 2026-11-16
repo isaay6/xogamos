@@ -1,12 +1,82 @@
 {
-  "realm": "clave-simulado",
-  "enabled": true,
-  "users": [{
-    "username": "uxia.demo",
-    "enabled": true,
-    "firstName": "Uxía",
-    "lastName": "Ficticia",
-    "email": "uxia.demo@example.invalid",
-    "credentials": [{"type": "password", "value": "demo-only", "temporary": false}]
-  }]
+	"realm": "clave-simulado",
+	"displayName": "Cl@ve simulado (só demostración)",
+	"enabled": true,
+	"sslRequired": "external",
+	"registrationAllowed": false,
+	"users": [
+		{
+			"username": "99999999r",
+			"enabled": true,
+			"firstName": "Sabela",
+			"lastName": "Proba Exemplo",
+			"email": "sabela.proba@example.invalid",
+			"emailVerified": true,
+			"credentials": [
+				{
+					"type": "password",
+					"value": "demo-only",
+					"temporary": false
+				}
+			]
+		}
+	],
+	"clients": [
+		{
+			"clientId": "http://localhost:8081/realms/xogamos",
+			"name": "Xogamos (ponte)",
+			"enabled": true,
+			"protocol": "saml",
+			"redirectUris": [
+				"http://localhost:8081/realms/xogamos/broker/clave/endpoint*"
+			],
+			"frontchannelLogout": true,
+			"fullScopeAllowed": false,
+			"defaultClientScopes": [],
+			"attributes": {
+				"saml.authnstatement": "true",
+				"saml.server.signature": "true",
+				"saml.assertion.signature": "true",
+				"saml.client.signature": "false",
+				"saml.force.post.binding": "true",
+				"saml_name_id_format": "username",
+				"saml_force_name_id_format": "true"
+			},
+			"protocolMappers": [
+				{
+					"name": "PersonIdentifier",
+					"protocol": "saml",
+					"protocolMapper": "saml-user-property-mapper",
+					"config": {
+						"user.attribute": "username",
+						"attribute.name": "PersonIdentifier",
+						"attribute.nameformat": "Basic",
+						"friendly.name": "PersonIdentifier"
+					}
+				},
+				{
+					"name": "FirstName",
+					"protocol": "saml",
+					"protocolMapper": "saml-user-property-mapper",
+					"config": {
+						"user.attribute": "firstName",
+						"attribute.name": "FirstName",
+						"attribute.nameformat": "Basic",
+						"friendly.name": "FirstName"
+					}
+				},
+				{
+					"name": "FamilyName",
+					"protocol": "saml",
+					"protocolMapper": "saml-user-property-mapper",
+					"config": {
+						"user.attribute": "lastName",
+						"attribute.name": "FamilyName",
+						"attribute.nameformat": "Basic",
+						"friendly.name": "FamilyName"
+					}
+				}
+			]
+		}
+	]
 }

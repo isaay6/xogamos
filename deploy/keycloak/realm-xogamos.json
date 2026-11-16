@@ -1,18 +1,119 @@
 {
-  "realm": "xogamos",
-  "enabled": true,
-  "clients": [{
-    "clientId": "xogamos",
-    "enabled": true,
-    "publicClient": true,
-    "standardFlowEnabled": true,
-    "redirectUris": ["http://localhost:3000/auth/clave/callback", "http://localhost:3000/auth/chave365/callback"],
-    "attributes": {"pkce.code.challenge.method": "S256"}
-  }],
-  "identityProviders": [{
-    "alias": "clave",
-    "providerId": "saml",
-    "enabled": true,
-    "config": {"singleSignOnServiceUrl": "http://localhost:8081/realms/clave-simulado/protocol/saml", "entityId": "clave-simulado"}
-  }]
+	"realm": "xogamos",
+	"enabled": true,
+	"sslRequired": "external",
+	"registrationAllowed": false,
+	"components": {
+		"org.keycloak.userprofile.UserProfileProvider": [
+			{
+				"providerId": "declarative-user-profile",
+				"config": {
+					"kc.user.profile.config": [
+						"{\"attributes\": [{\"name\": \"username\", \"displayName\": \"${username}\", \"validations\": {\"length\": {\"min\": 3, \"max\": 255}}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}}, {\"name\": \"email\", \"displayName\": \"${email}\", \"validations\": {\"email\": {}}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}}, {\"name\": \"firstName\", \"displayName\": \"${firstName}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}}, {\"name\": \"lastName\", \"displayName\": \"${lastName}\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}}, {\"name\": \"dni\", \"displayName\": \"DNI ou NIE\", \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\"]}}]}"
+					]
+				}
+			}
+		]
+	},
+	"clients": [
+		{
+			"clientId": "xogamos",
+			"name": "Xogamos",
+			"enabled": true,
+			"protocol": "openid-connect",
+			"publicClient": true,
+			"standardFlowEnabled": true,
+			"implicitFlowEnabled": false,
+			"directAccessGrantsEnabled": false,
+			"redirectUris": [
+				"http://localhost:3000/auth/clave/callback",
+				"http://localhost:3000/auth/chave365/callback"
+			],
+			"webOrigins": [],
+			"attributes": {
+				"pkce.code.challenge.method": "S256"
+			},
+			"protocolMappers": [
+				{
+					"name": "dni",
+					"protocol": "openid-connect",
+					"protocolMapper": "oidc-usermodel-attribute-mapper",
+					"config": {
+						"user.attribute": "dni",
+						"claim.name": "dni",
+						"jsonType.label": "String",
+						"id.token.claim": "true",
+						"access.token.claim": "false",
+						"userinfo.token.claim": "false"
+					}
+				}
+			]
+		}
+	],
+	"identityProviders": [
+		{
+			"alias": "clave",
+			"displayName": "Cl@ve",
+			"providerId": "saml",
+			"enabled": true,
+			"trustEmail": false,
+			"firstBrokerLoginFlowAlias": "first broker login",
+			"config": {
+				"entityId": "http://localhost:8081/realms/xogamos",
+				"idpEntityId": "http://localhost:8081/realms/clave-simulado",
+				"singleSignOnServiceUrl": "http://localhost:8081/realms/clave-simulado/protocol/saml",
+				"singleLogoutServiceUrl": "http://localhost:8081/realms/clave-simulado/protocol/saml",
+				"nameIDPolicyFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
+				"principalType": "ATTRIBUTE",
+				"principalAttribute": "PersonIdentifier",
+				"postBindingAuthnRequest": "true",
+				"postBindingResponse": "true",
+				"wantAuthnRequestsSigned": "false",
+				"validateSignature": "false",
+				"syncMode": "FORCE"
+			}
+		}
+	],
+	"identityProviderMappers": [
+		{
+			"name": "dni",
+			"identityProviderAlias": "clave",
+			"identityProviderMapper": "saml-user-attribute-idp-mapper",
+			"config": {
+				"syncMode": "FORCE",
+				"attribute.name": "PersonIdentifier",
+				"user.attribute": "dni"
+			}
+		},
+		{
+			"name": "nome",
+			"identityProviderAlias": "clave",
+			"identityProviderMapper": "saml-user-attribute-idp-mapper",
+			"config": {
+				"syncMode": "FORCE",
+				"attribute.name": "FirstName",
+				"user.attribute": "firstName"
+			}
+		},
+		{
+			"name": "apelidos",
+			"identityProviderAlias": "clave",
+			"identityProviderMapper": "saml-user-attribute-idp-mapper",
+			"config": {
+				"syncMode": "FORCE",
+				"attribute.name": "FamilyName",
+				"user.attribute": "lastName"
+			}
+		},
+		{
+			"name": "usuario",
+			"identityProviderAlias": "clave",
+			"identityProviderMapper": "saml-username-idp-mapper",
+			"config": {
+				"syncMode": "FORCE",
+				"template": "${ATTRIBUTE.PersonIdentifier}",
+				"target": "LOCAL"
+			}
+		}
+	]
 }
