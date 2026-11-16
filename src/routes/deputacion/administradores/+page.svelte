@@ -197,11 +197,13 @@
 	.search,
 	.identity {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 8px;
 	}
 
 	.search div {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 8px;
 	}
 
@@ -214,8 +216,19 @@
 		font: inherit;
 	}
 
+	input,
+	select {
+		min-width: 0;
+		max-width: 100%;
+	}
+
 	input[type='search'] {
-		flex: 1;
+		flex: 1 1 140px;
+	}
+
+	li > span {
+		min-width: 0;
+		overflow-wrap: anywhere;
 	}
 
 	ul {
