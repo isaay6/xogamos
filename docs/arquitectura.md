@@ -21,7 +21,7 @@
 
 **Calidade:**
 
-- 1.403 probas automáticas (Vitest con PostgreSQL en memoria, PGlite) e unha batería de accesibilidade no navegador (Playwright + axe-core);
+- 1.407 probas automáticas (Vitest con PostgreSQL en memoria, PGlite) e unha batería de accesibilidade no navegador (Playwright + axe-core);
 - comprobación de tipos estrita;
 - comprobación de licenzas e cabeceiras SPDX en cada cambio.
 
