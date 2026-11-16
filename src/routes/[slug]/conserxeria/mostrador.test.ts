@@ -3,6 +3,14 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 const env = vi.hoisted(() => ({ PUBLIC_ORIGIN: undefined as string | undefined }));
 vi.mock('$app/env/private', () => ({
+	OIDC_SCOPES: undefined,
+	OIDC_SUBJECT_CLAIM: undefined,
+	OIDC_CLAVE_ISSUER: undefined,
+	OIDC_CLAVE_CLIENT_ID: undefined,
+	OIDC_CLAVE_CLIENT_SECRET: undefined,
+	OIDC_CHAVE365_ISSUER: undefined,
+	OIDC_CHAVE365_CLIENT_ID: undefined,
+	OIDC_CHAVE365_CLIENT_SECRET: undefined,
 	DATABASE_URL: 'postgres://x',
 	IDENTITY_MODE: undefined,
 	AUTH_SECRET: 'k'.repeat(40),

@@ -163,7 +163,9 @@
 		</div>
 		<div class="botons">
 			{#if data.enabledProviders.includes('clave')}
-				<Button href="/auth/clave/start?redirectTo={back}">{t(locale, 'vec.confirmar.clave')}</Button>
+				<Button href="/auth/clave/start?redirectTo={back}"
+					>{t(locale, 'vec.confirmar.clave')}</Button
+				>
 			{/if}
 			{#if data.enabledProviders.includes('chave365')}
 				<Button variant="out" href="/auth/chave365/start?redirectTo={back}"

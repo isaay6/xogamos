@@ -29,7 +29,18 @@ export const GET: RequestHandler = async ({ params, url, cookies, locals }) => {
 		const raw = cookies.get('auth_state');
 		if (url.searchParams.has('error') || !raw) return fail('VALIDATION_FAILED');
 		let saved: z.infer<typeof stateCookie> & { nonce?: string; codeVerifier?: string };
-		try { saved = z.object({ state: z.string().min(1), nonce: z.string().min(1), codeVerifier: z.string().min(1), redirectTo: z.string() }).parse(JSON.parse(raw)); } catch { return fail('VALIDATION_FAILED'); }
+		try {
+			saved = z
+				.object({
+					state: z.string().min(1),
+					nonce: z.string().min(1),
+					codeVerifier: z.string().min(1),
+					redirectTo: z.string()
+				})
+				.parse(JSON.parse(raw));
+		} catch {
+			return fail('VALIDATION_FAILED');
+		}
 		const state = url.searchParams.get('state');
 		const code = url.searchParams.get('code');
 		if (!state || !code || !sameString(state, saved.state)) return fail('VALIDATION_FAILED');
@@ -37,7 +48,10 @@ export const GET: RequestHandler = async ({ params, url, cookies, locals }) => {
 		if (!exchanged.ok) return fail('VALIDATION_FAILED');
 		const identity = await verifyIdToken(provider, exchanged.value, saved.nonce!);
 		if (!identity.ok) return fail('VALIDATION_FAILED');
-		const user = await startSession({ locals, cookies }, { provider: params.provider, ...identity.value });
+		const user = await startSession(
+			{ locals, cookies },
+			{ provider: params.provider, ...identity.value }
+		);
 		cookies.delete('auth_state', { path: '/' });
 		return redirectAfterLogin(locals, user, saved.redirectTo);
 	}

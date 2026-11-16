@@ -30,6 +30,14 @@ import { bookingQrSecret } from '../../lib/server/auth/booking-qr-secret';
 
 // Clave dos QR: sen AUTH_SECRET non se emiten (Ruling 2), así que aquí se fixa unha.
 vi.mock('$app/env/private', () => ({
+	OIDC_SCOPES: undefined,
+	OIDC_SUBJECT_CLAIM: undefined,
+	OIDC_CLAVE_ISSUER: undefined,
+	OIDC_CLAVE_CLIENT_ID: undefined,
+	OIDC_CLAVE_CLIENT_SECRET: undefined,
+	OIDC_CHAVE365_ISSUER: undefined,
+	OIDC_CHAVE365_CLIENT_ID: undefined,
+	OIDC_CHAVE365_CLIENT_SECRET: undefined,
 	DATABASE_URL: 'postgres://x',
 	IDENTITY_MODE: undefined,
 	AUTH_SECRET: 'k'.repeat(40),

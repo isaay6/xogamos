@@ -24,10 +24,24 @@ export const GET: RequestHandler = async ({ params, url, cookies }) => {
 		} catch {
 			return fail('VALIDATION_FAILED');
 		}
-		cookies.set(AUTH_STATE_COOKIE, JSON.stringify({ state: request.state, nonce: request.nonce, codeVerifier: request.codeVerifier, redirectTo: safeRedirect(url.searchParams.get('redirectTo')) }), {
-			httpOnly: true, sameSite: 'lax', path: '/', secure: !dev, maxAge: 600
-		});
-		redirect(303, request.url);
+		cookies.set(
+			AUTH_STATE_COOKIE,
+			JSON.stringify({
+				state: request.state,
+				nonce: request.nonce,
+				codeVerifier: request.codeVerifier,
+				redirectTo: safeRedirect(url.searchParams.get('redirectTo'))
+			}),
+			{
+				httpOnly: true,
+				sameSite: 'lax',
+				path: '/',
+				secure: !dev,
+				maxAge: 600
+			}
+		);
+		// O destino sae do descubrimento do emisor configurado, non de datos da petición.
+		redirect(303, request.url, { external: true });
 	}
 	const state = randomBytes(24).toString('base64url');
 	cookies.set(

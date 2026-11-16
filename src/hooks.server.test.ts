@@ -2,6 +2,15 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 vi.mock('$app/env/private', () => ({
+	PUBLIC_ORIGIN: undefined,
+	OIDC_SCOPES: undefined,
+	OIDC_SUBJECT_CLAIM: undefined,
+	OIDC_CLAVE_ISSUER: undefined,
+	OIDC_CLAVE_CLIENT_ID: undefined,
+	OIDC_CLAVE_CLIENT_SECRET: undefined,
+	OIDC_CHAVE365_ISSUER: undefined,
+	OIDC_CHAVE365_CLIENT_ID: undefined,
+	OIDC_CHAVE365_CLIENT_SECRET: undefined,
 	get DEMO() {
 		return undefined;
 	},

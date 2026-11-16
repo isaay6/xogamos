@@ -87,7 +87,10 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		needsLogin: !locals.user,
-		enabledProviders: (() => { const identity = readIdentityConfig(); return identity.mode === 'oidc' ? Object.keys(identity.providers) : ['clave', 'chave365']; })(),
+		enabledProviders: (() => {
+			const identity = readIdentityConfig();
+			return identity.mode === 'oidc' ? Object.keys(identity.providers) : ['clave', 'chave365'];
+		})(),
 		redirectTo: url.pathname + url.search,
 		easy: url.searchParams.get('easy') === '1',
 		facility: {

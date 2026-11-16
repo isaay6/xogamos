@@ -16,13 +16,15 @@ import {
 	PUBLIC_ORIGIN
 } from '$app/env/private';
 
-export type IdentityConfig = {
-	mode: 'simulated' | 'disabled';
-	secret: string | null;
-} | {
-	mode: 'oidc';
-	providers: Partial<Record<Provider, OidcProviderConfig>>;
-};
+export type IdentityConfig =
+	| {
+			mode: 'simulated' | 'disabled';
+			secret: string | null;
+	  }
+	| {
+			mode: 'oidc';
+			providers: Partial<Record<Provider, OidcProviderConfig>>;
+	  };
 
 export type OidcProviderConfig = {
 	issuer: string;
@@ -83,7 +85,12 @@ export function identityConfig(env: IdentityEnvironment): IdentityConfig {
 		const providers: Partial<Record<Provider, OidcProviderConfig>> = {};
 		for (const [provider, issuer, clientId, clientSecret] of [
 			['clave', env.OIDC_CLAVE_ISSUER, env.OIDC_CLAVE_CLIENT_ID, env.OIDC_CLAVE_CLIENT_SECRET],
-			['chave365', env.OIDC_CHAVE365_ISSUER, env.OIDC_CHAVE365_CLIENT_ID, env.OIDC_CHAVE365_CLIENT_SECRET]
+			[
+				'chave365',
+				env.OIDC_CHAVE365_ISSUER,
+				env.OIDC_CHAVE365_CLIENT_ID,
+				env.OIDC_CHAVE365_CLIENT_SECRET
+			]
 		] as const) {
 			if (!issuer || !clientId) continue;
 			let parsed: URL;
@@ -97,11 +104,16 @@ export function identityConfig(env: IdentityEnvironment): IdentityConfig {
 				throw new Error(`OIDC_${provider.toUpperCase()}_ISSUER debe usar https`);
 			}
 			providers[provider] = {
-				issuer: issuer.replace(/\/+$/, ''), clientId, clientSecret: clientSecret || undefined, scopes,
-				subjectClaim, redirectUri: `${publicOrigin.origin}/auth/${provider}/callback`
+				issuer: issuer.replace(/\/+$/, ''),
+				clientId,
+				clientSecret: clientSecret || undefined,
+				scopes,
+				subjectClaim,
+				redirectUri: `${publicOrigin.origin}/auth/${provider}/callback`
 			};
 		}
-		if (!Object.keys(providers).length) throw new Error('IDENTITY_MODE=oidc requiere al menos un proveedor OIDC');
+		if (!Object.keys(providers).length)
+			throw new Error('IDENTITY_MODE=oidc requiere al menos un proveedor OIDC');
 		return { mode: 'oidc', providers };
 	}
 	if (env.IDENTITY_MODE !== 'simulated') return { mode: 'disabled', secret: null };
@@ -125,8 +137,14 @@ export function readIdentityConfig(): IdentityConfig {
 		DATABASE_URL,
 		DEMO,
 		DEMO_DATABASE_IS_DISPOSABLE,
-		PUBLIC_ORIGIN, OIDC_SCOPES, OIDC_SUBJECT_CLAIM,
-		OIDC_CLAVE_ISSUER, OIDC_CLAVE_CLIENT_ID, OIDC_CLAVE_CLIENT_SECRET,
-		OIDC_CHAVE365_ISSUER, OIDC_CHAVE365_CLIENT_ID, OIDC_CHAVE365_CLIENT_SECRET
+		PUBLIC_ORIGIN,
+		OIDC_SCOPES,
+		OIDC_SUBJECT_CLAIM,
+		OIDC_CLAVE_ISSUER,
+		OIDC_CLAVE_CLIENT_ID,
+		OIDC_CLAVE_CLIENT_SECRET,
+		OIDC_CHAVE365_ISSUER,
+		OIDC_CHAVE365_CLIENT_ID,
+		OIDC_CHAVE365_CLIENT_SECRET
 	});
 }

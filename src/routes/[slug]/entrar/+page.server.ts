@@ -12,6 +12,7 @@ export const load: PageServerLoad = ({ params, url, locals }) => {
 	const identity = readIdentityConfig();
 	return {
 		redirectTo,
-		enabledProviders: identity.mode === 'oidc' ? Object.keys(identity.providers) : ['clave', 'chave365']
+		enabledProviders:
+			identity.mode === 'oidc' ? Object.keys(identity.providers) : ['clave', 'chave365']
 	};
 };
