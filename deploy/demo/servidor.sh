@@ -13,8 +13,8 @@ fi
 echo "== Cortalumes do sistema: abrir 80 e 443"
 # As imaxes Ubuntu de Oracle traen regras iptables que bloquean todo agás SSH.
 if command -v iptables >/dev/null; then
-	sudo iptables -C INPUT -p tcp --dport 80 -j ACCEPT 2>/dev/null || sudo iptables -I INPUT 6 -p tcp --dport 80 -j ACCEPT
-	sudo iptables -C INPUT -p tcp --dport 443 -j ACCEPT 2>/dev/null || sudo iptables -I INPUT 6 -p tcp --dport 443 -j ACCEPT
+	sudo iptables -C INPUT -p tcp --dport 80 -j ACCEPT 2>/dev/null || sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+	sudo iptables -C INPUT -p tcp --dport 443 -j ACCEPT 2>/dev/null || sudo iptables -I INPUT -p tcp --dport 443 -j ACCEPT
 	if command -v netfilter-persistent >/dev/null; then sudo netfilter-persistent save; fi
 fi
 
