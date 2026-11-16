@@ -13,8 +13,8 @@
 		TOURS,
 		isTourKey,
 		matchesStep,
+		restartPlan,
 		stepHref,
-		tourForPath,
 		type TourKey,
 		type TourStep
 	} from './tour';
@@ -200,12 +200,18 @@
 		if (focus?.isConnected) focus.focus({ preventScroll: true });
 	}
 
-	/** «Percorrido guiado» e «Repetir o percorrido»: desde o primeiro paso. */
+	/**
+	 * «Percorrido guiado» e «Repetir o percorrido»: desde o primeiro paso. Se aínda non se escolleu
+	 * perfil nin concello, lévase a /demo para escollelo.
+	 */
 	export function restart() {
+		const plan = restartPlan(cur, lastTour(), page.url.pathname, page.params.slug ?? null);
+		if (!plan) {
+			goto('/demo');
+			return;
+		}
 		rememberOpener();
-		const tour = cur?.tour ?? lastTour() ?? tourForPath(page.url.pathname);
-		const slug = cur?.slug ?? (TOURS[tour].scope === 'concello' ? slugOf(page.url.pathname) : null);
-		cur = { tour, paso: 0, slug, urls: {}, fin: false };
+		cur = { tour: plan.tour, paso: 0, slug: plan.slug, urls: {}, fin: false };
 		go(0);
 	}
 
@@ -249,7 +255,10 @@
 			}
 		}
 		if (cur && !cur.fin && step && !matchesStep(cur.tour, step, cur.slug, page.url.pathname)) {
+			// Un paso que pide sesión acabou na pantalla de entrar: escóllese o perfil en /demo.
+			const login = /\/entrar$/.test(page.url.pathname);
 			skip();
+			if (login) goto('/demo');
 			return;
 		}
 		show();

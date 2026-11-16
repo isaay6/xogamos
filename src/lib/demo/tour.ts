@@ -127,3 +127,21 @@ export function tourForPath(pathname: string): TourKey {
 	if (zone === 'conserxeria') return 'conserxe';
 	return 'vecina';
 }
+
+/**
+ * Con que percorrido e concello se pode (re)comezar desde a pantalla actual, ou `null` se antes
+ * hai que escoller un perfil en /demo (p. ex. na lista de concellos, onde aínda non hai concello).
+ */
+export function restartPlan(
+	current: { tour: TourKey; slug: string | null } | null,
+	last: TourKey | null,
+	pathname: string,
+	slugParam: string | null
+): { tour: TourKey; slug: string | null } | null {
+	const inApp = slugParam !== null || pathname.startsWith('/deputacion');
+	const tour = current?.tour ?? last ?? (inApp ? tourForPath(pathname) : null);
+	if (!tour) return null;
+	if (TOURS[tour].scope === 'raiz') return { tour, slug: null };
+	const slug = current?.slug ?? slugParam;
+	return slug ? { tour, slug } : null;
+}

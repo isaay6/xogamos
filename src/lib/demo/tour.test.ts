@@ -8,6 +8,7 @@ import {
 	TOUR_KEYS,
 	isTourKey,
 	matchesStep,
+	restartPlan,
 	stepHref,
 	stepPattern,
 	tourForPath
@@ -92,5 +93,31 @@ describe('rutas dos pasos', () => {
 		expect(tourForPath('/viana-do-bolo/eu')).toBe('vecina');
 		expect(isTourKey('vecina')).toBe(true);
 		expect(isTourKey('outro')).toBe(false);
+	});
+});
+
+describe('restartPlan', () => {
+	it('na lista de concellos, sen perfil, manda escoller en /demo', () => {
+		expect(restartPlan(null, null, '/', null)).toBeNull();
+		expect(restartPlan(null, 'vecina', '/', null)).toBeNull();
+		expect(restartPlan(null, null, '/benvida', null)).toBeNull();
+	});
+
+	it('dentro dun concello empeza o percorrido da zona', () => {
+		expect(restartPlan(null, null, '/viana-do-bolo/admin', 'viana-do-bolo')).toEqual({
+			tour: 'concello',
+			slug: 'viana-do-bolo'
+		});
+	});
+
+	it('repite o percorrido en curso co seu concello', () => {
+		expect(restartPlan({ tour: 'conserxe', slug: 'a-rua' }, 'vecina', '/', null)).toEqual({
+			tour: 'conserxe',
+			slug: 'a-rua'
+		});
+	});
+
+	it('a Deputación non necesita concello', () => {
+		expect(restartPlan(null, 'deputacion', '/', null)).toEqual({ tour: 'deputacion', slug: null });
 	});
 });
