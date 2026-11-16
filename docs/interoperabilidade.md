@@ -4,24 +4,11 @@ A plataforma segue o Esquema Nacional de Interoperabilidade (ENI) en tres planos
 
 ## 1. Identidade dixital pública: Cl@ve e Chave365
 
-**Como está deseñado.** A aplicación non xestiona contrasinais. O acceso faise sempre a través dun **provedor de identidade público**: Cl@ve, da AGE, ou Chave365, da Xunta. O provedor autentica a persoa e entrega á aplicación unha **aserción asinada** (HMAC-SHA256, válida 120 segundos) con:
+**Como está deseñado.** A aplicación non xestiona contrasinais. A integración real usa OpenID Connect, fluxo Authorization Code con PKCE S256: comproba a sinatura, emisor, audiencia, caducidade e `nonce` do ID token antes de abrir sesión. Configúrase por provedor mediante `OIDC_CLAVE_*` ou `OIDC_CHAVE365_*`.
 
-- o provedor;
-- un identificador estable;
-- o nome;
-- o correo, se o hai.
+**Cl@ve e Chave365.** Keycloak pode actuar opcionalmente como broker SAML 2.0 de Cl@ve e publicar OIDC para a aplicación. A alta administrativa ante AGE ou Xunta, os metadatos, certificados e as probas de preprodución seguen sendo necesarios; a persoa operadora debe mapear o DNI/NIE ao claim de suxeito estable.
 
-A aplicación só confía nesa aserción (`src/lib/server/auth/assertion.ts`).
-
-**Que hai hoxe.** Un **simulador** de Cl@ve e Chave365 que xera exactamente esa aserción con identidades ficticias. Só funciona cunha base de datos de demostración (`IDENTITY_MODE=simulated`), e a aplicación rexeita arrincar se se intenta usar con datos reais.
-
-**Que falta para a integración real.** É un trámite administrativo, non un cambio de deseño:
-
-1. **Cl@ve:** o concello ou a Deputación dáse de alta como entidade usuaria ante a Secretaría Xeral de Administración Dixital. A conexión faise co protocolo SAML 2.0 da pasarela Cl@ve, a través dun pequeno servizo intermedio que, tras a autenticación, emite a mesma aserción.
-2. **Chave365:** alta ante a AMTEGA, co protocolo que indique a Xunta. O resultado é tamén a mesma aserción.
-3. **Proba en preprodución** cos certificados de cada provedor.
-
-Estímase en 4–8 semanas, sobre todo polos prazos de alta. É o **primeiro paso do piloto** (ver a memoria).
+**Demo.** O simulador mantense só para demostración (`IDENTITY_MODE=simulated` e base desbotable). É o único camiño que usa a aserción HMAC de `src/lib/server/auth/assertion.ts`; non forma parte da integración OIDC real.
 
 Persoas sen identidade dixital: a conserxería pode darlles de alta e reservar no seu nome por teléfono ou en persoa. Ese acceso queda identificado pola busca por DNI (só se garda o seu hash).
 

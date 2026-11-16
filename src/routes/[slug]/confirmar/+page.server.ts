@@ -14,6 +14,7 @@ import { walletBalance } from '../../../lib/server/services/wallet';
 import { responsibleEntities } from '../../../lib/server/services/entities';
 import { formatTime } from '../../../lib/ui/format';
 import { requireMunicipality } from '../municipality.server';
+import { readIdentityConfig } from '../../../lib/server/auth/config';
 import type { Actions, PageServerLoad } from './$types';
 
 const Query = z.object({
@@ -86,6 +87,7 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		needsLogin: !locals.user,
+		enabledProviders: (() => { const identity = readIdentityConfig(); return identity.mode === 'oidc' ? Object.keys(identity.providers) : ['clave', 'chave365']; })(),
 		redirectTo: url.pathname + url.search,
 		easy: url.searchParams.get('easy') === '1',
 		facility: {

@@ -1,0 +1,18 @@
+{
+  "realm": "xogamos",
+  "enabled": true,
+  "clients": [{
+    "clientId": "xogamos",
+    "enabled": true,
+    "publicClient": true,
+    "standardFlowEnabled": true,
+    "redirectUris": ["http://localhost:3000/auth/clave/callback", "http://localhost:3000/auth/chave365/callback"],
+    "attributes": {"pkce.code.challenge.method": "S256"}
+  }],
+  "identityProviders": [{
+    "alias": "clave",
+    "providerId": "saml",
+    "enabled": true,
+    "config": {"singleSignOnServiceUrl": "http://localhost:8081/realms/clave-simulado/protocol/saml", "entityId": "clave-simulado"}
+  }]
+}

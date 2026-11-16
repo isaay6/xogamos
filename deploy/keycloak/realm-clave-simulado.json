@@ -1,0 +1,12 @@
+{
+  "realm": "clave-simulado",
+  "enabled": true,
+  "users": [{
+    "username": "uxia.demo",
+    "enabled": true,
+    "firstName": "Uxía",
+    "lastName": "Ficticia",
+    "email": "uxia.demo@example.invalid",
+    "credentials": [{"type": "password", "value": "demo-only", "temporary": false}]
+  }]
+}

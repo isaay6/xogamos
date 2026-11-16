@@ -11,6 +11,14 @@ export const variables = defineEnvVars({
 			"Identidad: 'simulated' activa el simulador de Cl@ve y Chave365; otro valor lo desactiva",
 		schema: (value) => value || undefined
 	},
+	OIDC_CLAVE_ISSUER: { description: 'Emisor OIDC de Cl@ve', schema: (value) => value || undefined },
+	OIDC_CLAVE_CLIENT_ID: { description: 'Client ID OIDC de Cl@ve', schema: (value) => value || undefined },
+	OIDC_CLAVE_CLIENT_SECRET: { description: 'Secreto OIDC opcional de Cl@ve', schema: (value) => value || undefined },
+	OIDC_CHAVE365_ISSUER: { description: 'Emisor OIDC de Chave365', schema: (value) => value || undefined },
+	OIDC_CHAVE365_CLIENT_ID: { description: 'Client ID OIDC de Chave365', schema: (value) => value || undefined },
+	OIDC_CHAVE365_CLIENT_SECRET: { description: 'Secreto OIDC opcional de Chave365', schema: (value) => value || undefined },
+	OIDC_SCOPES: { description: 'Scopes OIDC', schema: (value) => value || undefined },
+	OIDC_SUBJECT_CLAIM: { description: 'Claim OIDC para o identificador', schema: (value) => value || undefined },
 	DEMO: {
 		description:
 			"Modo demo: '1' activa a portada /demo, os percorridos guiados e a faixa «Datos de demostración» (só con IDENTITY_MODE=simulated e unha base desbotable)",

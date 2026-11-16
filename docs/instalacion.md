@@ -92,5 +92,7 @@ de PostgreSQL.
 
 ## Identidade dixital real
 
+Use `IDENTITY_MODE=oidc`, `PUBLIC_ORIGIN` e, para cada provedor activado, `OIDC_<PROVEDOR>_ISSUER` e `OIDC_<PROVEDOR>_CLIENT_ID`; `OIDC_<PROVEDOR>_CLIENT_SECRET` é opcional para clientes públicos con PKCE. `OIDC_SCOPES` vale por defecto `openid profile email` e `OIDC_SUBJECT_CLAIM` vale `sub`.
+
 A integración real con Cl@ve ou Chave365 require tramitar a alta correspondente ante a AGE ou a
 Xunta de Galicia. O modo `simulated` non é un substituto desa alta.
