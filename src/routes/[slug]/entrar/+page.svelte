@@ -19,10 +19,14 @@
 	<h1>{t(data.locale, 'entrar.titulo')}</h1>
 	<p>{t(data.locale, 'entrar.texto')}</p>
 	<div class="botons">
-		<Button href="/auth/clave/start?redirectTo={back}">{t(data.locale, 'entrar.clave')}</Button>
-		<Button variant="out" href="/auth/chave365/start?redirectTo={back}"
-			>{t(data.locale, 'entrar.chave365')}</Button
-		>
+		{#if data.enabledProviders.includes('clave')}
+			<Button href="/auth/clave/start?redirectTo={back}">{t(data.locale, 'entrar.clave')}</Button>
+		{/if}
+		{#if data.enabledProviders.includes('chave365')}
+			<Button variant="out" href="/auth/chave365/start?redirectTo={back}"
+				>{t(data.locale, 'entrar.chave365')}</Button
+			>
+		{/if}
 		<!-- «Agora non» vai sempre á portada: o destino pode requirir sesión e volvería aquí. -->
 		<a class="agora" href="/{data.municipality.slug}">{t(data.locale, 'entrar.agora_non')}</a>
 	</div>

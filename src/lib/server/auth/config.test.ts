@@ -51,4 +51,19 @@ describe('identityConfig', () => {
 			})
 		).toThrow(/DEMO_DATABASE_IS_DISPOSABLE/);
 	});
+	it('OIDC require orixe pública e polo menos un provedor válido', () => {
+		expect(() => identityConfig({ IDENTITY_MODE: 'oidc' })).toThrow(/PUBLIC_ORIGIN/);
+		expect(() => identityConfig({ IDENTITY_MODE: 'oidc', PUBLIC_ORIGIN: 'https://x.example' })).toThrow(/proveedor/);
+		expect(() => identityConfig({
+			IDENTITY_MODE: 'oidc', PUBLIC_ORIGIN: 'https://x.example',
+			OIDC_CLAVE_ISSUER: 'http://idp.example', OIDC_CLAVE_CLIENT_ID: 'client'
+		})).toThrow(/https/);
+		expect(identityConfig({
+			IDENTITY_MODE: 'oidc', PUBLIC_ORIGIN: 'https://x.example/',
+			OIDC_CLAVE_ISSUER: 'https://idp.example/', OIDC_CLAVE_CLIENT_ID: 'client'
+		})).toMatchObject({
+			mode: 'oidc',
+			providers: { clave: { redirectUri: 'https://x.example/auth/clave/callback', scopes: 'openid profile email' } }
+		});
+	});
 });

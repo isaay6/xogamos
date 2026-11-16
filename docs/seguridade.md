@@ -9,7 +9,7 @@ medidas organizativas (política, persoas responsables, formación, xestión de 
 
 | Ámbito | Medida | Onde |
 |---|---|---|
-| Identificación | Sen contrasinais propios: só aserción asinada (HMAC-SHA256, validez 120 s) do provedor público (Cl@ve, Chave365) | `src/lib/server/auth/` |
+| Identificación | Sen contrasinais propios: OIDC Authorization Code con PKCE, validación de JWT; o HMAC queda só no simulador | `src/lib/server/auth/` |
 | Sesións | Token aleatorio; na base só se garda o seu hash SHA-256. Cookie `HttpOnly`, `Secure` e `SameSite`. Caducan aos 30 días sen uso e bórranse cada día | `services/sessions.ts`, `jobs/retention.ts` |
 | Autorización | Papeis por concello (administración, conserxería, apertura, Deputación), comprobados no servidor en cada ruta e operación da API | `routes/[slug]/admin/guard.ts` e equivalentes |
 | Separación de datos | Cada fila leva o seu concello; claves foráneas compostas por concello impiden mesturar datos | `db/schema.ts` |

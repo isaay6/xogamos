@@ -35,6 +35,7 @@ Primeira versión completa, con datos ficticios.
 - Batería de accesibilidade (axe-core) en 48 pantallas e dous anchos, na CI.
 - API REST `/api/v1` con OpenAPI 3.1 e datos abertos de ocupación.
 - Identidade só a través de Cl@ve e Chave365 (simulador para a demo).
+- OIDC Authorization Code con PKCE e Keycloak opcional como broker SAML para Cl@ve.
 - Seguridade: CSP con *nonce*, HSTS, límite de peticións, sesións con hash e borrado automático de datos vellos.
 - Despregamento con Docker Compose, migracións automáticas, copias e comprobación de saúde.
 - Integración continua: tipos, probas, compilación, SPDX e licenzas.

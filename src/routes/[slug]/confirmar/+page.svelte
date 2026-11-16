@@ -162,10 +162,14 @@
 			<Bubble>{t(locale, 'vec.confirmar.entra')}</Bubble>
 		</div>
 		<div class="botons">
-			<Button href="/auth/clave/start?redirectTo={back}">{t(locale, 'vec.confirmar.clave')}</Button>
-			<Button variant="out" href="/auth/chave365/start?redirectTo={back}"
-				>{t(locale, 'vec.confirmar.chave365')}</Button
-			>
+			{#if data.enabledProviders.includes('clave')}
+				<Button href="/auth/clave/start?redirectTo={back}">{t(locale, 'vec.confirmar.clave')}</Button>
+			{/if}
+			{#if data.enabledProviders.includes('chave365')}
+				<Button variant="out" href="/auth/chave365/start?redirectTo={back}"
+					>{t(locale, 'vec.confirmar.chave365')}</Button
+				>
+			{/if}
 		</div>
 	{:else}
 		<form
