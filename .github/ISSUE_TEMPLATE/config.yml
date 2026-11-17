@@ -2,5 +2,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Vulnerabilidade de seguridade
-    url: https://github.com/[⚠ usuario]/[⚠ repositorio]/security/policy
+    url: https://github.com/isaay6/xogamos/security/policy
     about: Non abras unha incidencia pública. Segue a política de seguridade.

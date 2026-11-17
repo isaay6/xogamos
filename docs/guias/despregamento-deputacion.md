@@ -20,7 +20,7 @@ Non fai falta nada máis: unha aplicación e unha base PostgreSQL. Non hai servi
 1. **Descargar e instalar.**
 
 	```sh
-	git clone https://github.com/[⚠ usuario]/[⚠ repositorio].git xogamos && cd xogamos
+	git clone https://github.com/isaay6/xogamos.git xogamos && cd xogamos
 	./install.sh
 	```
 

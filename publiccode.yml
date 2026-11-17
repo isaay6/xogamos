@@ -1,10 +1,9 @@
 # Metadatos de reutilización segundo o estándar publiccode.yml (https://yml.publiccode.tools).
-# ⚠ Completar url e landingURL ao publicar o repositorio.
 publiccodeYmlVersion: '0.4'
 
 name: Xogamos
-url: 'https://github.com/[⚠ usuario]/[⚠ repositorio]'
-landingURL: '[⚠ URL da demo]'
+url: 'https://github.com/isaay6/xogamos'
+landingURL: 'https://187-33-145-223.sslip.io'
 softwareVersion: '0.1.0'
 releaseDate: '2026-11-18'
 platforms:

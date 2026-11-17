@@ -6,7 +6,7 @@ con indicadores; a Deputación pode aloxar nunha soa instalación todos os conce
 
 Proposta ao **I Certame GOBTEC de Software Libre** (AGASOL, 2026). Licenza **EUPL-1.2**.
 
-**Demo:** [⚠ URL da demo] · **Documentación:** [docs/](docs) · **Cumprimento das bases:** [docs/cumprimento.md](docs/cumprimento.md)
+**Demo:** https://187-33-145-223.sslip.io · **Documentación:** [docs/](docs) · **Cumprimento das bases:** [docs/cumprimento.md](docs/cumprimento.md)
 
 <table>
   <tr>
@@ -53,7 +53,7 @@ Pila: SvelteKit (Svelte 5, TypeScript estrito), Node 22 (`.nvmrc`), PostgreSQL 1
 Nun servidor con Docker, instale cun só comando:
 
 ```sh
-git clone https://github.com/[⚠ usuario]/[⚠ repositorio].git xogamos && cd xogamos
+git clone https://github.com/isaay6/xogamos.git xogamos && cd xogamos
 ./install.sh
 ```
 

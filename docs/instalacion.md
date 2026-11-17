@@ -5,7 +5,7 @@
 Nun servidor con Docker, execute:
 
 ```sh
-git clone https://github.com/[⚠ usuario]/[⚠ repositorio].git xogamos && cd xogamos
+git clone https://github.com/isaay6/xogamos.git xogamos && cd xogamos
 ./install.sh
 ```
 
