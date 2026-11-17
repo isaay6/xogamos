@@ -5,6 +5,9 @@ Seguridade** (RD 311/2022), categoría **básica**. **Non é unha declaración d
 corresponde á entidade que opera a instalación (concello ou Deputación), que debe completar as
 medidas organizativas (política, persoas responsables, formación, xestión de incidentes).
 
+Para declarar a conformidade hai un kit listo en [ens/](ens/README.md): análise de riscos,
+declaración de aplicabilidade e modelo de declaración de conformidade.
+
 ## 1. Medidas que xa inclúe o produto
 
 | Ámbito | Medida | Onde |
@@ -29,7 +32,7 @@ medidas organizativas (política, persoas responsables, formación, xestión de 
 | Medida ENS | Achega do produto | Queda para a entidade operadora |
 |---|---|---|
 | op.acc (control de acceso) | Identidade pública, papeis por concello, sesións seguras | Altas e baixas do persoal; revisión periódica de permisos |
-| op.exp.8 / op.exp.10 (rexistro de actividade) | Rexistro das accións do persoal | Revisalo e conservalo segundo a súa política |
+| op.exp.8 (rexistro de actividade) | Rexistro das accións do persoal | Revisalo e conservalo segundo a súa política |
 | op.cont (continuidade) | Scripts de copia e restauración | Programar copias diarias fóra do servidor e probar a restauración |
 | mp.com (comunicacións) | HTTPS obrigatorio detrás do proxy; HSTS | Certificado e configuración do proxy |
 | mp.info (información) | Minimización, DNI en HMAC, borrado automático | Clasificación da información e prazos propios |

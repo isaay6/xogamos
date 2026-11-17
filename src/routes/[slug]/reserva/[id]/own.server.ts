@@ -59,6 +59,8 @@ export function facilityData(ctx: Awaited<ReturnType<typeof loadOwn>>['ctx']) {
 		name: ctx.facilityName,
 		location: ctx.location,
 		address: ctx.address,
+		latitude: ctx.latitude,
+		longitude: ctx.longitude,
 		nameGl: ctx.nameGl,
 		nameEs: ctx.nameEs,
 		color: ctx.color,

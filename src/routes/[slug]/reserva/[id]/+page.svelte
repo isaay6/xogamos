@@ -1,5 +1,6 @@
 <!-- SPDX-License-Identifier: EUPL-1.2 -->
 <script lang="ts">
+	import { mapHref } from '#lib/ui/map-link.js';
 	import { googleCalendarUrl, outlookCalendarUrl } from '#lib/ui/calendar-links.js';
 	import { t, type MessageKey } from '#lib/i18n/index.js';
 	import {
@@ -51,7 +52,14 @@
 		location: place
 	});
 	// `geo:` abre la app de mapas del sistema, sin terceros; sin dirección no hay enlace.
-	const map = $derived(f.address ? `geo:0,0?q=${encodeURIComponent(f.address)}` : null);
+	const map = $derived(
+		mapHref({
+			latitude: f.latitude ?? null,
+			longitude: f.longitude ?? null,
+			address: f.address,
+			municipalityName: data.municipality.name
+		})
+	);
 	// Una confirmada que ya empezó no cambia el texto de estado salvo para decir que empezó.
 	const note = $derived(
 		data.status !== 'confirmed'
@@ -121,7 +129,9 @@
 			<span
 				><b>{sport} · {unit}</b>{place}
 				{#if map}
-					· <a class="chegar" href={map}>{t(locale, 'vec.reserva.como_chegar')}</a>
+					· <a class="chegar" href={map} target="_blank" rel="noopener noreferrer"
+						>{t(locale, 'vec.mapa.ver')}</a
+					>
 				{/if}</span
 			>
 		</li>

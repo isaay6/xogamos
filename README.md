@@ -69,6 +69,7 @@ Para opcións de demo, instalación local e operación, consulte a guía de
 - [Accesibilidade](docs/accesibilidade.md): auditoría WCAG 2.1 AA, matriz e declaración.
 - [Protección de datos](docs/rgpd.md): rexistro de tratamentos, conservación e dereitos.
 - [Seguridade](docs/seguridade.md): medidas técnicas e correspondencia co ENS (categoría básica).
+- [Kit ENS](docs/ens/README.md): análise de riscos, declaración de aplicabilidade e modelo de declaración de conformidade.
 - [Encargo do tratamento](docs/encargo-tratamento.md): modelo de contrato e reparto de responsabilidades.
 - [Operación](docs/operacion.md): actualizar, reverter, soporte e quen fai que.
 - [Cumprimento das bases](docs/cumprimento.md): cada requisito, onde se demostra e que falta.

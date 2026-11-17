@@ -349,6 +349,7 @@ export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
 	'vec.reserva.titulo': 'Tu reserva',
 	'vec.reserva.volver': 'Mis reservas',
 	'vec.reserva.qr': 'Código QR de la reserva',
+	'vec.mapa.ver': 'Ver en el mapa',
 	'vec.reserva.como_chegar': 'Cómo llegar',
 	'vec.reserva.calendario': 'Añadir al calendario',
 	'vec.reserva.google': 'Google Calendar',

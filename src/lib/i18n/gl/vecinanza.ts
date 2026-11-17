@@ -359,6 +359,7 @@ export const glVecinanza = {
 	'vec.reserva.titulo': 'A túa reserva',
 	'vec.reserva.volver': 'As miñas reservas',
 	'vec.reserva.qr': 'Código QR da reserva',
+	'vec.mapa.ver': 'Ver no mapa',
 	'vec.reserva.como_chegar': 'Como chegar',
 	'vec.reserva.calendario': 'Engadir ao calendario',
 	'vec.reserva.google': 'Google Calendar',

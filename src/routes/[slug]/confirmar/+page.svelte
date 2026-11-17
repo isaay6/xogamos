@@ -1,5 +1,6 @@
 <!-- SPDX-License-Identifier: EUPL-1.2 -->
 <script lang="ts">
+	import { mapHref } from '#lib/ui/map-link.js';
 	import { enhance } from '$app/forms';
 	import { t, type MessageKey } from '#lib/i18n/index.js';
 	import {
@@ -54,6 +55,14 @@
 			'script>'
 	);
 	const accessInfo = $derived(locale === 'es' ? f.accessInfoEs || f.accessInfo : f.accessInfo);
+	const mapa = $derived(
+		mapHref({
+			latitude: f.latitude,
+			longitude: f.longitude,
+			address: f.address,
+			municipalityName: data.municipality.name
+		})
+	);
 	const sportName = $derived(locale === 'es' ? f.nameEs : f.nameGl);
 	const noun = $derived(nounFor(f.bookingMode, f.mascot));
 	const when = $derived(
@@ -95,10 +104,16 @@
 			<dt>{t(locale, 'vec.confirmar.instalacion')}</dt>
 			<dd>{sportName}, {facilityLabel(locale, f.name, data.unitIndex, noun)}</dd>
 		</div>
-		{#if f.location}
+		{#if f.location || mapa}
 			<div>
 				<dt>{t(locale, 'vec.confirmar.lugar')}</dt>
-				<dd>{f.location}</dd>
+				<dd>
+					{f.location}
+					{#if mapa}
+						{#if f.location}·{/if}
+						<a href={mapa} target="_blank" rel="noopener noreferrer">{t(locale, 'vec.mapa.ver')}</a>
+					{/if}
+				</dd>
 			</div>
 		{/if}
 		<div>
