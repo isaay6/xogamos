@@ -31,9 +31,12 @@
 					<option value="very_large">{t(locale, 'vec.acc.moi_grande')}</option>
 				</select>
 			</label>
-			<label>
+			<label class="opcion">
 				<input type="checkbox" name="highContrast" checked={data.accessibility.highContrast} />
-				{t(locale, 'vec.acc.contraste')}
+				<span>
+					{t(locale, 'vec.acc.contraste')}
+					<small>{t(locale, 'vec.acc.contraste.axuda')}</small>
+				</span>
 			</label>
 			<label>
 				{t(locale, 'vec.acc.movemento')}
@@ -42,9 +45,12 @@
 					<option value="always">{t(locale, 'vec.acc.reducir')}</option>
 				</select>
 			</label>
-			<label>
+			<label class="opcion">
 				<input type="checkbox" name="easyBooking" checked={data.accessibility.easyBooking} />
-				{t(locale, 'vec.acc.reserva_facil')}
+				<span>
+					{t(locale, 'vec.acc.reserva_facil')}
+					<small>{t(locale, 'vec.acc.reserva_facil.axuda')}</small>
+				</span>
 			</label>
 			<button type="submit">{t(locale, 'vec.acc.gardar')}</button>
 		</form>
@@ -115,8 +121,48 @@
 		font-weight: 700;
 	}
 
-	.accesibilidade select,
+	/* Casillas: a caixa á esquerda e o texto ao lado, cunha liña que explica a opción */
+	.accesibilidade label.opcion {
+		grid-template-columns: auto 1fr;
+		align-items: start;
+		gap: 12px;
+		padding: 6px 0;
+		cursor: pointer;
+	}
+
+	.opcion input {
+		width: 24px;
+		height: 24px;
+		margin: 0;
+		accent-color: var(--txt);
+	}
+
+	.opcion small {
+		display: block;
+		margin-top: 2px;
+		color: var(--texto-suave);
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	.accesibilidade select {
+		min-height: var(--toque);
+	}
+
 	.accesibilidade button {
 		min-height: var(--toque);
+		margin-top: 4px;
+		border: 0;
+		border-radius: 22px;
+		background: var(--txt);
+		color: var(--branco);
+		font: inherit;
+		font-weight: 800;
+		cursor: pointer;
+	}
+
+	.accesibilidade button:focus-visible {
+		outline: 3px solid var(--foco);
+		outline-offset: 2px;
 	}
 </style>

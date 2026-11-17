@@ -674,6 +674,12 @@ export const glVecinanza = {
 	'vec.acc.reducir': 'Reducir sempre',
 	'vec.acc.gardar': 'Gardar accesibilidade',
 	'vec.acc.reserva_facil': 'Reserva fácil',
+	'vec.acc.contraste.axuda': 'Cores máis fortes e bordos máis marcados.',
+	'vec.acc.reserva_facil.axuda':
+		'Reserva paso a paso: deporte, día e hora, unha pregunta por pantalla e con botóns grandes.',
+	'vec.inicio.facil': 'Prefires ir paso a paso?',
+	'vec.inicio.facil.ligazon': 'Reserva fácil, con botóns grandes',
+	'vec.abonos.ampliar': 'Toca para ver o QR en grande',
 	'vec.facil.paso': 'Paso {n} de 4',
 	'vec.facil.atras': 'Atrás',
 	'vec.facil.deporte': 'Que deporte?',

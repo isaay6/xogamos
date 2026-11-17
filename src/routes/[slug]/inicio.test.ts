@@ -123,7 +123,11 @@ describe('portada', () => {
 
 	it('os deportes e as suxestións levan ao fluxo normal, sen data nin hora', async () => {
 		const html = await page(InicioPage, load, null);
-		const links = [...html.matchAll(/href="([^"]*\/reservar\/[^"]*)"/g)].map((m) => m[1]);
+		// A reserva fácil vai á parte: é outro fluxo, sempre visible baixo os deportes.
+		expect(html).toContain('href="/viana-do-bolo/reservar/facil"');
+		const links = [...html.matchAll(/href="([^"]*\/reservar\/[^"]*)"/g)]
+			.map((m) => m[1])
+			.filter((href) => !href.endsWith('/reservar/facil'));
 		expect(links.length).toBeGreaterThan(0);
 		for (const href of links) {
 			expect(href).toMatch(/^\/viana-do-bolo\/reservar\/[0-9a-f-]{36}$/);

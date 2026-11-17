@@ -1,5 +1,6 @@
 <!-- SPDX-License-Identifier: EUPL-1.2 -->
 <script lang="ts">
+	import { page } from '$app/state';
 	import { t, type MessageKey } from '#lib/i18n/index.js';
 	import { dayLabel, durationText, facilityLabel, nounFor } from '#lib/ui/booking-text.js';
 	import Bubble from '#lib/ui/Bubble.svelte';
@@ -83,27 +84,42 @@
 			<section class="abonos" aria-labelledby="abonos-titulo">
 				<h2 id="abonos-titulo">{t(locale, 'vec.abonos.titulo')}</h2>
 				{#each data.passes as pass (pass.id)}
-					<article>
-						<Fob
-							code={pass.pin}
-							color="#1AA6C8"
-							mascot={pass.mascot}
-							size="sm"
-							{locale}
-							qr={pass.qr}
-						/>
-						<div class="abono-texto">
-							<b>{pass.name}</b>
-							<span>{locale === 'es' ? pass.sportEs : pass.sportGl}</span>
-							<span
-								>{t(locale, 'vec.abonos.valido', {
-									desde: longDate(locale, pass.startsOn),
-									ata: longDate(locale, pass.endsOn)
-								})}</span
-							>
+					<!-- Tócase e ábrese o chaveiro grande co QR, coma nunha reserva -->
+					<details class="abono" open={page.url.searchParams.get('abono') === pass.id}>
+						<summary>
+							<Fob
+								code={pass.pin}
+								color="#1AA6C8"
+								mascot={pass.mascot}
+								size="sm"
+								{locale}
+								qr={pass.qr}
+							/>
+							<div class="abono-texto">
+								<b>{pass.name}</b>
+								<span>{locale === 'es' ? pass.sportEs : pass.sportGl}</span>
+								<span
+									>{t(locale, 'vec.abonos.valido', {
+										desde: longDate(locale, pass.startsOn),
+										ata: longDate(locale, pass.endsOn)
+									})}</span
+								>
+								{#if pass.qr}<span class="ampliar">{t(locale, 'vec.abonos.ampliar')}</span>{/if}
+							</div>
+							{#if pass.qr}<Qr value={pass.qr} size={82} framed={false} decorative />{/if}
+						</summary>
+						<div class="abono-grande">
+							<Fob
+								code={pass.pin}
+								color="#1AA6C8"
+								mascot={pass.mascot}
+								size="xl"
+								qr={pass.qr}
+								qrLabel={t(locale, 'vec.reserva.qr')}
+								{locale}
+							/>
 						</div>
-						{#if pass.qr}<Qr value={pass.qr} size={82} framed={false} decorative />{/if}
-					</article>
+					</details>
 				{/each}
 			</section>
 		{/if}
@@ -280,13 +296,44 @@
 		font-weight: 900;
 	}
 
-	.abonos article {
+	.abono {
+		border-bottom: 1px solid var(--liña);
+	}
+
+	.abono summary {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 12px;
 		align-items: center;
 		padding: 12px 0;
-		border-bottom: 1px solid var(--liña);
+		list-style: none;
+		cursor: pointer;
+	}
+
+	.abono summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.abono summary:focus-visible {
+		outline: 3px solid var(--foco);
+		outline-offset: 2px;
+	}
+
+	.abono .ampliar {
+		color: var(--txt);
+		font-weight: 800;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.abono[open] .ampliar {
+		display: none;
+	}
+
+	.abono-grande {
+		display: flex;
+		justify-content: center;
+		padding: 8px 0 20px;
 	}
 
 	.abono-texto {

@@ -184,6 +184,12 @@
 					<Bubble>{t(locale, 'vec.inicio.baleiro')}</Bubble>
 				</div>
 			{/if}
+			{#if data.sports.length > 0}
+				<p class="facil-ligazon">
+					{t(locale, 'vec.inicio.facil')}
+					<a href="{base}/reservar/facil">{t(locale, 'vec.inicio.facil.ligazon')}</a>
+				</p>
+			{/if}
 		</section>
 
 		{#if !data.signedIn}
@@ -211,7 +217,7 @@
 									data: longDate(locale, pass.endsOn)
 								}
 							)} ·
-							<a href="{base}/reservas">{t(locale, 'vec.inicio.abonos.ver_qr')}</a>
+							<a href="{base}/reservas?abono={pass.id}">{t(locale, 'vec.inicio.abonos.ver_qr')}</a>
 						</li>
 					{/each}
 				</ul>
@@ -467,6 +473,20 @@
 		min-height: var(--toque);
 		font-weight: 800;
 		color: var(--txt);
+	}
+
+	/* Acceso á reserva fácil, sempre visible baixo os deportes */
+	.facil-ligazon {
+		margin-top: 12px;
+		font-size: 15px;
+	}
+
+	.facil-ligazon a {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--toque);
+		font-weight: 800;
+		color: inherit;
 	}
 
 	/* Todos os deportes */

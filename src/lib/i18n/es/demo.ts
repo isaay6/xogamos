@@ -52,6 +52,9 @@ export const esDemo: Record<keyof typeof glDemo, string> = {
 	'demo.paso.dia-hora.texto': 'Elige el día y la hora. Las horas llenas salen apagadas.',
 	'demo.paso.accesibilidade.titulo': 'Accesibilidad',
 	'demo.paso.accesibilidade.texto': 'Consulta esta ficha antes de elegir la instalación.',
+	'demo.paso.reserva-facil.titulo': 'Reserva fácil',
+	'demo.paso.reserva-facil.texto':
+		'Para quien prefiere ir paso a paso: una pregunta por pantalla y botones grandes.',
 	'demo.paso.chave.titulo': 'Tu llave',
 	'demo.paso.chave.texto': 'Cada reserva tiene un PIN y un QR. Enséñalo al llegar.',
 	'demo.paso.avisos.titulo': 'Tus avisos',

@@ -31,7 +31,7 @@
 	{/if}
 	{#if step === 1}
 		<h1>{t(locale, 'vec.facil.deporte')}</h1>
-		<div class="choices">
+		<div class="choices" data-tour="reserva-facil">
 			{#each data.sports as sport (sport.typeId)}
 				<a href={href({ tipo: sport.typeId })}>
 					<Mascot kind={sport.mascot} color={sport.color} size={72} />

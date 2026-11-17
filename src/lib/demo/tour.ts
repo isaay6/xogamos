@@ -47,6 +47,7 @@ export const TOURS: Record<TourKey, Tour> = {
 		steps: [
 			step('', 'deportes'),
 			step('/reservar/[typeId]', 'dia-hora', 'deportes'),
+			step('/reservar/facil', 'reserva-facil'),
 			step('/reservas', 'chave'),
 			step('/avisos', 'avisos'),
 			step('/eu/perfil', 'perfil-accesibilidade'),

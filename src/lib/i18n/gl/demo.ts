@@ -52,6 +52,9 @@ export const glDemo = {
 	'demo.paso.dia-hora.texto': 'Escolle o día e a hora. As horas cheas saen apagadas.',
 	'demo.paso.accesibilidade.titulo': 'Accesibilidade',
 	'demo.paso.accesibilidade.texto': 'Consulta esta ficha antes de escoller a instalación.',
+	'demo.paso.reserva-facil.titulo': 'Reserva fácil',
+	'demo.paso.reserva-facil.texto':
+		'Para quen prefire ir paso a paso: unha pregunta por pantalla e botóns grandes.',
 	'demo.paso.chave.titulo': 'A túa chave',
 	'demo.paso.chave.texto': 'Cada reserva ten un PIN e un QR. Ensínao ao chegar.',
 	'demo.paso.avisos.titulo': 'Os teus avisos',

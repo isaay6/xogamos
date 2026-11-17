@@ -664,6 +664,12 @@ export const esVecinanza: Record<keyof typeof glVecinanza, string> = {
 	'vec.acc.reducir': 'Reducir siempre',
 	'vec.acc.gardar': 'Guardar accesibilidad',
 	'vec.acc.reserva_facil': 'Reserva fácil',
+	'vec.acc.contraste.axuda': 'Colores más fuertes y bordes más marcados.',
+	'vec.acc.reserva_facil.axuda':
+		'Reserva paso a paso: deporte, día y hora, una pregunta por pantalla y con botones grandes.',
+	'vec.inicio.facil': '¿Prefieres ir paso a paso?',
+	'vec.inicio.facil.ligazon': 'Reserva fácil, con botones grandes',
+	'vec.abonos.ampliar': 'Toca para ver el QR en grande',
 	'vec.facil.paso': 'Paso {n} de 4',
 	'vec.facil.atras': 'Atrás',
 	'vec.facil.deporte': '¿Qué deporte?',
